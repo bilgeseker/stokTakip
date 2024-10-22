@@ -97,6 +97,14 @@
                     </m:OverflowToolbar>
                 </extension>
 				<columns>
+                    <Column
+                        id="image"
+                        width="7rem">
+						<m:Label text="Ürün Resmi" />
+						<template>
+							<m:Image class="productImage listImage" src="{ImageUrl}"/>
+						</template>
+					</Column>
 					<Column
                         id="name"
                         width="11rem"

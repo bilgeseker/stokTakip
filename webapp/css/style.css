@@ -12,9 +12,15 @@ html[dir="ltr"] .myAppDemoWT .myCustomButton.sapMBtn {
     font-weight: bold;
  }
  .productImage {
-   width: 70px;   /* Sabit genişlik */
-   height: 70px;  /* Sabit yükseklik */
    object-fit: cover; /* Resmin orantısını koruyarak kesmesini sağlar */
    display: block;
    margin: 0 auto; /* Resmi ortalar */
+}
+.listImage{
+   width: 50px;   /* Sabit genişlik */
+   height: 50px;  /* Sabit yükseklik */
+}
+.detailImage{
+   width: 300px;   /* Sabit genişlik */
+   height: 300px;  /* Sabit yükseklik */
 }

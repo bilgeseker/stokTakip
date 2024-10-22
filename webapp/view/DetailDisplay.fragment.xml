@@ -21,8 +21,10 @@
 			columnsM="1"
 			singleContainerFullSize="false" >
 			<f:content>
-				<Label text="Ürün Adı" />
-				<Text text="{product>ProductName}" />
+				<core:Title text="{product>ProductName}" />
+				<Image class="productImage detailImage sapUiMediumMarginBottom" src="{product>ImageUrl}"/>
+				<Label text="Ürün Kodu" />
+				<Text text="" />
 				<Label text="Birim Fiyatı" />
 				<Text text="{product>ExtendedPrice} TL" />
 				<Label text="Miktar" />

@@ -7,7 +7,6 @@
 		<f:SimpleForm id="SimpleFormChange480_12120"
 			editable="true"
 			layout="ResponsiveGridLayout"
-			title="Address"
 			labelSpanXL="4"
 			labelSpanL="4"
 			labelSpanM="12"
@@ -22,9 +21,9 @@
 			columnsM="1"
 			singleContainerFullSize="false" >
 			<f:content>
-				<core:Title text="Office" />
-				<Label text="Name" />
-				<Input value="{product>ProductName}" />
+				<core:Title text="{product>ProductName}" />
+				<Label text="Ürün Kodu" />
+				<Input value="" />
 				<Label text="Birim Fiyatı (TL)" />
 				<Input value="{product>ExtendedPrice}" type="Number"/>
 				<Label text="Miktar" />

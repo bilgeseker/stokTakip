@@ -6,35 +6,40 @@
             "Quantity": 21,
             "ExtendedPrice": 120,
             "Category":"Üst Giyim",
-            "SubCategory": "Tişört"
+            "SubCategory": "Tişört",
+            "ImageUrl":"https://static.ticimax.cloud/55914/uploads/urunresimleri/buyuk/erkek-basic-polo-yaka-tisort-regular-f-a3ef6-..jpg"
         },
         {
             "ProductName": "Kayık Yaka Tişört",
             "Quantity": 4,
             "ExtendedPrice": 130,
             "Category":"Üst Giyim",
-            "SubCategory": "Tişört"
+            "SubCategory": "Tişört",
+            "ImageUrl":"https://images.altinyildizclassics.com/mnresize/460/690/images/4A4822200203HAK_5.jpg"
         },
         {
             "ProductName": "Wide Leg Pantolon",
             "Quantity": 3,
             "ExtendedPrice": 450,
             "Category":"Alt Giyim",
-            "SubCategory": "Pantolon"
+            "SubCategory": "Pantolon",
+            "ImageUrl":"https://static.ticimax.cloud/43606/uploads/urunresimleri/buyuk/kadin-wanda-black-wide-leg-jean-pantol--45c4-.jpg"
         },
         {
             "ProductName": "Midi Etek",
             "Quantity": 2,
             "ExtendedPrice": 250,
             "Category":"Alt Giyim",
-            "SubCategory": "Etek"
+            "SubCategory": "Etek",
+            "ImageUrl": "https://www.maymoda.com/i/l/003/0030065_beli-lastikli-midi-etek-puantiye.jpeg"
         },
         {
             "ProductName": "Şişme Mont",
             "Quantity": 1,
             "ExtendedPrice": 1350,
             "Category":"Dış Giyim",
-            "SubCategory": "Mont"
+            "SubCategory": "Mont",
+            "ImageUrl": "https://static.ticimax.cloud/cdn-cgi/image/width=-,quality=85/60588/uploads/urunresimleri/buyuk/montdangererkek-kapusonlu-uzun-sisme-m-da5244.jpg"
         }
     ]
 }
