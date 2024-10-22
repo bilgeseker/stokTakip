@@ -1,0 +1,31 @@
+<mvc:View 
+    xmlns:html="http://www.w3.org/1999/xhtml" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m" 
+    xmlns:form="sap.ui.layout.form" 
+    controllerName="ui5.walkthrough.controller.Login" 
+    displayBlock="true">
+
+	<Page showHeader="false">
+		<content>
+			<VBox 
+				justifyContent="Center" 
+				alignItems="Center" 
+				fitContainer="true">
+				
+				<form:SimpleForm>
+					<form:content>
+						<Title id="__xmlview0--title" text="Kullanıcı Girişi"/>
+						<Label class="label" text="Kullanıcı Adı"/>
+						<Input class="input" id="user" placeholder="Kullanıcı adını gir."/>
+						<Label text="Şifre"/>
+						<Input class="pwdClass" id="pwd" type="Password" placeholder="Şifre gir."/>
+					</form:content>
+					<Button icon="sap-icon://visits" id="btn" text="Giriş Yap" type="Accept" press="onBtnClick" width="12rem"/>
+				</form:SimpleForm>
+				
+			</VBox>
+		</content>
+	</Page>
+	
+</mvc:View>

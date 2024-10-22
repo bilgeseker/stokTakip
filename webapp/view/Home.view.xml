@@ -1,0 +1,168 @@
+
+<!-- <mvc:View
+    controllerName="ui5.walkthrough.controller.Home"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
+    <List
+        id="productList"
+        headerText="{i18n>invoiceListTitle}"
+        class="sapUiResponsiveMargin"
+        width="auto"
+        items="{
+            path : 'product>/Products'
+            
+        }">
+        <headerToolbar>
+         <Toolbar>
+            <Title text="{i18n>invoiceListTitle}"/>
+            <ToolbarSpacer/>
+            <SearchField 
+               width="50%" 
+               search=".onFilterInvoices"/>
+         </Toolbar>
+      </headerToolbar>
+        <items>
+            <ObjectListItem
+                title="{product>ProductName}"
+                number="{
+                    parts: [
+                        'product>ExtendedPrice',
+                        'view>/currency'
+                    ],
+                    type: 'sap.ui.model.type.Currency',
+                    formatOptions: {
+                        showMeasure: false
+                    }
+                }"
+                numberUnit="{view>/currency}"
+                type="Navigation"
+                press=".onPress" >
+                <firstStatus>
+                    <ObjectStatus
+                        core:require="{
+                            Formatter: 'ui5/walkthrough/model/formatter'
+                        }"
+                        text="{
+                            path: 'product>Status',
+                            formatter: 'Formatter.statusText.bind($controller)'
+                        }"/>
+                </firstStatus>
+            </ObjectListItem>
+        </items>
+    </List>
+</mvc:View> -->
+<mvc:View
+	controllerName="ui5.walkthrough.controller.Home"
+	xmlns="sap.ui.table"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:u="sap.ui.unified"
+	xmlns:c="sap.ui.core"
+	xmlns:m="sap.m"
+    height="100%">
+	<m:Page
+		showHeader="false"
+		enableScrolling="false"
+		class="sapUiContentPadding">
+		<m:content>
+            <m:HBox justifyContent="End" class="searchAndButton">
+                <m:SearchField
+                    id="searchField"
+                    placeholder="Ürün Ara"
+                    search=".onFilterProducts"
+                    width="100%"/>
+                    
+                <m:Button 
+                    enabled="false" 
+                    text="Ürünü sil" 
+                    type="Negative" 
+                    icon="sap-icon://delete"
+                    class="sapUiMediumMarginBegin">
+                </m:Button>
+            </m:HBox>
+			<Table
+                id="productList"
+				rows="{/Products}"
+				selectionMode="MultiToggle"
+				ariaLabelledBy="title"
+                showColumnVisibilityMenu="true"
+                enableColumnFreeze="true"
+                enableCellFilter="true"
+                >
+				<extension>
+                    <m:OverflowToolbar style="Clear">
+                        <m:Title id="title" text="Products"/>
+                        <m:ToolbarSpacer/>
+                        <m:Button icon="sap-icon://clear-filter" type="Negative" press=".clearFilters" tooltip="i18n>clearFilterText"/>
+                    </m:OverflowToolbar>
+                </extension>
+				<columns>
+					<Column
+                        id="name"
+                        width="11rem"
+                        sortProperty="ProductName"
+                        filterProperty="ProductName"
+                        showFilterMenuEntry="true"
+                        showSortMenuEntry="true">
+						<m:Label text="Ürün Adı" />
+						<template>
+							<m:Text text="{ProductName}" wrapping="false" />
+						</template>
+					</Column>
+					<Column 
+                        width="9rem"
+                        id="productId"
+                        filterProperty=""
+                        sortProperty="">
+						<m:Label text="Ürün Kodu" />
+						<template>
+							<m:Text text=""/>
+						</template>
+					</Column>
+					<Column 
+                        id="quantity"
+                        width="6rem"
+                        hAlign="End"
+                        sortProperty="Quantity">
+						<m:Label text="Miktar" />
+						<template>
+							<m:Label text="{Quantity}" />
+						</template>
+					</Column>
+					
+					<Column 
+                        width="9rem"
+                        id="price"
+                        sortProperty="ExtendedPrice">
+						<m:Label text="Fiyat" />
+						<template>
+							<u:Currency value="{ExtendedPrice}" currency="{view>/currency}"/>
+						</template>
+					</Column>
+					<Column 
+                        width="10rem"
+                        id="subCategory">
+						<m:Label text="Alt Kategori" />
+						<template>
+							<m:Label text="{SubCategory}" />
+						</template>
+					</Column>
+					<Column 
+                        width="10rem"
+                        id="categoryHome">
+						<m:Label text="Ana Kategori" />
+						<template>
+							<m:Label text="{Category}" />
+						</template>
+					</Column>
+                    <Column width="10rem">
+                        <m:Label text="Detayı Gör" />
+                        <template>
+                            <m:Button text="Detayı Gör" press=".onPress" />
+                        </template>
+                    </Column>
+				</columns>
+			</Table>
+		</m:content>
+	</m:Page>
+</mvc:View>

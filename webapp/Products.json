@@ -1,0 +1,40 @@
+
+{
+    "Products": [
+        {
+            "ProductName": "Polo Yaka Tişört",
+            "Quantity": 21,
+            "ExtendedPrice": 120,
+            "Category":"Üst Giyim",
+            "SubCategory": "Tişört"
+        },
+        {
+            "ProductName": "Kayık Yaka Tişört",
+            "Quantity": 4,
+            "ExtendedPrice": 130,
+            "Category":"Üst Giyim",
+            "SubCategory": "Tişört"
+        },
+        {
+            "ProductName": "Wide Leg Pantolon",
+            "Quantity": 3,
+            "ExtendedPrice": 450,
+            "Category":"Alt Giyim",
+            "SubCategory": "Pantolon"
+        },
+        {
+            "ProductName": "Midi Etek",
+            "Quantity": 2,
+            "ExtendedPrice": 250,
+            "Category":"Alt Giyim",
+            "SubCategory": "Etek"
+        },
+        {
+            "ProductName": "Şişme Mont",
+            "Quantity": 1,
+            "ExtendedPrice": 1350,
+            "Category":"Dış Giyim",
+            "SubCategory": "Mont"
+        }
+    ]
+}

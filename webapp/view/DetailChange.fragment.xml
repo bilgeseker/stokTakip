@@ -1,0 +1,53 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="SimpleFormChange480_12120"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			title="Address"
+			labelSpanXL="4"
+			labelSpanL="4"
+			labelSpanM="12"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="0"
+			emptySpanL="0"
+			emptySpanM="0"
+			emptySpanS="0"
+			columnsXL="2"
+			columnsL="2"
+			columnsM="1"
+			singleContainerFullSize="false" >
+			<f:content>
+				<core:Title text="Office" />
+				<Label text="Name" />
+				<Input value="{product>ProductName}" />
+				<Label text="Birim Fiyatı (TL)" />
+				<Input value="{product>ExtendedPrice}" type="Number"/>
+				<Label text="Miktar" />
+				<Input value="{product>Quantity}" type="Number"/>
+				<Label text="Kategori" />
+				<Select id="category" selectedKey="{product>Category}">
+					<items>
+						<core:Item text="Alt Giyim" key="Alt Giyim"/>
+						<core:Item text="Üst Giyim" key="Üst Giyim"/>
+						<core:Item text="Dış Giyim" key="Dış Giyim"/>
+					</items>
+				</Select>
+				<Label text="Alt Kategori" />
+				<Select id="subcategory" selectedKey="{product>SubCategory}">
+					<items>
+						<core:Item text="Pantolon" key="Pantolon"/>
+						<core:Item text="Etek" key="Etek"/>
+						<core:Item text="Mont" key="Mont"/>
+						<core:Item text="Tişört" key="Tişört"/>
+						<core:Item text="Gömlek" key="Gömlek"/>
+					</items>
+				</Select>
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+</core:FragmentDefinition>

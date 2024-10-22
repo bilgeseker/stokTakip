@@ -1,0 +1,23 @@
+
+<mvc:View
+	height="100%"
+	controllerName="ui5.walkthrough.controller.Detail"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+	<Page
+		id="page">
+		<customHeader>
+			<Bar>
+			<contentLeft>
+				<Button id="goback" press="onNavBack" icon="sap-icon://arrow-left"/>
+				<Text text="{product>/ProductName}" />	
+			</contentLeft>
+				<contentRight>
+					<Button id="edit" text="Düzenle" press="handleEditPress" />
+					<Button id="save" text="Kaydet" type="Emphasized" visible="false" press="handleSavePress" />
+					<Button id="cancel" text="İptal" visible="false" press="handleCancelPress" />
+				</contentRight>
+			</Bar>
+		</customHeader>
+	</Page>
+</mvc:View>

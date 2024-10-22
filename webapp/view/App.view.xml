@@ -1,0 +1,61 @@
+<mvc:View height="100%"
+	controllerName="ui5.walkthrough.controller.App"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:tnt="sap.tnt">
+	<tnt:ToolPage
+		id="app"
+		class="sapUiDemoToolPage">
+		<tnt:header>
+			<tnt:ToolHeader id="navHeader">
+				<Button
+					id="sideNavigationToggleButton"
+					icon="sap-icon://menu2"
+					type="Transparent"
+					press=".onSideNavButtonPress">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow"/>
+					</layoutData>
+				</Button>
+				<ToolbarSpacer/>
+				<Title
+					text="{i18n>appTitle}"
+					level="H2"/>
+				<ToolbarSpacer/>
+				<Button
+					id="themeChange"
+					icon="sap-icon://dark-mode"
+					type="Transparent"
+					press=".onThemeButtonPress"
+					tooltip="{i18n>themeButtonText}">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow"/>
+					</layoutData>
+				</Button>
+				<Button
+					id="logoutButton"
+					icon="sap-icon://log"
+					type="Transparent"
+					press=".onLogoutButtonPress"
+					tooltip="{i18n>logoutButtonText}">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow"/>
+					</layoutData>
+				</Button>
+			</tnt:ToolHeader>
+		</tnt:header>
+		<tnt:sideContent>
+			<tnt:SideNavigation
+                id="sideNavigation"
+				itemSelect="onItemSelect">
+				<tnt:NavigationList>
+					<tnt:NavigationListItem text="Anasayfa" icon="sap-icon://home" key="home"/>
+                    <tnt:NavigationListItem text="Ürün Ekle" icon="sap-icon://add" key="addProduct"/>
+				</tnt:NavigationList>
+			</tnt:SideNavigation>
+		</tnt:sideContent>
+		<tnt:mainContents>
+			<App id="mainContents"/>
+		</tnt:mainContents>
+	</tnt:ToolPage>
+</mvc:View>
