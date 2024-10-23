@@ -91,7 +91,7 @@
                 >
 				<extension>
                     <m:OverflowToolbar style="Clear">
-                        <m:Title id="title" text="Products"/>
+                        <m:Title id="title" text="Ürünler"/>
                         <m:ToolbarSpacer/>
                         <m:Button icon="sap-icon://clear-filter" type="Negative" press=".clearFilters" tooltip="i18n>clearFilterText"/>
                     </m:OverflowToolbar>
