@@ -15,32 +15,30 @@ sap.ui.define([
 				this.getOwnerComponent().getRouter().navTo("login");
 			}
 
-			const oRouter = this.getOwnerComponent().getRouter();
-			oRouter.getRoute("detail").attachPatternMatched(this.onObjectMatched, this);
+			const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+    		oRouter.getRoute("detail").attachPatternMatched(this._onObjectMatched, this);
 
 			this._formFragments = {};
 			this._showFormFragment("DetailDisplay");
 		},
 
-		onObjectMatched(oEvent) {
-			const sPath = "/" + window.decodeURIComponent(oEvent.getParameter("arguments").invoicePath);
-	
+		_onObjectMatched: function (oEvent) {
+			const sProductPath = decodeURIComponent(oEvent.getParameter("arguments").productPath);
+			const oModel = this.getView().getModel("products");
 			this.getView().bindElement({
-				path: sPath,
-				model: "product"
+				path: sProductPath,
+				model: "products"
 			});
-			console.log("Veri detay sayfasına bağlandı: ", this.getView().getModel("product").getProperty(sPath));
-			console.log("Bağlam: ", this.getView().getBindingContext("product"));
-		},			
+			this._toggleButtonsAndView(false);
+		},				
 		
 		handleEditPress() {
             // Clone the current product data
-			const oModel = this.getView().getModel("product");
-			const sPath = this.getView().getBindingContext("product").getPath();
-			
+			const oModel = this.getView().getModel("products");
+			const sPath = this.getView().getBindingContext("products").getPath();
 			const oProductData = oModel.getProperty(sPath);
-			
 			if (oProductData) {
+				console.log(oProductData.CategoryId);
 				this._oProducts = Object.assign({}, oProductData);
 				this._toggleButtonsAndView(true);
 			} else {
@@ -51,8 +49,8 @@ sap.ui.define([
 
 		handleCancelPress : function () {
 
-			const oModel = this.getView().getModel("product");
-			const sPath = this.getView().getBindingContext("product").getPath();
+			const oModel = this.getView().getModel("products");
+			const sPath = this.getView().getBindingContext("products").getPath();
 
 			if (this._oProducts) {
 				oModel.setProperty(sPath, this._oProducts); // Restore cloned product data
@@ -64,25 +62,56 @@ sap.ui.define([
 
 		},
 
-		handleSavePress : function () {
-			const oModel = this.getView().getModel("product");
-			const sPath = this.getView().getBindingContext("product").getPath();
-			
-			const extendedPrice = oModel.getProperty(sPath + "/ExtendedPrice");
-			const quantity = oModel.getProperty(sPath + "/Quantity");
-
-			if (isNaN(extendedPrice) || extendedPrice < 1) {
-				MessageToast.show("Birim fiyatı geçerli bir sayı olmalı ve 0'dan küçük olmamalıdır.");
+		handleSavePress: function () {
+			const oModel = this.getView().getModel("products");
+			const sPath = this.getView().getBindingContext("products").getPath();
+		
+			const updatedData = {
+				ProductID: oModel.getProperty(sPath + "/ProductID"), // Güncelleme için ProductID
+				ProductName: this.getView().byId("updateProductName").getValue(),
+				ProductCode: this.getView().byId("updateProductCode").getValue(),
+				Quantity: parseInt(this.getView().byId("updateQuantity").getValue(), 10),
+				ExtendedPrice: parseFloat(this.getView().byId("updateExtendedPrice").getValue()),
+				SizeId: this.getView().byId("updateSize").getSelectedKey(), // Seçilen SizeId
+				ColorId: this.getView().byId("updateColor").getSelectedKey(), // Seçilen ColorId
+				CategoryId: this.getView().byId("updateCategory").getSelectedKey(), // Seçilen CategoryId
+				SubCategoryId: this.getView().byId("updateSubcategory").getSelectedKey(), // Seçilen SubCategoryId
+				ImageUrl: null
+			};
+		
+			if (!updatedData.ProductName) {
+				sap.m.MessageToast.show("Ürün adı zorunludur.");
 				return;
 			}
-
-			if (isNaN(quantity) || quantity < 1) {
-				MessageToast.show("Miktar geçerli bir sayı olmalı ve 1'den az olmamalıdır.");
+		
+			if (isNaN(updatedData.Quantity) || updatedData.Quantity < 1) {
+				sap.m.MessageToast.show("Miktar geçerli bir sayı olmalı ve 1'den az olmamalıdır.");
 				return;
 			}
-			this._toggleButtonsAndView(false)
+		
+			if (isNaN(updatedData.ExtendedPrice) || updatedData.ExtendedPrice <= 0) {
+				sap.m.MessageToast.show("Fiyat geçerli bir sayı olmalı ve 0'dan büyük olmalıdır.");
+				return;
+			}
+		
+			$.ajax({
+				url: 'http://localhost:3000/updateProduct', 
+				method: 'POST',
+				data: JSON.stringify(updatedData), 
+				contentType: 'application/json',
+				success: function (response) {
+					oModel.refresh(true);
+					sap.m.MessageToast.show("Ürün başarıyla güncellendi");
+					this._toggleButtonsAndView(false);
 
+					sap.m.MessageToast.show("Ürün başarıyla güncellendi.");
+				}.bind(this), 
+				error: function () {
+					sap.m.MessageToast.show("Güncelleme sırasında hata oluştu.");
+				}
+			});
 		},
+
 		_toggleButtonsAndView : function (bEdit) {
 			var oView = this.getView();
 
@@ -115,7 +144,7 @@ sap.ui.define([
 			
 			this._getFormFragment(sFragmentName).then(function (oVBox) {
 				// Fragmente ait binding context'in doğru ayarlandığından emin olun
-				oVBox.setModel(this.getView().getModel("product"), "product"); // Modele bağlama
+				oVBox.setModel(this.getView().getModel("products"), "products"); // Modele bağlama
 				oPage.insertContent(oVBox);
 			}.bind(this)); // Bağlamı korumak için bind kullanıyoruz
 		},		

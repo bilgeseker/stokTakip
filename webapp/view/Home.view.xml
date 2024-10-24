@@ -29,7 +29,7 @@
             </m:HBox>
 			<Table
                 id="productList"
-				rows="{/Products}"
+				rows="{products>/}"
 				selectionMode="MultiToggle"
 				ariaLabelledBy="title"
                 showColumnVisibilityMenu="true"
@@ -49,7 +49,7 @@
                         width="7rem">
 						<m:Label text="Ürün Resmi" />
 						<template>
-							<m:Image class="productImage listImage" src="{ImageUrl}"/>
+							<m:Image class="productImage listImage" src="{products>ImageUrl}"/>
 						</template>
 					</Column>
 					<Column
@@ -61,7 +61,7 @@
                         showSortMenuEntry="true">
 						<m:Label text="Ürün Adı" />
 						<template>
-							<m:Text text="{ProductName}" wrapping="false" />
+							<m:Text text="{products>ProductName}" wrapping="false" />
 						</template>
 					</Column>
 					<Column 
@@ -71,7 +71,7 @@
                         sortProperty="">
 						<m:Label text="Ürün Kodu" />
 						<template>
-							<m:Text text=""/>
+							<m:Text text="{products>ProductCode}"/>
 						</template>
 					</Column>
 					<Column 
@@ -81,7 +81,7 @@
                         sortProperty="Quantity">
 						<m:Label text="Miktar" />
 						<template>
-							<m:Label text="{Quantity}" />
+							<m:Label text="{products>Quantity}" />
 						</template>
 					</Column>
 					
@@ -91,7 +91,23 @@
                         sortProperty="ExtendedPrice">
 						<m:Label text="Fiyat" />
 						<template>
-							<u:Currency value="{ExtendedPrice}" currency="{view>/currency}"/>
+							<u:Currency value="{products>ExtendedPrice}" currency="{view>/currency}"/>
+						</template>
+					</Column>
+					<Column 
+                        width="10rem"
+                        id="size">
+						<m:Label text="Beden" />
+						<template>
+							<m:Label text="{products>SizeId}" />
+						</template>
+					</Column>
+					<Column 
+                        width="10rem"
+                        id="color">
+						<m:Label text="Renk" />
+						<template>
+							<m:Label text="{products>ColorId}" />
 						</template>
 					</Column>
 					<Column 
@@ -99,7 +115,7 @@
                         id="subCategory">
 						<m:Label text="Alt Kategori" />
 						<template>
-							<m:Label text="{SubCategory}" />
+							<m:Label text="{products>SubCategoryId}" />
 						</template>
 					</Column>
 					<Column 
@@ -107,7 +123,7 @@
                         id="categoryHome">
 						<m:Label text="Ana Kategori" />
 						<template>
-							<m:Label text="{Category}" />
+							<m:Label text="{products>CategoryId}" />
 						</template>
 					</Column>
                     <Column width="10rem">

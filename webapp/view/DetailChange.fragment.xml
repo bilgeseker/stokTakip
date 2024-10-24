@@ -21,29 +21,37 @@
 			columnsM="1"
 			singleContainerFullSize="false" >
 			<f:content>
-				<core:Title text="{product>ProductName}" />
+				<core:Title text="{products>ProductName}" />
+				<Label text="Ürün Adı" />
+				<Input value="{products>ProductName}" id="updateProductName"/>
 				<Label text="Ürün Kodu" />
-				<Input value="" />
-				<Label text="Birim Fiyatı (TL)" />
-				<Input value="{product>ExtendedPrice}" type="Number"/>
+				<Input value="{products>ProductCode}" id="updateProductCode" class="disabled"/>
 				<Label text="Miktar" />
-				<Input value="{product>Quantity}" type="Number"/>
-				<Label text="Kategori" />
-				<Select id="category" selectedKey="{product>Category}">
+				<Input value="{products>Quantity}" type="Number" id="updateQuantity"/>
+				<Label text="Birim Fiyatı (TL)" />
+				<Input value="{products>ExtendedPrice}" type="Number" id="updateExtendedPrice"/>
+				<Label text="Beden" />
+				<Select id="updateSize" selectedKey="{products>SizeId}" items="{sizes>/}">
 					<items>
-						<core:Item text="Alt Giyim" key="Alt Giyim"/>
-						<core:Item text="Üst Giyim" key="Üst Giyim"/>
-						<core:Item text="Dış Giyim" key="Dış Giyim"/>
+						<core:Item text="{sizes>SizeName}" key="{sizes>SizeID}"/>
+					</items>
+				</Select>
+				<Label text="Renk" />
+				<Select id="updateColor" selectedKey="{products>ColorId}" items="{colors>/}">
+					<items>
+						<core:Item text="{colors>ColorName}" key="{colors>ColorID}"/>
+					</items>
+				</Select>
+				<Label text="Kategori" />
+				<Select id="updateCategory" selectedKey="{products>CategoryId}" items="{categories>/}">
+					<items>
+						<core:Item text="{categories>CategoryName}" key="{categories>CategoryID}"/>
 					</items>
 				</Select>
 				<Label text="Alt Kategori" />
-				<Select id="subcategory" selectedKey="{product>SubCategory}">
+				<Select id="updateSubcategory" selectedKey="{products>SubCategoryId}" items="{subCategories>/}">
 					<items>
-						<core:Item text="Pantolon" key="Pantolon"/>
-						<core:Item text="Etek" key="Etek"/>
-						<core:Item text="Mont" key="Mont"/>
-						<core:Item text="Tişört" key="Tişört"/>
-						<core:Item text="Gömlek" key="Gömlek"/>
+						<core:Item text="{subCategories>SubCategoryName}" key="{subCategories>SubCategoryID}"/>
 					</items>
 				</Select>
 			</f:content>

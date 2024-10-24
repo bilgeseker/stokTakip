@@ -20,11 +20,12 @@ sap.ui.define([
 			}
 
 			var oModel = new JSONModel();
-            
-            oModel.loadData("Products.json");
-            
-            this.getView().setModel(oModel);
 
+            // Veriyi sunucudan çek
+            oModel.loadData("http://localhost:3000/products");
+
+            // View'e model olarak set et
+            this.getView().setModel(oModel, "products");
 
 			const oViewModel = new JSONModel({
 				currency: "TL"
@@ -72,18 +73,22 @@ sap.ui.define([
 			oBinding.filter(aFilter);
 		},
 		onPress: function(oEvent) {
-			const oButton = oEvent.getSource();
-			const oContext = oButton.getBindingContext(); 
-		
-			if (oContext) {
-				const oRouter = this.getOwnerComponent().getRouter();
-				oRouter.navTo("detail", {
-					invoicePath: window.encodeURIComponent(oContext.getPath().substr(1))
-				});
-				console.log(oContext.getPath());
-			} else {
+			const oButton = oEvent.getSource();  // Tıklanan butonu al
+			const oContext = oButton.getBindingContext("products"); // Bağlamı "product" modelinden al
+
+			// Bağlamı kontrol et
+			if (!oContext) {
 				console.error("Bağlam bulunamadı.");
+				return; // Bağlam yoksa çık
 			}
+
+			const oRouter = this.getOwnerComponent().getRouter(); // Router'ı al
+			const sPath = encodeURIComponent(oContext.getPath()); // Bağlam yolunu al
+			
+			oRouter.navTo("detail", { // Detay sayfasına yönlendirme
+				productPath: sPath // Ürün yolunu parametre olarak geç
+			});
+			console.log(`Navigating to detail page with path: ${sPath}`); // Konsola yönlendirme yolunu yazdır
 		},
 		clearFilters: function() {
 			const oTable = this.byId("productList");

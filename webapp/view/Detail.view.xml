@@ -10,7 +10,7 @@
 			<Bar>
 			<contentLeft>
 				<Button id="goback" press="onNavBack" icon="sap-icon://arrow-left"/>
-				<Text text="{product>/ProductName}" />	
+				<Text text="{products>ProductName}" />	
 			</contentLeft>
 				<contentRight>
 					<Button id="edit" text="Düzenle" press="handleEditPress" />

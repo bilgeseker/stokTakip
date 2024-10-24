@@ -21,18 +21,22 @@
 			columnsM="1"
 			singleContainerFullSize="false" >
 			<f:content>
-				<core:Title text="{product>ProductName}" />
-				<Image class="productImage detailImage sapUiMediumMarginBottom" src="{product>ImageUrl}"/>
+				<core:Title text="{products>ProductName}" />
+				<Image class="productImage detailImage sapUiMediumMarginBottom" src="{products>ImageUrl}"/>
 				<Label text="Ürün Kodu" />
-				<Text text="" />
-				<Label text="Birim Fiyatı" />
-				<Text text="{product>ExtendedPrice} TL" />
+				<Text text="{products>ProductCode}" />
 				<Label text="Miktar" />
-				<Text text="{product>Quantity}" />
-				<Label text="Kategori" />
-				<Text text="{product>Category}" />
+				<Text text="{products>Quantity}" />
+				<Label text="Birim Fiyatı" />
+				<Text text="{products>ExtendedPrice} TL" />
+				<Label text="Beden" />
+				<Text text="{products>SizeId}" />
+				<Label text="Renk" />
+				<Text text="{products>ColorId}" />
 				<Label text="Alt Kategori" />
-				<Text text="{product>SubCategory}" />
+				<Text text="{products>SubCategoryId}" />
+				<Label text="Kategori" />
+				<Text text="{products>CategoryId}" />
 			</f:content>
 		</f:SimpleForm>
 	</VBox>

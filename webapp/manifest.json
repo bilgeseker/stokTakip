@@ -8,15 +8,6 @@
 		"type": "application",
 		"applicationVersion": {
 			"version": "1.0.0"
-		},
-		"dataSources": {
-			"invoiceRemote": {
-				"uri": "V2/Northwind/Northwind.svc/",
-				"type": "OData",
-				"settings": {
-					"odataVersion": "2.0"
-				}
-			}
 		}
 	},
 	"sap.ui": {
@@ -51,10 +42,6 @@
 					],
 					"fallbackLocale": ""
 				}
-			},
-			"product": {
-				"type": "sap.ui.model.json.JSONModel",
-				"uri": "Products.json"
 			}
 		},
 		"rootView": {
@@ -92,7 +79,7 @@
 					"target": "home"
 				},
 				{
-					"pattern": "detail/{invoicePath}",
+					"pattern": "detail/{productPath}",
 					"name": "detail",
 					"target": "detail"
 				},

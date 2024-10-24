@@ -3,9 +3,11 @@
     "version": "1.0.0",
     "description": "The UI5 walkthrough application",
     "scripts": {
-        "start": "ui5 serve -o index.html"
+        "start": "concurrently \"ui5 serve -o index.html\" \"node app.js\"",
+        "dev": "nodemon app.js"
     },
     "devDependencies": {
+        "concurrently": "^9.0.1",
         "ui5-middleware-simpleproxy": "^3.3.0"
     },
     "main": "index.js",
