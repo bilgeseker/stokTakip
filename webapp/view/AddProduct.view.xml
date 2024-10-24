@@ -1,10 +1,53 @@
 <mvc:View
+	controllerName="ui5.walkthrough.controller.AddProduct"
 	xmlns:l="sap.ui.layout"
-	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
 	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
 	xmlns="sap.m">
-	<List
-		headerText="Input" >
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="SimpleFormToolbar"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			labelSpanXL="4"
+			labelSpanL="3"
+			labelSpanM="4"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="0"
+			emptySpanL="4"
+			emptySpanM="0"
+			emptySpanS="0"
+			columnsXL="2"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false"
+			ariaLabelledBy="Title1" >
+			<f:toolbar>
+				<Toolbar id="TB1">
+					<HBox class="sapUiSmallMarginTop">
+						<Button
+							text="Kaydet"
+							type="Emphasized"
+							icon="sap-icon://save"
+							press=".onSavePress" 
+							class="addProductSave"/> <!-- Controller'da tanımlanacak fonksiyon -->
+					</HBox>
+				</Toolbar>
+			</f:toolbar>
+			<f:content>
+				<Toolbar ariaLabelledBy="Title2">
+					<Title id="Title2" text="Office"/>
+					<ToolbarSpacer />
+					<Button icon="sap-icon://settings"/>
+				</Toolbar>
+				<Label text="Name" />
+				<Label text="Street/No." />
+				
+				<Label text="ZIP Code/City" />
+			
+			</f:content>
+		</f:SimpleForm>
 		
-	</List>
+	</VBox>
 </mvc:View>
