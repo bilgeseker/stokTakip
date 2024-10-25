@@ -106,7 +106,7 @@
 						autoResizable="true">
 						<m:Label text="Beden" />
 						<template>
-							<m:Label text="{products>SizeId}" wrapping="false"/>
+							<m:Label text="{path: 'products>SizeId', formatter: '.getSizeName'}" wrapping="false"/>
 						</template>
 					</Column>
 					<Column 
@@ -115,7 +115,7 @@
 						autoResizable="true">
 						<m:Label text="Renk" />
 						<template>
-							<m:Label text="{products>ColorId}" wrapping="false"/>
+							<m:Label text="{path: 'products>ColorId', formatter: '.getColorName'}" wrapping="false"/>
 						</template>
 					</Column>
 					<Column 
@@ -124,7 +124,7 @@
 						autoResizable="true">
 						<m:Label text="Alt Kategori" />
 						<template>
-							<m:Label text="{products>SubCategoryId}" wrapping="false"/>
+							<m:Label text="{path: 'products>SubCategoryId', formatter: '.getSubCategoryName'}" wrapping="false"/>
 						</template>
 					</Column>
 					<Column 
@@ -133,7 +133,7 @@
 						autoResizable="true">
 						<m:Label text="Ana Kategori" />
 						<template>
-							<m:Label text="{products>CategoryId}" wrapping="false" />
+							<m:Label text="{path: 'products>CategoryId', formatter: '.getCategoryName'}" wrapping="false" />
 						</template>
 					</Column>
                     <Column width="10rem"

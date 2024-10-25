@@ -130,8 +130,31 @@ sap.ui.define([
             const oColumn = this.byId("quantity");
             const bDescending = oColumn.getSortOrder() === "Ascending";
             oTable.sort(oColumn, bDescending ? "Descending" : "Ascending");
-        }
-		
+        },
+		getSizeName: function (sizeId) {
+			const sizesModel = this.getView().getModel("sizes");
+			const sizesData = sizesModel.getData(); 
+			const size = sizesData.find(size => size.SizeID === sizeId); 
+			return size ? size.SizeName : 'Bilinmiyor';
+		},
+		getColorName: function (colorId) {
+			const colorsModel = this.getView().getModel("colors");
+			const colorsData = colorsModel.getData(); 
+			const color = colorsData.find(color => color.ColorID === colorId);
+			return color ? color.ColorName : 'Bilinmiyor';
+		},
+		getSubCategoryName: function (subCategoryId) {
+			const subCategoriesModel = this.getView().getModel("subCategories"); 
+			const subCategoriesData = subCategoriesModel.getData(); 
+			const subCategory = subCategoriesData.find(subCategory => subCategory.SubCategoryID === subCategoryId); 
+			return subCategory ? subCategory.SubCategoryName : 'Bilinmiyor';
+		},
+		getCategoryName: function (categoryId) {
+			const categoriesModel = this.getView().getModel("categories");
+			const categoriesData = categoriesModel.getData(); 
+			const category = categoriesData.find(category => category.CategoryID === categoryId); 
+			return category ? category.CategoryName : 'Bilinmiyor'; 
+		}
 		
 	});
 });
