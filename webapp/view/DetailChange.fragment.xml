@@ -25,7 +25,7 @@
 				<Label text="Ürün Adı" />
 				<Input value="{products>ProductName}" id="updateProductName"/>
 				<Label text="Ürün Kodu" />
-				<Input value="{products>ProductCode}" id="updateProductCode" class="disabled"/>
+				<Input value="{products>ProductCode}" id="updateProductCode" editable="false"/>
 				<Label text="Miktar" />
 				<Input value="{products>Quantity}" type="Number" id="updateQuantity"/>
 				<Label text="Birim Fiyatı (TL)" />

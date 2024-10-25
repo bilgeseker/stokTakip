@@ -8,10 +8,9 @@
 		id="page">
 		<customHeader>
 			<Bar>
-			<contentLeft>
-				<Button id="goback" press="onNavBack" icon="sap-icon://arrow-left"/>
-				<Text text="{products>ProductName}" />	
-			</contentLeft>
+				<contentLeft>
+					<Button id="goback" press="onNavBack" icon="sap-icon://arrow-left"/>
+				</contentLeft>
 				<contentRight>
 					<Button id="edit" text="Düzenle" press="handleEditPress" />
 					<Button id="save" text="Kaydet" type="Emphasized" visible="false" press="handleSavePress" />

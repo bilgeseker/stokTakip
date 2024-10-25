@@ -70,13 +70,13 @@
 			"routes": [
 				{
 					"pattern": "",
-					"name": "login",
-					"target": "login"
-				},
-				{
-					"pattern": "home",
 					"name": "home",
 					"target": "home"
+				},
+				{
+					"pattern": "login",
+					"name": "login",
+					"target": "login"
 				},
 				{
 					"pattern": "detail/{productPath}",
@@ -87,6 +87,11 @@
 					"pattern": "addProduct",
 					"name": "addProduct",
 					"target": "addProduct"
+				},
+				{
+					"pattern": "addCategory",
+					"name": "addCategory",
+					"target": "addCategory"
 				}
 			],
 			"targets": {
@@ -105,6 +110,10 @@
 				"addProduct": {
 					"id": "addProduct",
 					"name": "AddProduct"
+				},
+				"addCategory": {
+					"id": "addCategory",
+					"name": "AddCategory"
 				}
 			}
 		}

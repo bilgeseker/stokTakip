@@ -46,7 +46,8 @@
 				<columns>
                     <Column
                         id="image"
-                        width="7rem">
+                        width="6rem"
+						autoResizable="true">
 						<m:Label text="Ürün Resmi" />
 						<template>
 							<m:Image class="productImage listImage" src="{products>ImageUrl}"/>
@@ -58,7 +59,8 @@
                         sortProperty="ProductName"
                         filterProperty="ProductName"
                         showFilterMenuEntry="true"
-                        showSortMenuEntry="true">
+                        showSortMenuEntry="true"
+						autoResizable="true">
 						<m:Label text="Ürün Adı" />
 						<template>
 							<m:Text text="{products>ProductName}" wrapping="false" />
@@ -68,65 +70,73 @@
                         width="9rem"
                         id="productId"
                         filterProperty=""
-                        sortProperty="">
+                        sortProperty=""
+						autoResizable="true">
 						<m:Label text="Ürün Kodu" />
 						<template>
-							<m:Text text="{products>ProductCode}"/>
+							<m:Text text="{products>ProductCode}" wrapping="false"/>
 						</template>
 					</Column>
 					<Column 
                         id="quantity"
                         width="6rem"
                         hAlign="End"
-                        sortProperty="Quantity">
+                        sortProperty="Quantity"
+						autoResizable="true">
 						<m:Label text="Miktar" />
 						<template>
-							<m:Label text="{products>Quantity}" />
+							<m:Label text="{products>Quantity}" wrapping="false"/>
 						</template>
 					</Column>
 					
 					<Column 
                         width="9rem"
                         id="price"
-                        sortProperty="ExtendedPrice">
+                        sortProperty="ExtendedPrice"
+						autoResizable="true">
 						<m:Label text="Fiyat" />
 						<template>
-							<u:Currency value="{products>ExtendedPrice}" currency="{view>/currency}"/>
+							<u:Currency value="{products>ExtendedPrice}" currency="{view>/currency}" />
 						</template>
 					</Column>
 					<Column 
                         width="10rem"
-                        id="size">
+                        id="size"
+						autoResizable="true">
 						<m:Label text="Beden" />
 						<template>
-							<m:Label text="{products>SizeId}" />
+							<m:Label text="{products>SizeId}" wrapping="false"/>
 						</template>
 					</Column>
 					<Column 
                         width="10rem"
-                        id="color">
+                        id="color"
+						autoResizable="true">
 						<m:Label text="Renk" />
 						<template>
-							<m:Label text="{products>ColorId}" />
+							<m:Label text="{products>ColorId}" wrapping="false"/>
 						</template>
 					</Column>
 					<Column 
                         width="10rem"
-                        id="subCategory">
+                        id="subCategory"
+						autoResizable="true">
 						<m:Label text="Alt Kategori" />
 						<template>
-							<m:Label text="{products>SubCategoryId}" />
+							<m:Label text="{products>SubCategoryId}" wrapping="false"/>
 						</template>
 					</Column>
 					<Column 
                         width="10rem"
-                        id="categoryHome">
+                        id="categoryHome"
+						autoResizable="true">
 						<m:Label text="Ana Kategori" />
 						<template>
-							<m:Label text="{products>CategoryId}" />
+							<m:Label text="{products>CategoryId}" wrapping="false" />
 						</template>
 					</Column>
-                    <Column width="10rem">
+                    <Column width="10rem"
+					autoResizable="true">
                         <m:Label text="Detayı Gör" />
                         <template>
                             <m:Button text="Detayı Gör" press=".onPress" />

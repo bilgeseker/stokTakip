@@ -3,16 +3,16 @@ const mysql = require('mysql');
 const cors = require('cors');
 const app = express();
 
-// CORS middleware'ini ekleyin (SAPUI5'in API'ye erişmesini sağlar)
+
 app.use(cors());
 app.use(express.json());
 
-// MySQL veritabanına bağlantı
+
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'crisscolfer1',  // MySQL şifrenizi buraya ekleyin
-  database: 'stock'  // Veritabanı adınızı buraya ekleyin
+  password: 'crisscolfer1', 
+  database: 'stock' 
 });
 
 connection.connect((err) => {
@@ -98,7 +98,7 @@ app.get('/subCategories', (req, res) => {
 });
 /* -------------- GET END -------------*/
 
-/* -------------- PUT START -------------*/
+/* -------------- POST START -------------*/
 app.post('/updateProduct', (req, res) => {
   const { ProductID, ProductName, ProductCode, Quantity, ExtendedPrice, CategoryId, SubCategoryId, SizeId, ColorId, ImageUrl } = req.body;
 console.log(req.body);
@@ -129,7 +129,57 @@ console.log(req.body);
   });
 });
 
-/* -------------- PUT END -------------*/
+app.post('/addProduct', (req, res) => {
+  const { ProductName, ProductCode, Quantity, ExtendedPrice, CategoryId, SubCategoryId, SizeId, ColorId, ImageUrl } = req.body;
+
+  const sql = `INSERT INTO Products (ProductName, ProductCode, Quantity, ExtendedPrice, CategoryId, SubCategoryId, SizeId, ColorId, ImageUrl) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  
+  connection.query(sql, [ProductName, ProductCode, Quantity, ExtendedPrice, CategoryId, SubCategoryId, SizeId, ColorId, ImageUrl], (error, results) => {
+      if (error) {
+          console.error('Ekleme hatası:', error);
+          return res.status(500).json({ error: "Ürün ekleme sırasında hata oluştu" });
+      }
+
+      const newProductId = results.insertId;
+
+      const query = `SELECT * FROM Products WHERE ProductID = ?`;
+      connection.query(query, [newProductId], (error, results) => {
+          if (error) {
+              console.error('Ürün bilgisi alma hatası:', error);
+              return res.status(500).json({ error: "Yeni ürün bilgisi alınamadı" });
+          }
+          res.json({ message: "Ürün başarıyla eklendi", newProduct: results[0] });
+      });
+  });
+});
+app.post('/addCategory', (req, res) => {
+  const { CategoryName} = req.body;
+
+  const sql = `INSERT INTO Categories (CategoryName) VALUES (?)`;
+  
+  connection.query(sql, [CategoryName], (error, results) => {
+    if (error) {
+      console.error('Ekleme hatası:', error);
+      return res.status(500).json({ error: "Kategori ekleme sırasında hata oluştu" });
+    }
+    res.json({ message: "Kategori başarıyla eklendi", newProduct: results[0] });
+  });
+});
+app.post('/addSubCategory', (req, res) => {
+  const { SubCategoryName, CategoryId} = req.body;
+
+  const sql = `INSERT INTO SubCategories (SubCategoryName, CategoryId) VALUES (?, ?)`;
+  
+  connection.query(sql, [SubCategoryName, CategoryId], (error, results) => {
+    if (error) {
+      console.error('Ekleme hatası:', error);
+      return res.status(500).json({ error: "Alt kategori ekleme sırasında hata oluştu" });
+    }
+    res.json({ message: "Alt kategori başarıyla eklendi", newProduct: results[0] });
+  });
+});
+
+/* -------------- POST END -------------*/
 const port = 3000;
 app.listen(port, () => {
     console.log(`Server ${port} portunda dinleniyor.`);

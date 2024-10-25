@@ -10,85 +10,54 @@ sap.ui.define([
 
 	return Controller.extend("ui5.walkthrough.controller.Home", {
 		onInit() {
-			
-			// const oJSONModel = this.initSampleDataModel();
-			// this.getView().setModel(oJSONModel);
-			
-			var isLoggedIn = localStorage.getItem("isLoggedIn");
-			if (!isLoggedIn) {
-				this.getOwnerComponent().getRouter().navTo("login");
+			var isLoggedIn = sessionStorage.getItem("isLoggedIn");
+			console.log("isLoggedIn:", isLoggedIn); 
+
+			if (isLoggedIn === "true") {
+				console.log("Kullanıcı giriş yaptı, yönlendirme yapılmayacak.");
+			} else {
+				this.getOwnerComponent().getRouter().navTo("login"); 
 			}
 
 			var oModel = new JSONModel();
 
-            // Veriyi sunucudan çek
             oModel.loadData("http://localhost:3000/products");
 
-            // View'e model olarak set et
             this.getView().setModel(oModel, "products");
+
 
 			const oViewModel = new JSONModel({
 				currency: "TL"
 			});
 			this.getView().setModel(oViewModel, "view");
 		},
-		// initSampleDataModel: function() {
-		// 	const oModel = new JSONModel();
-
-		// 	jQuery.ajax(sap.ui.require.toUrl("Products.json"), {
-		// 		dataType: "json",
-		// 		success: function(oData) {
-		// 			const aTemp2 = [];
-		// 			const aCategoryData = [];
-		// 			for (let i = 0; i < oData.Products.length; i++) {
-		// 				const oProduct = oData.Products[i];
-		// 				if (oProduct.Category && aTemp2.indexOf(oProduct.Category) < 0) {
-		// 					aTemp2.push(oProduct.Category);
-		// 					aCategoryData.push({ProductName: oProduct.Category});
-		// 				}
-		// 			}
-
-		// 			oData.Categories = aCategoryData;
-
-		// 			oModel.setData(oData);
-		// 		},
-		// 		error: function() {
-		// 			Log.error("failed to load json");
-		// 		}
-		// 	});
-
-		// 	return oModel;
-		// },
 		onFilterProducts(oEvent) {
-			// build filter array
-			const aFilter = []; //holds filter object. If there are multiple criteria to filter by, each filter will be added to this array.
+			const aFilter = []; 
 			const sQuery = oEvent.getParameter("query");
 			if (sQuery) {
 				aFilter.push(new Filter("ProductName", FilterOperator.Contains, sQuery));
 			}
 
-			// filter binding
 			const oList = this.byId("productList");
 			const oBinding = oList.getBinding("rows");
 			oBinding.filter(aFilter);
 		},
 		onPress: function(oEvent) {
-			const oButton = oEvent.getSource();  // Tıklanan butonu al
-			const oContext = oButton.getBindingContext("products"); // Bağlamı "product" modelinden al
+			const oButton = oEvent.getSource(); 
+			const oContext = oButton.getBindingContext("products"); 
 
-			// Bağlamı kontrol et
 			if (!oContext) {
 				console.error("Bağlam bulunamadı.");
-				return; // Bağlam yoksa çık
+				return; 
 			}
 
-			const oRouter = this.getOwnerComponent().getRouter(); // Router'ı al
-			const sPath = encodeURIComponent(oContext.getPath()); // Bağlam yolunu al
+			const oRouter = this.getOwnerComponent().getRouter();
+			const sPath = encodeURIComponent(oContext.getPath());
 			
-			oRouter.navTo("detail", { // Detay sayfasına yönlendirme
-				productPath: sPath // Ürün yolunu parametre olarak geç
+			oRouter.navTo("detail", {
+				productPath: sPath 
 			});
-			console.log(`Navigating to detail page with path: ${sPath}`); // Konsola yönlendirme yolunu yazdır
+			console.log(`Navigating to detail page with path: ${sPath}`);
 		},
 		clearFilters: function() {
 			const oTable = this.byId("productList");

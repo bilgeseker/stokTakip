@@ -1,15 +1,15 @@
 .productImage {
-   object-fit: cover; /* Resmin orantısını koruyarak kesmesini sağlar */
+   object-fit: cover;
    display: block;
-   margin: 0 auto; /* Resmi ortalar */
+   margin: 0 auto; 
 }
 .listImage{
-   width: 50px;   /* Sabit genişlik */
-   height: 50px;  /* Sabit yükseklik */
+   width: 50px;  
+   height: 50px;  
 }
 .detailImage{
-   width: 300px;   /* Sabit genişlik */
-   height: 300px;  /* Sabit yükseklik */
+   width: 300px;  
+   height: 300px;  
 }
 
 .loginPage {
@@ -18,3 +18,7 @@
    width: 100%;
    text-align: center;
 }
+.sapMListTblCell {
+   white-space: nowrap;
+}
+

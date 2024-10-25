@@ -10,11 +10,14 @@ sap.ui.define([
 	return Controller.extend("ui5.walkthrough.controller.Detail", {
 
 		onInit() {
-			var isLoggedIn = localStorage.getItem("isLoggedIn");
-			if (!isLoggedIn) {
-				this.getOwnerComponent().getRouter().navTo("login");
-			}
+			var isLoggedIn = sessionStorage.getItem("isLoggedIn");
+			console.log("isLoggedIn:", isLoggedIn);
 
+			if (isLoggedIn === "true") {
+				console.log("Kullanıcı giriş yaptı, yönlendirme yapılmayacak.");
+			} else {
+				this.getOwnerComponent().getRouter().navTo("login"); 
+			}
 			const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
     		oRouter.getRoute("detail").attachPatternMatched(this._onObjectMatched, this);
 
@@ -33,7 +36,6 @@ sap.ui.define([
 		},				
 		
 		handleEditPress() {
-            // Clone the current product data
 			const oModel = this.getView().getModel("products");
 			const sPath = this.getView().getBindingContext("products").getPath();
 			const oProductData = oModel.getProperty(sPath);
@@ -53,7 +55,7 @@ sap.ui.define([
 			const sPath = this.getView().getBindingContext("products").getPath();
 
 			if (this._oProducts) {
-				oModel.setProperty(sPath, this._oProducts); // Restore cloned product data
+				oModel.setProperty(sPath, this._oProducts); 
 			} else {
 				console.error("Geri yüklemek için geçerli veriler yok.");
 			}
@@ -67,15 +69,15 @@ sap.ui.define([
 			const sPath = this.getView().getBindingContext("products").getPath();
 		
 			const updatedData = {
-				ProductID: oModel.getProperty(sPath + "/ProductID"), // Güncelleme için ProductID
+				ProductID: oModel.getProperty(sPath + "/ProductID"), 
 				ProductName: this.getView().byId("updateProductName").getValue(),
 				ProductCode: this.getView().byId("updateProductCode").getValue(),
 				Quantity: parseInt(this.getView().byId("updateQuantity").getValue(), 10),
 				ExtendedPrice: parseFloat(this.getView().byId("updateExtendedPrice").getValue()),
-				SizeId: this.getView().byId("updateSize").getSelectedKey(), // Seçilen SizeId
-				ColorId: this.getView().byId("updateColor").getSelectedKey(), // Seçilen ColorId
-				CategoryId: this.getView().byId("updateCategory").getSelectedKey(), // Seçilen CategoryId
-				SubCategoryId: this.getView().byId("updateSubcategory").getSelectedKey(), // Seçilen SubCategoryId
+				SizeId: this.getView().byId("updateSize").getSelectedKey(),
+				ColorId: this.getView().byId("updateColor").getSelectedKey(),
+				CategoryId: this.getView().byId("updateCategory").getSelectedKey(), 
+				SubCategoryId: this.getView().byId("updateSubcategory").getSelectedKey(), 
 				ImageUrl: null
 			};
 		
@@ -115,12 +117,10 @@ sap.ui.define([
 		_toggleButtonsAndView : function (bEdit) {
 			var oView = this.getView();
 
-			// Show the appropriate action buttons
 			oView.byId("edit").setVisible(!bEdit);
 			oView.byId("save").setVisible(bEdit);
 			oView.byId("cancel").setVisible(bEdit);
 
-			// Set the right form type
 			this._showFormFragment(bEdit ? "DetailChange" : "DetailDisplay");
 		},
 		_getFormFragment: function (sFragmentName) {
@@ -143,10 +143,9 @@ sap.ui.define([
 			oPage.removeAllContent();
 			
 			this._getFormFragment(sFragmentName).then(function (oVBox) {
-				// Fragmente ait binding context'in doğru ayarlandığından emin olun
-				oVBox.setModel(this.getView().getModel("products"), "products"); // Modele bağlama
+				oVBox.setModel(this.getView().getModel("products"), "products"); 
 				oPage.insertContent(oVBox);
-			}.bind(this)); // Bağlamı korumak için bind kullanıyoruz
+			}.bind(this));
 		},		
 
 		onNavBack() {

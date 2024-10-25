@@ -7,6 +7,14 @@ sap.ui.define([
 
    return Controller.extend("ui5.walkthrough.controller.App", {
       onInit() {
+         var isLoggedIn = sessionStorage.getItem("isLoggedIn");
+			console.log("isLoggedIn:", isLoggedIn); 
+
+			if (isLoggedIn === "true") {
+				console.log("Kullanıcı giriş yaptı, yönlendirme yapılmayacak.");
+			} else {
+				this.getOwnerComponent().getRouter().navTo("login"); 
+			}
          this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
 
          this.getOwnerComponent().getRouter().attachRouteMatched(this.onRouteMatched, this);
@@ -41,6 +49,8 @@ sap.ui.define([
             oRouter.navTo("home");
          } else if (sKey === "addProduct") {
             oRouter.navTo("addProduct");
+         } else if (sKey === "addCategory") {
+            oRouter.navTo("addCategory");
          }
       },
       onLogoutButtonPress: function (oEvent){

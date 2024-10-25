@@ -10,19 +10,18 @@
 			editable="true"
 			layout="ResponsiveGridLayout"
 			labelSpanXL="4"
-			labelSpanL="3"
-			labelSpanM="4"
+			labelSpanL="4"
+			labelSpanM="12"
 			labelSpanS="12"
 			adjustLabelSpan="false"
 			emptySpanXL="0"
-			emptySpanL="4"
+			emptySpanL="0"
 			emptySpanM="0"
 			emptySpanS="0"
 			columnsXL="2"
-			columnsL="1"
+			columnsL="2"
 			columnsM="1"
-			singleContainerFullSize="false"
-			ariaLabelledBy="Title1" >
+			singleContainerFullSize="false" >
 			<f:toolbar>
 				<Toolbar id="TB1">
 					<HBox class="sapUiSmallMarginTop">
@@ -30,24 +29,46 @@
 							text="Kaydet"
 							type="Emphasized"
 							icon="sap-icon://save"
-							press=".onSavePress" 
-							class="addProductSave"/> <!-- Controller'da tanımlanacak fonksiyon -->
+							press="onSavePress" />
 					</HBox>
 				</Toolbar>
 			</f:toolbar>
 			<f:content>
 				<Toolbar ariaLabelledBy="Title2">
-					<Title id="Title2" text="Office"/>
-					<ToolbarSpacer />
-					<Button icon="sap-icon://settings"/>
+					<Title id="Title2" text="Ürün Ekle"/>
+					<Button icon="sap-icon://add-product" />
 				</Toolbar>
-				<Label text="Name" />
-				<Label text="Street/No." />
-				
-				<Label text="ZIP Code/City" />
-			
+				<Label text="Ürün Adı" />
+				<Input value="" id="addProductName"/>
+				<Label text="Miktar" />
+				<Input value="" type="Number" id="addQuantity"/>
+				<Label text="Birim Fiyatı (TL)" />
+				<Input value="" type="Number" id="addExtendedPrice"/>
+				<Label text="Beden" />
+				<Select id="addSize" items="{sizes>/}">
+					<items>
+						<core:Item text="{sizes>SizeName}" key="{sizes>SizeID}"/>
+					</items>
+				</Select>
+				<Label text="Renk" />
+				<Select id="addColor" items="{colors>/}">
+					<items>
+						<core:Item text="{colors>ColorName}" key="{colors>ColorID}"/>
+					</items>
+				</Select>
+				<Label text="Kategori" />
+				<Select id="addCategory" items="{categories>/}">
+					<items>
+						<core:Item text="{categories>CategoryName}" key="{categories>CategoryID}"/>
+					</items>
+				</Select>
+				<Label text="Alt Kategori" />
+				<Select id="addSubcategory" items="{subCategories>/}">
+					<items>
+						<core:Item text="{subCategories>SubCategoryName}" key="{subCategories>SubCategoryID}"/>
+					</items>
+				</Select>
 			</f:content>
 		</f:SimpleForm>
-		
 	</VBox>
 </mvc:View>

@@ -36,7 +36,6 @@ sap.ui.define([
          UIComponent.prototype.init.apply(this, arguments);
 
          this.getRouter().initialize();
-         this.getRouter().navTo("login", {}, true); 
       },
       getContentDensityClass() {
 			return Device.support.touch ? "sapUiSizeCozy" : "sapUiSizeCompact";

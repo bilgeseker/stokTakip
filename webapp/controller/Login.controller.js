@@ -10,14 +10,15 @@ sap.ui.define([
             var sPassword = this.byId("pwd").getValue();
         
             if (sUsername === "admin" && sPassword === "password123") {
-                localStorage.setItem("isLoggedIn", true);
+                console.log("Giriş yapıldı, isLoggedIn kaydediliyor.");
+                sessionStorage.setItem("isLoggedIn", true);
+                console.log(sessionStorage);
         
                 this.getOwnerComponent().getRouter().navTo("home");
             } else {
                 sap.m.MessageToast.show("Kullanıcı adı veya şifre hatalı!");
             }
         }
-        
 
 	});
 });
