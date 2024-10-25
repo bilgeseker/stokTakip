@@ -70,13 +70,13 @@
 			"routes": [
 				{
 					"pattern": "",
-					"name": "home",
-					"target": "home"
-				},
-				{
-					"pattern": "login",
 					"name": "login",
 					"target": "login"
+				},
+				{
+					"pattern": "home",
+					"name": "home",
+					"target": "home"
 				},
 				{
 					"pattern": "detail/{productPath}",
