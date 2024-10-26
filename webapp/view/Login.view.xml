@@ -10,17 +10,18 @@
 			<VBox 
 				justifyContent="Center" 
 				alignItems="Center" 
-				fitContainer="true">
+				fitContainer="true" 
+				width="100%">
 				
-				<form:SimpleForm class="loginForm"  layout="ResponsiveGridLayout">
+				<form:SimpleForm class="loginForm"  layout="ResponsiveGridLayout" width="100%" >
 					<form:content>
-						<Title id="__xmlview0--title" text="Yönetici Girişi"/>
+						<Title id="__xmlview0--title" text="Yönetici Girişi" class="sapUiSmallMarginTop"/>
 						<Label class="label" text="Kullanıcı Adı"/>
-						<Input class="input loginInput" id="user" placeholder="Kullanıcı adını gir."/>
+						<Input class="input" id="user"/>
 						<Label text="Şifre"/>
-						<Input class="pwdClass loginInput" id="pwd" type="Password" placeholder="Şifre gir."/>
+						<Input class="pwdClass" id="pwd" type="Password"/>
 					</form:content>
-					<Button icon="sap-icon://visits" id="btn" text="Giriş Yap" type="Accept" press="onBtnClick" width="12rem"/>
+					<Button icon="sap-icon://visits" id="btn" text="Giriş Yap" press="onBtnClick" width="9rem" class="sapUiSmallMarginTop sapUiSmallMarginBottom"/>
 				</form:SimpleForm>
 				
 			</VBox>

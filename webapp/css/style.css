@@ -1,3 +1,8 @@
+
+.sapTntToolPage{
+   padding: 0 !important;
+   border-radius: 0px !important;
+}
 .productImage {
    object-fit: cover;
    display: block;
@@ -11,14 +16,84 @@
    width: 300px;  
    height: 300px;  
 }
-
+/* ----- Login ----- */
+.sapMTitleStyleAuto{
+   font-size: 20px !important;
+   color:#2d355f;
+}
 .loginPage {
-   background: #eaecee;
+   background: linear-gradient(10deg, rgba(235,229,236,1) 0%, rgba(236,231,240,1) 3%, rgba(255,255,255,1) 100%);
    height: 100vh;
    width: 100%;
    text-align: center;
 }
-.sapMListTblCell {
-   white-space: nowrap;
+.sapUiFormResGrid.sapUiFormBackgrTranslucent{
+   border-radius: 1rem;
+   box-shadow: 0px 0px 3px -1px rgba(181,151,189,1);
+}
+.loginForm label{
+   font-size: 15px;
+   color: #3b4267;
+}
+.sapUiSizeCompact .sapMInputBaseContentWrapper{
+   box-shadow: 0 0 10px 1px rgba(85, 107, 129, 0.25);
+   height: 2.1rem;
+}
+.sapMInputBaseContentWrapper{
+   background: none !important;
+}
+.sapMBtnInner{
+   border: none !important;
+   background-color: #6c7ee1;
+   color: rgb(248, 243, 243);
+}
+.sapMBtn:hover > .sapMBtnHoverable
+{
+   border: none;
+   background-color: #838fd1;
+}
+.sapMBtnIcon{
+   color: rgb(248, 243, 243);
+}
+.sapMBtn:hover:not(.sapMBtnDisabled):not(.sapMSBActive) > .sapMBtnHoverable:not(.sapMBtnDisabled):not(.sapMBtnActive):not(.sapMToggleBtnPressed):not(.sapMBtnTransparent).sapMBtnDefault .sapUiIcon,
+.sapMBtn:hover:not(.sapMBtnDisabled):not(.sapMSBActive) > .sapMBtnHoverable:not(.sapMBtnDisabled):not(.sapMBtnActive):not(.sapMToggleBtnPressed):not(.sapMBtnTransparent).sapMBtnDefault{
+   color: rgb(248, 243, 243);
+}
+.sapUiSizeCompact .sapMBtnIcon,
+.sapUiSizeCompact .sapMBtnContent{
+   line-height: 2.5rem;
+}
+.sapUiSizeCompact .sapMBtnInner{
+   height: 2.5rem;
 }
 
+/* ----- Login ----- */
+.sapMListTblCell {
+   white-space: nowrap !important;
+}
+.sapUiTableCell{
+   border-right: none !important;
+   border-bottom:0.09rem solid #e5e5e5 !important;
+   white-space: nowrap !important;
+}
+.sapMFlexBoxAlignContentStretch{
+   margin-bottom: 20px;
+}
+.sapUiSizeCompact .sapMSFF{
+   height: 2.5rem;
+   border-radius: 10px;
+   background: none;
+}
+.sapUiSizeCompact .sapMSFB{
+   line-height: 2.5rem;
+}
+.sapUiSizeCompact .sapMTB{
+   height: 4.5rem;
+   padding: 0 1rem;
+}
+.sapUiTableCnt{
+   padding: 0 0.5rem;
+}
+.sapUiSizeCompact .sapMBtn{
+   height: 2.75rem !important;
+}

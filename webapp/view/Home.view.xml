@@ -36,7 +36,7 @@
                 showColumnVisibilityMenu="true"
                 enableColumnFreeze="true"
                 enableCellFilter="true"
-                >
+                alternateRowColors="true">
 				<extension>
                     <m:OverflowToolbar style="Clear">
                         <m:Title id="title" text="Ürünler"/>
@@ -47,7 +47,7 @@
 				<columns>
                     <Column
                         id="image"
-                        width="6rem"
+						resizable="true"
 						autoResizable="true">
 						<m:Label text="Ürün Resmi" />
 						<template>
@@ -56,11 +56,11 @@
 					</Column>
 					<Column
                         id="name"
-                        width="11rem"
                         sortProperty="ProductName"
                         filterProperty="ProductName"
                         showFilterMenuEntry="true"
                         showSortMenuEntry="true"
+						resizable="true"
 						autoResizable="true">
 						<m:Label text="Ürün Adı" />
 						<template>
@@ -68,9 +68,9 @@
 						</template>
 					</Column>
 					<Column 
-                        width="9rem"
                         id="productId"
                         filterProperty=""
+						resizable="true"
                         sortProperty=""
 						autoResizable="true">
 						<m:Label text="Ürün Kodu" />
@@ -80,8 +80,8 @@
 					</Column>
 					<Column 
                         id="quantity"
-                        width="6rem"
                         hAlign="End"
+						resizable="true"
                         sortProperty="Quantity"
 						autoResizable="true">
 						<m:Label text="Miktar" />
@@ -90,9 +90,9 @@
 						</template>
 					</Column>
 					
-					<Column 
-                        width="9rem"
+					<Column
                         id="price"
+						resizable="true"
                         sortProperty="ExtendedPrice"
 						autoResizable="true">
 						<m:Label text="Fiyat" />
@@ -101,8 +101,8 @@
 						</template>
 					</Column>
 					<Column 
-                        width="10rem"
                         id="size"
+						resizable="true"
 						autoResizable="true">
 						<m:Label text="Beden" />
 						<template>
@@ -110,8 +110,8 @@
 						</template>
 					</Column>
 					<Column 
-                        width="10rem"
                         id="color"
+						resizable="true"
 						autoResizable="true">
 						<m:Label text="Renk" />
 						<template>
@@ -119,8 +119,8 @@
 						</template>
 					</Column>
 					<Column 
-                        width="10rem"
                         id="subCategory"
+						resizable="true"
 						autoResizable="true">
 						<m:Label text="Alt Kategori" />
 						<template>
@@ -128,19 +128,20 @@
 						</template>
 					</Column>
 					<Column 
-                        width="10rem"
                         id="categoryHome"
+						resizable="true"
 						autoResizable="true">
 						<m:Label text="Ana Kategori" />
 						<template>
 							<m:Label text="{path: 'products>CategoryId', formatter: '.getCategoryName'}" wrapping="false" />
 						</template>
 					</Column>
-                    <Column width="10rem"
+                    <Column 
+					resizable="true"
 					autoResizable="true">
                         <m:Label text="Detayı Gör" />
                         <template>
-                            <m:Button text="Detayı Gör" press=".onPress" />
+                            <m:Button text="Detayı Gör" press=".onPress" id="detailButton"/>
                         </template>
                     </Column>
 				</columns>

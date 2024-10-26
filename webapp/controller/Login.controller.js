@@ -4,6 +4,9 @@ sap.ui.define([
 	"use strict";
 
 	return Controller.extend("ui5.walkthrough.controller.Login", {
+        onInit: function(){
+            this.byId("user").addStyleClass("loginInput");
+        },
 		
 		onBtnClick: function () {
             var sUsername = this.byId("user").getValue();
