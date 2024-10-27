@@ -64,6 +64,8 @@ sap.ui.define([
          var sNewTheme = (sCurrentTheme === "sap_horizon") ? "sap_horizon_dark" : "sap_horizon";
          
          sap.ui.getCore().applyTheme(sNewTheme);
+         const body = document.body;
+         body.classList.toggle("dark-theme");
       }
       
    });

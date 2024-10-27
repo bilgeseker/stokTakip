@@ -27,7 +27,7 @@
 					<HBox class="sapUiSmallMarginTop">
 						<Button
 							text="Kaydet"
-							type="Emphasized"
+							id="saveProduct"
 							icon="sap-icon://save"
 							press="onSavePress" />
 					</HBox>

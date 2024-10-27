@@ -1,7 +1,7 @@
 
 .sapTntToolPage{
    padding: 0 !important;
-   border-radius: 0px !important;
+   border-radius: 0 !important;
 }
 .productImage {
    object-fit: cover;
@@ -90,10 +90,52 @@
 .sapUiSizeCompact .sapMTB{
    height: 4.5rem;
    padding: 0 1rem;
+   border-top-left-radius: 10px;
+   border-top-right-radius: 10px;
 }
 .sapUiTableCnt{
    padding: 0 0.5rem;
 }
 .sapUiSizeCompact .sapMBtn{
    height: 2.75rem !important;
+}
+.sapUiFormResGrid.sapUiFormToolbar > div:first-child{
+   height: 4rem !important;
+}
+#container-walkthrough---addProduct--saveProduct-inner{
+   background-color: #6c7ee1 !important;
+   color: white;
+
+}
+#container-walkthrough---addProduct--saveProduct-img{
+   color: white;
+}
+#container-walkthrough---addProduct--addProductName-content,
+#container-walkthrough---addProduct--addQuantity-content,
+#container-walkthrough---addProduct--addExtendedPrice-content,
+#container-walkthrough---detail--updateProductCode-content,
+#container-walkthrough---detail--updateQuantity-content,
+#container-walkthrough---detail--updateExtendedPrice-content
+{
+   height: 1.7rem;
+}
+#container-walkthrough---detail--save-inner{
+   background-color: #6c7ee1 !important;
+   color: rgb(248, 243, 243) !important;
+   height: 2.4rem;
+   line-height: 3rem;
+}
+#container-walkthrough---detail--goback-img,
+#container-walkthrough---detail--edit-content,
+#container-walkthrough---detail--cancel-BDI-content{
+   color: #6c7ee1;
+   line-height: 3rem;
+}
+#__bar0{
+   height: 3rem;
+}
+/* ------ dark theme ------- */
+
+.dark-theme .sapMTitleStyleAuto{
+   color: #eaecee;
 }
