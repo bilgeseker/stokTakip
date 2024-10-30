@@ -1,0 +1,151 @@
+<core:FragmentDefinition
+	xmlns:m="sap.m"
+    xmlns="sap.ui.table"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<m:VBox class="sapUiSmallMargin">
+		<m:HBox justifyContent="End" class="searchAndButton">
+                <m:SearchField
+                    id="searchFieldList"
+                    placeholder="Ürün Ara"
+                    search=".onFilterProducts"
+                    width="100%"/>
+                    
+                <m:Button 
+                    text="Ürünü Sil" 
+                    type="Negative" 
+                    icon="sap-icon://delete"
+                    class="sapUiMediumMarginBegin"
+					id="deleteButtonList"
+					press="onDelete">
+                </m:Button>
+				<m:Button 
+                    text="Ürün Ekle"
+                    icon="sap-icon://add"
+                    class="sapUiMediumMarginBegin"
+					id="addButtonList"
+					press="onAdd">
+                </m:Button>
+            </m:HBox>
+			<Table
+                id="productFragmentList"
+				rows="{products>/}"
+				selectionMode="MultiToggle"
+				ariaLabelledBy="title"
+                showColumnVisibilityMenu="true"
+                enableColumnFreeze="true"
+                enableCellFilter="true"
+                alternateRowColors="true">
+				<extension>
+                    <m:OverflowToolbar style="Clear">
+                        <m:Title id="titleList" text="Ürünler"/>
+                        <m:ToolbarSpacer/>
+                        <m:Button id="deleteProductButtonList" icon="sap-icon://clear-filter" type="Negative" press=".clearFilters" tooltip="{i18n>clearFilterText}"/>
+						<m:Button icon="sap-icon://excel-attachment" press="onExport" tooltip="{i18n>excelText}"/>
+                    </m:OverflowToolbar>
+                </extension>
+				<columns>
+                    <Column
+                        id="imageList"
+						resizable="true"
+						autoResizable="true">
+						<m:Label text="Ürün Resmi" />
+						<template>
+							<m:Image class="productImage listImage" src="{products>ImageUrl}"/>
+						</template>
+					</Column>
+					<Column
+                        id="nameList"
+                        sortProperty="ProductName"
+                        filterProperty="ProductName"
+                        showFilterMenuEntry="true"
+                        showSortMenuEntry="true"
+						resizable="true"
+						autoResizable="true">
+						<m:Label text="Ürün Adı" />
+						<template>
+							<m:Text text="{products>ProductName}" wrapping="false" />
+						</template>
+					</Column>
+					<Column 
+                        id="productIdList"
+                        filterProperty=""
+						resizable="true"
+                        sortProperty=""
+						autoResizable="true">
+						<m:Label text="Ürün Kodu" />
+						<template>
+							<m:Text text="{products>ProductCode}" wrapping="false"/>
+						</template>
+					</Column>
+					<Column 
+                        id="quantityList"
+                        hAlign="End"
+						resizable="true"
+                        sortProperty="Quantity"
+						autoResizable="true">
+						<m:Label text="Miktar" />
+						<template>
+							<m:Label text="{products>Quantity}" wrapping="false"/>
+						</template>
+					</Column>
+					
+					<Column
+                        id="priceList"
+						resizable="true"
+                        sortProperty="ExtendedPrice"
+						autoResizable="true">
+						<m:Label text="Fiyat (TL)" />
+						<template>
+							<m:Label text="{products>ExtendedPrice}"/>
+						</template>
+					</Column>
+					<Column 
+                        id="sizeList"
+						resizable="true"
+						autoResizable="true">
+						<m:Label text="Beden" />
+						<template>
+							<m:Label text="{products>SizeId}" wrapping="false"/>
+						</template>
+					</Column>
+					<Column 
+                        id="colorList"
+						resizable="true"
+						autoResizable="true">
+						<m:Label text="Renk" />
+						<template>
+							<m:Label text="{products>ColorId}" wrapping="false"/>
+						</template>
+					</Column>
+					<Column 
+                        id="subCategoryList"
+						resizable="true"
+						autoResizable="true">
+						<m:Label text="Alt Kategori" />
+						<template>
+							<m:Label text="{products>SubCategoryId}" wrapping="false"/>
+						</template>
+					</Column>
+					<Column 
+                        id="categoryHomeList"
+						resizable="true"
+						autoResizable="true">
+						<m:Label text="Ana Kategori" />
+						<template>
+							<m:Label text="{products>CategoryId}" wrapping="false" />
+						</template>
+					</Column>
+                    <Column 
+					resizable="true"
+					autoResizable="true">
+                        <m:Label text="Detayı Gör" />
+                        <template>
+                            <m:Button text="Detayı Gör" press=".onPress" id="detailButtonList"/>
+                        </template>
+                    </Column>
+				</columns>
+			</Table>
+	</m:VBox>
+</core:FragmentDefinition>

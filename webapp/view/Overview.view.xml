@@ -1,0 +1,11 @@
+<mvc:View
+    controllerName="ui5.walkthrough.controller.Overview"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:table="sap.ui.table">
+    <Page title="Overview" id="contentArea" >
+        <content>
+            <VBox />
+        </content>
+    </Page>
+</mvc:View>

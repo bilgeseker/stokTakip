@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
+    <Dialog id="addProductDialog" title="Add Product" afterClose="onDialogClose">
+        <VBox class="sapUiSmallMargin">
+            <Input id="productName" placeholder="Product Name" />
+            <Input id="productDescription" placeholder="Description" />
+        </VBox>
+        <beginButton>
+            <Button text="Add" press="onAddProduct" />
+        </beginButton>
+        <endButton>
+            <Button text="Cancel" press="onDialogClose" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

@@ -4,16 +4,19 @@ const mysql = require('mysql');
 const cors = require('cors');
 const app = express();
 app.use(express.static('webapp'));
+const fileUpload = require('express-fileupload');
+const path = require('path');
 
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload());
 
 
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '**', 
+  password: 'crisscolfer1', 
   database: 'stock' 
 });
 
@@ -197,6 +200,29 @@ app.delete('/deleteProduct/:id', (req, res) => {
   });
 });
 /* -------------- DELETE END -------------*/
+
+app.post('/upload', (req, res) => {
+  if (!req.files || Object.keys(req.files).length === 0) {
+      return res.status(400).send('Hiçbir dosya seçilmedi.');
+  }
+
+  const sampleFile = req.files.myFileUpload; // FileUploader'dan gelen dosya
+  const uploadPath = path.join(__dirname, 'upload', sampleFile.name);
+  
+  sampleFile.mv(uploadPath, (err) => {
+      if (err) {
+          console.error('Dosya kaydedilirken hata:', err);
+          return res.status(500).send('Yükleme sırasında hata oluştu.');
+      }
+
+      // Doğru URL'yi oluşturun
+      const imageUrl = `${req.protocol}://${req.get('host')}/upload/${sampleFile.name}`;
+      console.log('Yüklenen resmin URL\'si:', imageUrl);
+      
+      res.json({ ImageUrl: imageUrl }); // JSON olarak doğru URL ile döndürün
+  });
+});
+
 const port = 3000;
 app.listen(port, () => {
     console.log(`Server ${port} portunda dinleniyor.`);

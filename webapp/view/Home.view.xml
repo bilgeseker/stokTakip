@@ -20,12 +20,19 @@
                     width="100%"/>
                     
                 <m:Button 
-                    text="Ürünü sil" 
+                    text="Ürünü Sil" 
                     type="Negative" 
                     icon="sap-icon://delete"
                     class="sapUiMediumMarginBegin"
 					id="deleteButton"
 					press="onDelete">
+                </m:Button>
+				<m:Button 
+                    text="Ürün Ekle"
+                    icon="sap-icon://add"
+                    class="sapUiMediumMarginBegin"
+					id="addButton"
+					press="onAdd">
                 </m:Button>
             </m:HBox>
 			<Table
@@ -42,6 +49,7 @@
                         <m:Title id="title" text="Ürünler"/>
                         <m:ToolbarSpacer/>
                         <m:Button id="deleteProductButton" icon="sap-icon://clear-filter" type="Negative" press=".clearFilters" tooltip="{i18n>clearFilterText}"/>
+						<m:Button icon="sap-icon://excel-attachment" press="onExport" tooltip="{i18n>excelText}"/>
                     </m:OverflowToolbar>
                 </extension>
 				<columns>
@@ -95,9 +103,9 @@
 						resizable="true"
                         sortProperty="ExtendedPrice"
 						autoResizable="true">
-						<m:Label text="Fiyat" />
+						<m:Label text="Fiyat (TL)" />
 						<template>
-							<u:Currency value="{products>ExtendedPrice}" currency="{view>/currency}" />
+							<m:Label text="{products>ExtendedPrice}"/>
 						</template>
 					</Column>
 					<Column 

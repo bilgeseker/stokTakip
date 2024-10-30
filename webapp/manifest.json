@@ -79,6 +79,11 @@
 					"target": "home"
 				},
 				{
+					"pattern": "overview",
+					"name": "overview",
+					"target": "overview"
+				},
+				{
 					"pattern": "detail/{productPath}",
 					"name": "detail",
 					"target": "detail"
@@ -97,7 +102,7 @@
 			"targets": {
 				"home": {
 					"id": "home",
-					"name": "Home"
+					"name": "home"
 				},
 				"login": {
 					"id": "login",
@@ -106,6 +111,10 @@
 				"detail": {
 					"id": "detail",
 					"name": "Detail"
+				},
+				"overview": {
+					"id": "overview",
+					"name": "Overview"
 				},
 				"addProduct": {
 					"id": "addProduct",

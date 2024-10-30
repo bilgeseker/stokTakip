@@ -4,7 +4,8 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:core="sap.ui.core"
-	xmlns="sap.m">
+	xmlns="sap.m"
+	xmlns:ui="sap.ui.unified">
 	<VBox class="sapUiSmallMargin">
 		<f:SimpleForm id="SimpleFormToolbar"
 			editable="true"
@@ -38,32 +39,59 @@
 					<Title id="Title2" text="Ürün Ekle"/>
 					<Button icon="sap-icon://add-product" />
 				</Toolbar>
+				<Label text="Ürün Fotoğrafı" />
+				<ui:FileUploader
+					id="fileUploader"
+					name="myFileUpload"
+					uploadUrl="http://localhost:3000/upload"
+					tooltip="Upload your file to the local server"
+					uploadComplete="handleUploadComplete"
+					change="handleValueChange"
+					typeMissmatch="handleTypeMissmatch"
+					style="Emphasized"
+					fileType="jpeg,jpg,png,gif"
+					placeholder="Dosya seçiniz...">
+						<ui:parameters>
+							<ui:FileUploaderParameter
+								name="Accept-CH"
+								value="Viewport-Width"/>
+							<ui:FileUploaderParameter
+								name="Accept-CH"
+								value="Width"/>
+							<ui:FileUploaderParameter
+								name="Accept-CH-Lifetime"
+								value="86400"/>
+						</ui:parameters>
+				</ui:FileUploader>
+				<!-- <Button
+					text="Upload File"
+					press="handleUploadPress"/> -->
 				<Label text="Ürün Adı" />
-				<Input value="" id="addProductName"/>
+				<Input value="" id="addProductName" change=".onInputChange"/>
 				<Label text="Miktar" />
-				<Input value="" type="Number" id="addQuantity"/>
+				<Input value="" type="Number" id="addQuantity"  change=".onInputChange"/>
 				<Label text="Birim Fiyatı (TL)" />
-				<Input value="" type="Number" id="addExtendedPrice"/>
+				<Input value="" type="Number" id="addExtendedPrice"  change=".onInputChange"/>
 				<Label text="Beden" />
-				<Select id="addSize" items="{sizes>/}">
+				<Select id="addSize" items="{sizes>/}" change=".onInputChange" >
 					<items>
-						<core:Item text="{sizes>SizeName}" key="{sizes>SizeID}"/>
+						<core:Item text="{sizes>SizeName}" key="{sizes>SizeID}" />
 					</items>
 				</Select>
 				<Label text="Renk" />
-				<Select id="addColor" items="{colors>/}">
+				<Select id="addColor" items="{colors>/}" change=".onInputChange">
 					<items>
 						<core:Item text="{colors>ColorName}" key="{colors>ColorID}"/>
 					</items>
 				</Select>
 				<Label text="Kategori" />
-				<Select id="addCategory" items="{categories>/}">
+				<Select id="addCategory" items="{categories>/}" change=".onInputChange">
 					<items>
 						<core:Item text="{categories>CategoryName}" key="{categories>CategoryID}"/>
 					</items>
 				</Select>
 				<Label text="Alt Kategori" />
-				<Select id="addSubcategory" items="{subCategories>/}">
+				<Select id="addSubcategory" items="{subCategories>/}" change=".onInputChange">
 					<items>
 						<core:Item text="{subCategories>SubCategoryName}" key="{subCategories>SubCategoryID}"/>
 					</items>

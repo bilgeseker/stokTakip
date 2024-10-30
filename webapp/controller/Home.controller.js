@@ -5,7 +5,7 @@ sap.ui.define([
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/m/MessageToast",
-	"sap/m/MessageBox" 
+	"sap/m/MessageBox"
 ], (Controller, JSONModel, Filter, FilterOperator,MessageToast, MessageBox) => {
 	"use strict";
 
@@ -20,19 +20,11 @@ sap.ui.define([
 				this.getOwnerComponent().getRouter().navTo("login"); 
 			}
 
-			var oModel = new JSONModel();
-
-            oModel.loadData("http://localhost:3000/products");
-
-            this.getView().setModel(oModel, "products");
+			const oModel = this.getOwnerComponent().getModel("products");
+    		this.getView().setModel(oModel);
 			
-			const oViewModel = new JSONModel({
-				currency: "TL"
-			});
-			this.getView().setModel(oViewModel, "view");
-
+			
         },
-
         onDelete: function () {
 			const oTable = this.byId("productList");
 			const selectedIndices = oTable.getSelectedIndices();
@@ -144,7 +136,7 @@ sap.ui.define([
 			return color ? color.ColorName : 'Bilinmiyor';
 		},
 		getSubCategoryName: function (subCategoryId) {
-			const subCategoriesModel = this.getView().getModel("subCategories"); 
+			const subCategoriesModel = this.getOwnerComponent().getModel("subCategories"); 
 			const subCategoriesData = subCategoriesModel.getData(); 
 			const subCategory = subCategoriesData.find(subCategory => subCategory.SubCategoryID === subCategoryId); 
 			return subCategory ? subCategory.SubCategoryName : 'Bilinmiyor';
@@ -154,7 +146,32 @@ sap.ui.define([
 			const categoriesData = categoriesModel.getData(); 
 			const category = categoriesData.find(category => category.CategoryID === categoryId); 
 			return category ? category.CategoryName : 'Bilinmiyor'; 
+		},
+		onExport: function() {
+			const oModel = this.getView().getModel("products");
+            const aData = oModel.getData();
+
+            const exportData = aData.map(item => ({
+                "Ürün Adı": item.ProductName,
+                "Ürün Kodu": item.ProductCode,
+                "Miktar": item.Quantity,
+                "Fiyat": item.ExtendedPrice,
+                "Beden": this.getSizeName(item.SizeId),
+                "Renk": this.getColorName(item.ColorId),
+                "Alt Kategori": this.getSubCategoryName(item.SubCategoryId),
+                "Ana Kategori": this.getCategoryName(item.CategoryId)
+            }));
+
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(exportData);
+
+			XLSX.utils.book_append_sheet(wb, ws, "Ürünler");
+
+            XLSX.writeFile(wb, "Ürünler.xlsx");
+			MessageToast.show("Excel dosyası yüklendi.");
+		},
+		onAdd: function(){
+			this.getOwnerComponent().getRouter().navTo("addProduct");
 		}
-		
 	});
 });
