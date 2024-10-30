@@ -5,8 +5,9 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel"
  ], (Controller,MessageToast,UIComponent,JSONModel) => {
     "use strict";
- 
+	var ImageUrl;
     return Controller.extend("ui5.walkthrough.controller.AddProduct", {
+		
 		onInit: function(){
 			var isLoggedIn = sessionStorage.getItem("isLoggedIn");
 			console.log("isLoggedIn:", isLoggedIn);
@@ -24,6 +25,7 @@ sap.ui.define([
             const randomNumber = Math.floor(10000 + Math.random() * 90000);
 
             this.handleUploadPress();
+			console.log(this.ImageUrl);
 
             const updatedData = {
 				ProductName: this.getView().byId("addProductName").getValue(),
@@ -109,18 +111,24 @@ sap.ui.define([
 		},
 
 		handleUploadComplete: function(oEvent) {
-			var sResponse = oEvent.getParameter("response"),
-				iHttpStatusCode = parseInt(/\d{3}/.exec(sResponse)[0]),
-				sMessage;
-			const ImageUrl = sResponse.ImageUrl;
-			console.log(oEvent.getParameter("response"));
-			console.log(ImageUrl);
-
+			var sResponse = oEvent.getParameter("response");
+			console.log("Yükleme Yanıtı:", oEvent.getParameter("response"));
+		
 			if (sResponse) {
-				sMessage = iHttpStatusCode === 200 ? sResponse + " (Upload Success)" : sResponse + " (Upload Error)";
-				console.log(sMessage);
+				console.log(sResponse);
+				try {
+					var responseObject = JSON.parse(sResponse);
+					var imageUrl = responseObject.FileName; // URL'yi al
+					this.ImageUrl = imageUrl;
+					console.log("Yüklenen resim URL'si:", imageUrl);
+					MessageToast.show("Yükleme başarılı.");
+				} catch (e) {
+					console.error("JSON yanıtı ayrıştırılamadı:", e);
+					MessageToast.show("Yükleme sırasında hata oluştu.");
+				}
 			}
 		}
+		
 		
 		
     });

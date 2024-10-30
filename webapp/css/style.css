@@ -139,3 +139,7 @@
 .dark-theme .sapMTitleStyleAuto{
    color: #eaecee;
 }
+
+#container-walkthrough---overview--contentArea-intHeader{
+   height: 0;
+}

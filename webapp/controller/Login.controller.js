@@ -17,7 +17,7 @@ sap.ui.define([
                 sessionStorage.setItem("isLoggedIn", true);
                 console.log(sessionStorage);
         
-                this.getOwnerComponent().getRouter().navTo("home");
+                this.getOwnerComponent().getRouter().navTo("overview");
             } else {
                 sap.m.MessageToast.show("Kullanıcı adı veya şifre hatalı!");
             }

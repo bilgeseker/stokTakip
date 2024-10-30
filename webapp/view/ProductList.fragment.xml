@@ -41,8 +41,8 @@
                     <m:OverflowToolbar style="Clear">
                         <m:Title id="titleList" text="Ürünler"/>
                         <m:ToolbarSpacer/>
-                        <m:Button id="deleteProductButtonList" icon="sap-icon://clear-filter" type="Negative" press=".clearFilters" tooltip="{i18n>clearFilterText}"/>
-						<m:Button icon="sap-icon://excel-attachment" press="onExport" tooltip="{i18n>excelText}"/>
+						<m:Button id="deleteProductButtonList" icon="sap-icon://clear-filter" type="Negative" press=".clearFilters" tooltip="{i18n>clearFilterText}"/>
+						<m:Button icon="sap-icon://excel-attachment" press="onExport" tooltip="{i18n>excelText}" id="exportExcel"/>
                     </m:OverflowToolbar>
                 </extension>
 				<columns>
@@ -107,7 +107,7 @@
 						autoResizable="true">
 						<m:Label text="Beden" />
 						<template>
-							<m:Label text="{products>SizeId}" wrapping="false"/>
+							<m:Label text="{path: 'products>SizeId', formatter: '.getSizeName'}" wrapping="false"/>
 						</template>
 					</Column>
 					<Column 
@@ -116,7 +116,7 @@
 						autoResizable="true">
 						<m:Label text="Renk" />
 						<template>
-							<m:Label text="{products>ColorId}" wrapping="false"/>
+							<m:Label text="{path: 'products>ColorId', formatter: '.getColorName'}" wrapping="false"/>
 						</template>
 					</Column>
 					<Column 
@@ -125,7 +125,7 @@
 						autoResizable="true">
 						<m:Label text="Alt Kategori" />
 						<template>
-							<m:Label text="{products>SubCategoryId}" wrapping="false"/>
+							<m:Label text="{path: 'products>SubCategoryId', formatter: '.getSubCategoryName'}" wrapping="false"/>
 						</template>
 					</Column>
 					<Column 
@@ -134,7 +134,7 @@
 						autoResizable="true">
 						<m:Label text="Ana Kategori" />
 						<template>
-							<m:Label text="{products>CategoryId}" wrapping="false" />
+							<m:Label text="{path: 'products>CategoryId', formatter: '.getCategoryName'}" wrapping="false" />
 						</template>
 					</Column>
                     <Column 

@@ -16,6 +16,7 @@
         "balanced-match": "^1.0.2",
         "brace-expansion": "^2.0.1",
         "braces": "^3.0.3",
+        "chart.js": "^4.4.6",
         "cors": "^2.8.5",
         "debug": "^4.3.7",
         "dotenv": "^16.4.5",

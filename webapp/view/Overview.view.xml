@@ -3,9 +3,45 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:table="sap.ui.table">
-    <Page title="Overview" id="contentArea" >
-        <content>
-            <VBox />
-        </content>
+    <Page id="contentArea" >
+        <!-- <customHeader>
+			<Bar>
+				<contentRight>
+					<SearchField
+                    id="searchFieldList"
+                    placeholder="Ürün Ara"
+                    search=".onFilterProducts"
+                    width="30%"/>
+					<Button 
+                    text="Ürünü Sil" 
+                    type="Negative" 
+                    icon="sap-icon://delete"
+                    class="sapUiMediumMarginBegin"
+					id="deleteButtonList"
+					press="onDelete">
+                </Button>
+					<Button 
+                    text="Ürün Ekle"
+                    icon="sap-icon://add"
+                    class="sapUiMediumMarginBegin"
+					id="addButtonList"
+					press="onAdd">
+                </Button>
+                <Button
+					text="Kaydet"
+					id="saveProductList"
+					icon="sap-icon://save"
+					press="onSavePress" />
+                    <Button
+					text="İptal"
+					id="cancelSaveList"
+					icon="sap-icon://cancel"
+					press="onCancelPress" />
+                    <Button id="deleteProductButtonList" icon="sap-icon://clear-filter" press=".clearFilters" tooltip="{i18n>clearFilterText}"/>
+				    <Button icon="sap-icon://excel-attachment" press="onExport" tooltip="{i18n>excelText}" id="exportExcel"/>
+				</contentRight>
+                
+			</Bar>
+		</customHeader> -->
     </Page>
 </mvc:View>

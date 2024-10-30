@@ -2,8 +2,10 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/Fragment",
     "sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function (Controller, Fragment,Filter, FilterOperator) {
+	"sap/ui/model/FilterOperator",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
+], function (Controller, Fragment,Filter, FilterOperator,MessageBox,MessageToast) {
     "use strict";
 
     return Controller.extend("ui5.walkthrough.controller.Overview", {
@@ -26,11 +28,21 @@ sap.ui.define([
             } else {
                 console.error("Products modeli bulunamadı!");
             }
+            
         
             this._formFragments = {};
-			this._showFormFragment("ProductList");
+            this._toggleButtonsAndView(false);
         },
         _toggleButtonsAndView : function (bEdit) {
+            var oView = this.getView();
+
+			// oView.byId("searchFieldList").setVisible(!bEdit);
+			// oView.byId("deleteButtonList").setVisible(!bEdit);
+			// oView.byId("addButtonList").setVisible(!bEdit);
+            // oView.byId("saveProductList").setVisible(bEdit);
+            // oView.byId("cancelSaveList").setVisible(bEdit);
+            //oView.byId("deleteProductButtonList").setVisible(!bEdit);
+            //oView.byId("exportExcel").setVisible(!bEdit);
 
 			this._showFormFragment(bEdit ? "AddProductFragment" : "ProductList");
 		},
@@ -41,7 +53,8 @@ sap.ui.define([
             if (!pFormFragment) {
                 pFormFragment = Fragment.load({
                     id: oView.getId(),
-                    name: "ui5.walkthrough.view." + sFragmentName // Fragment ismi
+                    name: "ui5.walkthrough.view." + sFragmentName,
+                    controller: this // Fragment ismi
                 }).then(function (oVBox) {
                     oVBox.setModel(this.getView().getModel("products"), "products"); // Model ayarla
                     oVBox.setModel(this.getView().getModel("categories"), "categories"); // Kategoriler için model ayarla
@@ -76,7 +89,326 @@ sap.ui.define([
 			const oList = this.byId("productFragmentList");
 			const oBinding = oList.getBinding("rows");
 			oBinding.filter(aFilter);
-		}
+		},
+        onCancelPress: function(){
+            this.getView().byId("addProductNameList").setValue("");
+			this.getView().byId("addQuantityList").setValue("");
+			this.getView().byId("addExtendedPriceList").setValue("");
+			this.getView().byId("addSizeList").setSelectedKey("");
+			this.getView().byId("addColorList").setSelectedKey("");
+			this.getView().byId("addCategoryList").setSelectedKey("");
+			this.getView().byId("addSubcategoryList").setSelectedKey("");
+            this._toggleButtonsAndView(false);
+        },
+        onDelete: function () {
+			const oTable = this.byId("productFragmentList");
+			const selectedIndices = oTable.getSelectedIndices();
+		
+			if (selectedIndices.length === 0) {
+				MessageToast.show("Silmek için lütfen bir ürün seçin.");
+				return;
+			}
+		
+			MessageBox.confirm("Seçilen ürünü silmek istediğinize emin misiniz?", {
+				onClose: (oAction) => {
+					if (oAction === MessageBox.Action.OK) {
+						this._deleteProducts(selectedIndices);
+					}
+				}
+			});
+		},
+		
+		_deleteProducts: function (selectedIndices) {
+			const oModel = this.getView().getModel("products");
+			const aProducts = oModel.getData();
+			const deletedProductIds = selectedIndices.map(index => aProducts[index].ProductID);
+		
+			const sUrl = 'http://localhost:3000/deleteProduct'; 
+		
+			const deletePromises = deletedProductIds.map(id => {
+				return $.ajax({
+					url: `${sUrl}/${id}`,
+					method: 'DELETE',
+					success: function () {
+						MessageToast.show("Ürün başarıyla silindi.");
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.error("Silme hatası:", textStatus, errorThrown);
+						console.error("Sunucu yanıtı:", jqXHR.responseText); // Yanıtı konsolda göster
+						MessageToast.show("Bir hata oluştu, ürün silinemedi.");
+					}
+				});
+				
+			});
+		
+			Promise.all(deletePromises)
+				.then(() => {
+					// Silme işlemi başarılı ise
+					MessageToast.show("Seçilen ürün(ler) başarıyla silindi.");
+					// Seçilen ürünleri modelden kaldır
+					for (let i = selectedIndices.length - 1; i >= 0; i--) {
+						const index = selectedIndices[i];
+						aProducts.splice(index, 1);
+					}
+					oModel.setData(aProducts); // Model verilerini güncelle
+				})
+				.catch(() => {
+					MessageToast.show("Bir hata oluştu, ürün silinemedi.");
+				});
+		},
+        onQuantitySort: function() {
+            const oTable = this.byId("productList");
+            const oColumn = this.byId("quantity");
+            const bDescending = oColumn.getSortOrder() === "Ascending";
+            oTable.sort(oColumn, bDescending ? "Descending" : "Ascending");
+        },
+        clearFilters: function() {
+			const oTable = this.byId("productFragmentList");
+			const oBinding = oTable.getBinding("rows");
+		
+			oBinding.filter([]);
+			oBinding.sort(null);
+		},
+        onExport: function() {
+			const oModel = this.getView().getModel("products");
+            const aData = oModel.getData();
+
+            const exportData = aData.map(item => ({
+                "Ürün Adı": item.ProductName,
+                "Ürün Kodu": item.ProductCode,
+                "Miktar": item.Quantity,
+                "Fiyat": item.ExtendedPrice,
+                "Beden": this.getSizeName(item.SizeId),
+                "Renk": this.getColorName(item.ColorId),
+                "Alt Kategori": this.getSubCategoryName(item.SubCategoryId),
+                "Ana Kategori": this.getCategoryName(item.CategoryId)
+            }));
+
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(exportData);
+
+			XLSX.utils.book_append_sheet(wb, ws, "Ürünler");
+
+            XLSX.writeFile(wb, "Ürünler.xlsx");
+			MessageToast.show("Excel dosyası yüklendi.");
+		},
+        getSizeName: function (sizeId) {
+			const sizesModel = this.getView().getModel("sizes");
+			const sizesData = sizesModel.getData(); 
+			const size = sizesData.find(size => size.SizeID === sizeId); 
+			return size ? size.SizeName : 'Bilinmiyor';
+		},
+		getColorName: function (colorId) {
+			const colorsModel = this.getView().getModel("colors");
+			const colorsData = colorsModel.getData(); 
+			const color = colorsData.find(color => color.ColorID === colorId);
+			return color ? color.ColorName : 'Bilinmiyor';
+		},
+		getSubCategoryName: function (subCategoryId) {
+			const subCategoriesModel = this.getOwnerComponent().getModel("subCategories"); 
+			const subCategoriesData = subCategoriesModel.getData(); 
+			const subCategory = subCategoriesData.find(subCategory => subCategory.SubCategoryID === subCategoryId); 
+			return subCategory ? subCategory.SubCategoryName : 'Bilinmiyor';
+		},
+		getCategoryName: function (categoryId) {
+			const categoriesModel = this.getView().getModel("categories");
+			const categoriesData = categoriesModel.getData(); 
+			const category = categoriesData.find(category => category.CategoryID === categoryId); 
+			return category ? category.CategoryName : 'Bilinmiyor'; 
+		},
+        onQuantityChange: function(oEvent) {
+            const sValue = oEvent.getParameter("value");
+            const oModel = this.getView().getModel("addProductModel");
+            oModel.setProperty("/Quantity", sValue); 
+        },  
+        onNameChange: function(oEvent) {
+            const sValue = oEvent.getParameter("value");
+            const oModel = this.getView().getModel("addProductModel");
+            oModel.setProperty("/ProductName", sValue);
+        },    
+        onPriceChange: function(oEvent) {
+            const sValue = oEvent.getParameter("value");
+            const oModel = this.getView().getModel("addProductModel");
+            oModel.setProperty("/ExtendedPrice", sValue);
+        },    
+        onSizeChange: function(oEvent) {
+            const selectedItem = oEvent.getParameter("selectedItem");
+            if (selectedItem) {
+                const sValue = selectedItem.getKey(); // Seçilen öğenin anahtarını al
+                const oModel = this.getView().getModel("addProductModel");
+                oModel.setProperty("/SizeId", sValue);
+            } else {
+                console.log("Hiçbir öğe seçilmedi.");
+            }
+        }, 
+        onColorChange: function(oEvent) {
+            const selectedItem = oEvent.getParameter("selectedItem");
+            if (selectedItem) {
+                const sValue = selectedItem.getKey(); // Seçilen öğenin anahtarını al
+                const oModel = this.getView().getModel("addProductModel");
+                oModel.setProperty("/ColorId", sValue);
+            } else {
+                console.log("Hiçbir öğe seçilmedi.");
+            }
+        },
+        onCategoryChange: function(oEvent) {
+            const selectedItem = oEvent.getParameter("selectedItem");
+            if (selectedItem) {
+                const sValue = selectedItem.getKey(); // Seçilen öğenin anahtarını al
+                const oModel = this.getView().getModel("addProductModel");
+                oModel.setProperty("/CategoryId", sValue);
+            } else {
+                console.log("Hiçbir öğe seçilmedi.");
+            }
+            
+        },
+        onSubCategoryChange: function(oEvent) {
+            const selectedItem = oEvent.getParameter("selectedItem");
+            if (selectedItem) {
+                const sValue = selectedItem.getKey(); // Seçilen öğenin anahtarını al
+                const oModel = this.getView().getModel("addProductModel");
+                oModel.setProperty("/SubCategoryId", sValue);
+            } else {
+                console.log("Hiçbir öğe seçilmedi.");
+            }
+        },
+        onSavePress: function() {
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const randomLetter = letters.charAt(Math.floor(Math.random() * letters.length));
+            const randomNumber = Math.floor(10000 + Math.random() * 90000);
+
+            this.handleUploadPress();
+			console.log(this.ImageUrl);
+
+            const oModel = this.getView().getModel("addProductModel");
+            console.log("Quantity Value: ", oModel.getProperty("/Quantity"));
+
+
+            const updatedData = {
+                ProductName: oModel.getProperty("/ProductName"),
+                ProductCode: randomLetter + randomNumber,
+                Quantity: parseInt(oModel.getProperty("/Quantity"), 10),
+                ExtendedPrice: parseFloat(oModel.getProperty("/ExtendedPrice")),
+                SizeId: oModel.getProperty("/SizeId"),
+                ColorId: oModel.getProperty("/ColorId"), 
+                CategoryId: oModel.getProperty("/CategoryId"), 
+                SubCategoryId: oModel.getProperty("/SubCategoryId"), 
+                ImageUrl: this.ImageUrl
+            };
+
+            if (!updatedData.ProductName) {
+				sap.m.MessageToast.show("Ürün adı zorunludur.");
+				return;
+			}
+		
+			if (isNaN(updatedData.Quantity) || updatedData.Quantity < 1) {
+				sap.m.MessageToast.show("Miktar geçerli bir sayı olmalı ve 1'den az olmamalıdır.");
+				return;
+			}
+		
+			if (isNaN(updatedData.ExtendedPrice) || updatedData.ExtendedPrice <= 0) {
+				sap.m.MessageToast.show("Fiyat geçerli bir sayı olmalı ve 0'dan büyük olmalıdır.");
+				return;
+			}
+            $.ajax({
+				url: 'http://localhost:3000/addProduct', 
+				method: 'POST',
+				data: JSON.stringify(updatedData), 
+				contentType: 'application/json',
+				success: function (response) {
+					MessageToast.show("Ürün başarıyla eklendi");
+					const oModel = this.getOwnerComponent().getModel("products");
+            		oModel.loadData("http://localhost:3000/products", null, true);
+					this._toggleButtonsAndView(false);
+					oModel.setProperty("/ProductName", "");
+                    oModel.setProperty("/Quantity", "");
+                    oModel.setProperty("/ExtendedPrice", "");
+                    oModel.setProperty("/SizeId", "");
+                    oModel.setProperty("/ColorId", "");
+                    oModel.setProperty("/CategoryId", "");
+                    oModel.setProperty("/SubCategoryId", "");
+					
+				}.bind(this), 
+				error: function () {
+					MessageToast.show("Ekleme sırasında hata oluştu.");
+				}
+			});
+        },
+		
+
+		handleUploadPress: function() {
+            if (!this._formFragments.AddProductFragment) {
+                // Ensure the fragment is loaded and stored in `_formFragments`
+                this._getFormFragment("AddProductFragment").then(function(oFragment) {
+                    var oFileUploader = oFragment.byId("fileUploaderList"); // Access the FileUploader in the fragment
+        
+                    if (!oFileUploader.getValue()) {
+                        sap.m.MessageToast.show("Choose a file first");
+                        return;
+                    }
+        
+                    oFileUploader.checkFileReadable().then(function() {
+                        oFileUploader.upload();
+                    }, function(error) {
+                        sap.m.MessageToast.show("The file cannot be read. It may have changed.");
+                    }).then(function() {
+                        oFileUploader.clear();
+                    });
+                }.bind(this));
+            }
+        },        
+
+		handleTypeMissmatch: function(oEvent) {
+			var aFileTypes = oEvent.getSource().getFileType();
+			aFileTypes.map(function(sType) {
+				return "*." + sType;
+			});
+			MessageToast.show("The file type *." + oEvent.getParameter("fileType") +
+									" is not supported. Choose one of the following types: " +
+									aFileTypes.join(", "));
+		},
+
+		handleValueChange: function(oEvent) {
+			MessageToast.show("Press 'Upload File' to upload file '" +
+									oEvent.getParameter("newValue") + "'");
+		},
+
+		handleUploadComplete: function(oEvent) {
+			var sResponse = oEvent.getParameter("response");
+			console.log("Yükleme Yanıtı:", oEvent.getParameter("response"));
+		
+			if (sResponse) {
+				console.log(sResponse);
+				try {
+					var responseObject = JSON.parse(sResponse);
+					var imageUrl = responseObject.FileName; // URL'yi al
+					this.ImageUrl = imageUrl;
+					console.log("Yüklenen resim URL'si:", imageUrl);
+					MessageToast.show("Yükleme başarılı.");
+				} catch (e) {
+					console.error("JSON yanıtı ayrıştırılamadı:", e);
+					MessageToast.show("Yükleme sırasında hata oluştu.");
+				}
+			}
+		},
+        onPress: function(oEvent) {
+            const oButton = oEvent.getSource(); 
+            const oContext = oButton.getBindingContext("products"); 
+        
+            if (!oContext) {
+                console.error("Bağlam bulunamadı.");
+                return; 
+            }
+        
+            const oRouter = this.getOwnerComponent().getRouter();
+            const sPath = encodeURIComponent(oContext.getPath());
+            
+            oRouter.navTo("detail", {
+                productPath: sPath 
+            });
+            console.log(`Navigating to detail page with path: ${sPath}`);
+        }
+        
 
     });
 });

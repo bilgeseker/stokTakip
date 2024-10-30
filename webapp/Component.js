@@ -13,6 +13,9 @@ sap.ui.define([
       },
 
       init() {
+
+         UIComponent.prototype.init.apply(this, arguments);
+
          var oProductsModel = new JSONModel();
          oProductsModel.loadData("http://localhost:3000/products");
          this.setModel(oProductsModel, "products");
@@ -33,9 +36,24 @@ sap.ui.define([
          oSubCategoriesModel.loadData("http://localhost:3000/subCategories");
          this.setModel(oSubCategoriesModel, "subCategories");
 
-         UIComponent.prototype.init.apply(this, arguments);
 
-         this.getRouter().initialize();
+         const oData = {
+            ProductName: "",
+            Quantity: "",
+            ExtendedPrice: "",
+            SizeId: "",
+            ColorId: "",
+            CategoryId: "",
+            SubCategoryId: ""
+        };
+        
+        const oModel = new JSONModel(oData);
+        
+        // Set the model to the view
+        this.setModel(oModel, "addProductModel");
+
+        this.getRouter().initialize();
+
       },
       getContentDensityClass() {
 			return Device.support.touch ? "sapUiSizeCozy" : "sapUiSizeCompact";

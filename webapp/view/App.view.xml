@@ -50,9 +50,9 @@
 				itemSelect="onItemSelect">
 				<tnt:NavigationList>
 					<tnt:NavigationListItem text="Anasayfa" icon="sap-icon://home" key="home"/>
-                    <tnt:NavigationListItem text="Ürün Ekle" icon="sap-icon://add" key="addProduct"/>
+					<tnt:NavigationListItem text="Ürünler" icon="sap-icon://list" key="overview"/>
 					<tnt:NavigationListItem text="Kategori Ekle" icon="sap-icon://add-activity-2" key="addCategory"/>
-					<tnt:NavigationListItem text="overview" icon="sap-icon://add-activity-2" key="overview"/>
+					
 				</tnt:NavigationList>
 			</tnt:SideNavigation>
 		</tnt:sideContent>

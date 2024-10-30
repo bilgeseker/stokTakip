@@ -200,13 +200,13 @@ app.delete('/deleteProduct/:id', (req, res) => {
   });
 });
 /* -------------- DELETE END -------------*/
-
+app.use('/upload', express.static(path.join(__dirname, 'upload')));
 app.post('/upload', (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).send('Hiçbir dosya seçilmedi.');
   }
 
-  const sampleFile = req.files.myFileUpload; // FileUploader'dan gelen dosya
+  const sampleFile = req.files.myFileUpload; 
   const uploadPath = path.join(__dirname, 'upload', sampleFile.name);
   
   sampleFile.mv(uploadPath, (err) => {
@@ -214,12 +214,9 @@ app.post('/upload', (req, res) => {
           console.error('Dosya kaydedilirken hata:', err);
           return res.status(500).send('Yükleme sırasında hata oluştu.');
       }
-
-      // Doğru URL'yi oluşturun
-      const imageUrl = `${req.protocol}://${req.get('host')}/upload/${sampleFile.name}`;
-      console.log('Yüklenen resmin URL\'si:', imageUrl);
-      
-      res.json({ ImageUrl: imageUrl }); // JSON olarak doğru URL ile döndürün
+      console.log(sampleFile.name);
+      res.setHeader('Content-Type', 'application/json');  // Yanıt türünü JSON olarak ayarlayın
+      res.json({ FileName: sampleFile.name });
   });
 });
 

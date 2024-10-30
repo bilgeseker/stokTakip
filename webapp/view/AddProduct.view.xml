@@ -67,31 +67,31 @@
 					text="Upload File"
 					press="handleUploadPress"/> -->
 				<Label text="Ürün Adı" />
-				<Input value="" id="addProductName" change=".onInputChange"/>
+				<Input value="" id="addProductName" />
 				<Label text="Miktar" />
-				<Input value="" type="Number" id="addQuantity"  change=".onInputChange"/>
+				<Input value="" type="Number" id="addQuantity" />
 				<Label text="Birim Fiyatı (TL)" />
-				<Input value="" type="Number" id="addExtendedPrice"  change=".onInputChange"/>
+				<Input value="" type="Number" id="addExtendedPrice"  />
 				<Label text="Beden" />
-				<Select id="addSize" items="{sizes>/}" change=".onInputChange" >
+				<Select id="addSize" items="{sizes>/}"  >
 					<items>
 						<core:Item text="{sizes>SizeName}" key="{sizes>SizeID}" />
 					</items>
 				</Select>
 				<Label text="Renk" />
-				<Select id="addColor" items="{colors>/}" change=".onInputChange">
+				<Select id="addColor" items="{colors>/}" >
 					<items>
 						<core:Item text="{colors>ColorName}" key="{colors>ColorID}"/>
 					</items>
 				</Select>
 				<Label text="Kategori" />
-				<Select id="addCategory" items="{categories>/}" change=".onInputChange">
+				<Select id="addCategory" items="{categories>/}" >
 					<items>
 						<core:Item text="{categories>CategoryName}" key="{categories>CategoryID}"/>
 					</items>
 				</Select>
 				<Label text="Alt Kategori" />
-				<Select id="addSubcategory" items="{subCategories>/}" change=".onInputChange">
+				<Select id="addSubcategory" items="{subCategories>/}" >
 					<items>
 						<core:Item text="{subCategories>SubCategoryName}" key="{subCategories>SubCategoryID}"/>
 					</items>
