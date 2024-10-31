@@ -36,6 +36,7 @@
 						<m:Button
 							text="İptal"
 							id="cancelSaveList"
+							type="Negative"
 							icon="sap-icon://cancel"
 							press="onCancelPress" />
 					</m:HBox>
@@ -78,29 +79,30 @@
 				<m:Label text="Ürün Adı" />
 				<m:Input value="{addProductModel>/ProductName}" id="addProductNameList" liveChange="onNameChange"/>
 				<m:Label text="Miktar" />
-				<m:Input value="addProductModel>/Quantity" type="Number" id="addQuantityList" liveChange="onQuantityChange"/>
+				<m:Input value="{addProductModel>/Quantity}" type="Number" id="addQuantityList" liveChange="onQuantityChange"/>
 				<m:Label text="Birim Fiyatı (TL)" />
-				<m:Input value="addProductModel>/ExtendedPrice" type="Number" id="addExtendedPriceList"  liveChange="onPriceChange"/>
+				<m:Input value="{addProductModel>/ExtendedPrice}" type="Number" id="addExtendedPriceList"  liveChange="onPriceChange"/>
 				<m:Label text="Beden" />
-				<m:Select id="addSizeList" items="{sizes>/}" change="onSizeChange" selectedKey="1">
+				<m:Select id="addSizeList" items="{sizes>/}" change="onSizeChange" selectedKey="{addProductModel>/SizeId}">
 					<m:items>
 						<core:Item text="{sizes>SizeName}" key="{sizes>SizeID}" />
 					</m:items>
 				</m:Select>
+
 				<m:Label text="Renk" />
-				<m:Select id="addColorList" items="{colors>/}" change="onColorChange" selectedKey="1">
+				<m:Select id="addColorList" items="{colors>/}" change="onColorChange" selectedKey="{addProductModel>/ColorId}">
 					<m:items>
 						<core:Item text="{colors>ColorName}" key="{colors>ColorID}"/>
 					</m:items>
 				</m:Select>
 				<m:Label text="Kategori" />
-				<m:Select id="addCategoryList" items="{categories>/}" change="onCategoryChange" selectedKey="1">
+				<m:Select id="addCategoryList" items="{categories>/}" change="onCategoryChange" selectedKey="{addProductModel>/CategoryId}">
 					<m:items>
 						<core:Item text="{categories>CategoryName}" key="{categories>CategoryID}"/>
 					</m:items>
 				</m:Select>
 				<m:Label text="Alt Kategori" />
-				<m:Select id="addSubcategoryList" items="{subCategories>/}" change="onSubCategoryChange" selectedKey="1">
+				<m:Select id="addSubcategoryList" items="{subCategories>/}" change="onSubCategoryChange" selectedKey="{addProductModel>/SubCategoryId}">
 					<m:items>
 						<core:Item text="{subCategories>SubCategoryName}" key="{subCategories>SubCategoryID}"/>
 					</m:items>

@@ -47,8 +47,6 @@ sap.ui.define([
          var oRouter = UIComponent.getRouterFor(this);
          if (sKey === "home") {
             oRouter.navTo("home");
-         } else if (sKey === "addProduct") {
-            oRouter.navTo("addProduct");
          } else if (sKey === "addCategory") {
             oRouter.navTo("addCategory");
          }else if (sKey === "overview") {
@@ -56,9 +54,14 @@ sap.ui.define([
          }
       },
       onLogoutButtonPress: function (oEvent){
+         sap.ui.getCore().applyTheme("sap_horizon");
+         const body = document.body;
+         body.classList.remove("dark-theme");
+
          var oRouter = UIComponent.getRouterFor(this);
          localStorage.removeItem("isLoggedIn");
          oRouter.navTo("login");
+         
          sap.ui.core.UIComponent.getRouterFor(this).navTo("login", {}, true);
       },
       onThemeButtonPress: function (oEvent){

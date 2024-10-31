@@ -45,11 +45,11 @@ sap.ui.define([
                 pFormFragment = Fragment.load({
                     id: oView.getId(),
                     name: "ui5.walkthrough.view." + sFragmentName,
-                    controller: this // Fragment ismi
+                    controller: this 
                 }).then(function (oVBox) {
-                    oVBox.setModel(this.getView().getModel("products"), "products"); // Model ayarla
-                    oVBox.setModel(this.getView().getModel("categories"), "categories"); // Kategoriler için model ayarla
-                    oVBox.setModel(this.getView().getModel("colors"), "colors"); // Renkler için model ayarla
+                    oVBox.setModel(this.getView().getModel("products"), "products"); 
+                    oVBox.setModel(this.getView().getModel("categories"), "categories");
+                    oVBox.setModel(this.getView().getModel("colors"), "colors");
                     return oVBox;
                 }.bind(this));
                 this._formFragments[sFragmentName] = pFormFragment;
@@ -59,11 +59,11 @@ sap.ui.define([
         },
 
         _showFormFragment: function (sFragmentName) {
-            var oPage = this.byId("contentArea"); // contentArea'nın id'sini belirtin
-            oPage.removeAllContent(); // Mevcut içeriği kaldır
+            var oPage = this.byId("contentArea"); 
+            oPage.removeAllContent();
 
             this._getFormFragment(sFragmentName).then(function (oVBox) {
-                oPage.insertContent(oVBox); // Fragment'i ekle
+                oPage.insertContent(oVBox);
             });
         },
         
@@ -86,6 +86,11 @@ sap.ui.define([
             oModel.setProperty("/ProductName", "");
             oModel.setProperty("/Quantity", "");
             oModel.setProperty("/ExtendedPrice", "");
+            oModel.setProperty("/SizeId", ""); 
+            oModel.setProperty("/ColorId", "");
+            oModel.setProperty("/CategoryId", ""); 
+            oModel.setProperty("/SubCategoryId", ""); 
+            oModel.setProperty("/ImageUrl", "");
             this._toggleButtonsAndView(false);
         },
         onDelete: function () {
@@ -221,18 +226,20 @@ sap.ui.define([
         },    
         onSizeChange: function(oEvent) {
             const selectedItem = oEvent.getParameter("selectedItem");
+            
             if (selectedItem) {
-                const sValue = selectedItem.getSelectedKey(); // Seçilen öğenin anahtarını al
+                const selectedKey = selectedItem.getKey();
                 const oModel = this.getView().getModel("addProductModel");
-                oModel.setProperty("/SizeId", sValue);
+                oModel.setProperty("/SizeId", selectedKey);
+                console.log("Seçilen Boyut ID: ", selectedKey);
             } else {
-                console.log("Hiçbir öğe seçilmedi.");
+                console.log("Hiçbir boyut seçilmedi.");
             }
         }, 
         onColorChange: function(oEvent) {
             const selectedItem = oEvent.getParameter("selectedItem");
             if (selectedItem) {
-                const sValue = selectedItem.getSelectedKey(); // Seçilen öğenin anahtarını al
+                const sValue = selectedItem.getKey();
                 const oModel = this.getView().getModel("addProductModel");
                 oModel.setProperty("/ColorId", sValue);
             } else {
@@ -242,7 +249,7 @@ sap.ui.define([
         onCategoryChange: function(oEvent) {
             const selectedItem = oEvent.getParameter("selectedItem");
             if (selectedItem) {
-                const sValue = selectedItem.getSelectedKey(); // Seçilen öğenin anahtarını al
+                const sValue = selectedItem.getKey(); 
                 const oModel = this.getView().getModel("addProductModel");
                 oModel.setProperty("/CategoryId", sValue);
             } else {
@@ -253,7 +260,7 @@ sap.ui.define([
         onSubCategoryChange: function(oEvent) {
             const selectedItem = oEvent.getParameter("selectedItem");
             if (selectedItem) {
-                const sValue = selectedItem.getSelectedKey(); // Seçilen öğenin anahtarını al
+                const sValue = selectedItem.getKey(); 
                 const oModel = this.getView().getModel("addProductModel");
                 oModel.setProperty("/SubCategoryId", sValue);
             } else {
@@ -308,7 +315,17 @@ sap.ui.define([
 					MessageToast.show("Ürün başarıyla eklendi");
 					const oModel = this.getOwnerComponent().getModel("products");
             		oModel.loadData("http://localhost:3000/products", null, true);
+                    oModel.setProperty("/ProductName", "");
+                    oModel.setProperty("/Quantity", "");
+                    oModel.setProperty("/ExtendedPrice", "");
+                    oModel.setProperty("/SizeId", "");
+                    oModel.setProperty("/ColorId", "");
+                    oModel.setProperty("/CategoryId", "");
+                    oModel.setProperty("/SubCategoryId", "");
+                    oModel.setProperty("/ImageUrl", "");
+
 					this._toggleButtonsAndView(false);
+
                     
 				}.bind(this), 
 				error: function () {

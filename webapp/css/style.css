@@ -104,7 +104,6 @@
 }
 #container-walkthrough---addProduct--saveProduct-inner,
 #container-walkthrough---overview--saveProductList-inner,
-#container-walkthrough---overview--cancelSaveList-inner,
 #container-walkthrough---overview--fileUploaderList-fu_button-inner{
    background-color: #6c7ee1 !important;
    color: white;
@@ -150,8 +149,30 @@
 }
 /* ------ dark theme ------- */
 
-.dark-theme .sapMTitleStyleAuto{
+.dark-theme .sapMTitleStyleAuto,
+.dark-theme #__text2,
+.dark-theme #container-walkthrough---overview--cancelSaveList-content,
+.dark-theme #container-walkthrough---overview--deleteButtonList-img,
+.dark-theme #container-walkthrough---overview--deleteButtonList-content,
+.dark-theme #container-walkthrough---overview--deleteProductButtonList-img{
    color: #eaecee;
+}
+.dark-theme #container-walkthrough---app--sideNavigation,
+.dark-theme .sapTntNLI a,
+.dark-theme .sapTntNLI,
+.dark-theme #__panel1-content,
+.dark-theme #__panel2-content,
+.dark-theme #__panel3-content,
+.dark-theme #container-walkthrough---addProduct--saveProduct-inner,
+.dark-theme #container-walkthrough---overview--saveProductList-inner,
+.dark-theme #container-walkthrough---overview--fileUploaderList-fu_button-inner,
+.dark-theme .sapMBtnInner{
+   background-color: #5e6ec8;
+}
+.dark-theme #container-walkthrough---overview--deleteButtonList-inner,
+.dark-theme #container-walkthrough---overview--deleteProductButtonList-inner,
+.dark-theme #container-walkthrough---overview--cancelSaveList-inner{
+   background-color: rgb(157, 32, 32);
 }
 
 #container-walkthrough---overview--contentArea-intHeader,
