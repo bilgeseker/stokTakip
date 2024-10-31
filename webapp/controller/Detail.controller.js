@@ -1,4 +1,5 @@
 
+
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/routing/History",
@@ -65,20 +66,29 @@ sap.ui.define([
 		},
 
 		handleSavePress: function () {
+
 			const oModel = this.getView().getModel("products");
 			const sPath = this.getView().getBindingContext("products").getPath();
 		
+			const oUpdateModel = this.getView().getModel("updateProductModel");
+			oUpdateModel.setProperty("/ProductName", this.getView().byId("updateProductName").getValue());
+			oUpdateModel.setProperty("/Quantity", parseInt(this.getView().byId("updateQuantity").getValue(), 10));
+			oUpdateModel.setProperty("/ExtendedPrice", this.getView().byId("updateExtendedPrice").getValue());
+			oUpdateModel.setProperty("/SizeId", this.getView().byId("updateSize").getSelectedKey());
+			oUpdateModel.setProperty("/ColorId", this.getView().byId("updateColor").getSelectedKey());
+			oUpdateModel.setProperty("/CategoryId", this.getView().byId("updateCategory").getSelectedKey());
+			oUpdateModel.setProperty("/SubCategoryId", this.getView().byId("updateSubcategory").getSelectedKey());
 			const updatedData = {
 				ProductID: oModel.getProperty(sPath + "/ProductID"), 
-				ProductName: this.getView().byId("updateProductName").getValue(),
+				ProductName: oUpdateModel.getProperty("/ProductName"),
 				ProductCode: this.getView().byId("updateProductCode").getValue(),
-				Quantity: parseInt(this.getView().byId("updateQuantity").getValue(), 10),
-				ExtendedPrice: parseFloat(this.getView().byId("updateExtendedPrice").getValue()),
-				SizeId: this.getView().byId("updateSize").getSelectedKey(),
-				ColorId: this.getView().byId("updateColor").getSelectedKey(),
-				CategoryId: this.getView().byId("updateCategory").getSelectedKey(), 
-				SubCategoryId: this.getView().byId("updateSubcategory").getSelectedKey(), 
-				ImageUrl: null
+                Quantity: parseInt(oUpdateModel.getProperty("/Quantity"), 10),
+                ExtendedPrice: parseFloat(oUpdateModel.getProperty("/ExtendedPrice")),
+                SizeId: oUpdateModel.getProperty("/SizeId"),
+                ColorId: oUpdateModel.getProperty("/ColorId"), 
+                CategoryId: oUpdateModel.getProperty("/CategoryId"), 
+                SubCategoryId: oUpdateModel.getProperty("/SubCategoryId"), 
+                ImageUrl: this.ImageUrl
 			};
 		
 			if (!updatedData.ProductName) {
@@ -130,7 +140,8 @@ sap.ui.define([
 			if (!pFormFragment) {
 				pFormFragment = Fragment.load({
 					id: oView.getId(),
-					name: "ui5.walkthrough.view." + sFragmentName
+					name: "ui5.walkthrough.view." + sFragmentName,
+					controller:this
 				});
 				this._formFragments[sFragmentName] = pFormFragment;
 			}
@@ -158,6 +169,86 @@ sap.ui.define([
 				const oRouter = this.getOwnerComponent().getRouter();
 				oRouter.navTo("overview", {}, true);
 			}
-		}
+		},
+		getSizeName: function (sizeId) {
+			const sizesModel = this.getView().getModel("sizes");
+			const sizesData = sizesModel.getData(); 
+			const size = sizesData.find(size => size.SizeID === sizeId); 
+			return size ? size.SizeName : 'Bilinmiyor';
+		},
+		getColorName: function (colorId) {
+			const colorsModel = this.getView().getModel("colors");
+			const colorsData = colorsModel.getData(); 
+			const color = colorsData.find(color => color.ColorID === colorId);
+			return color ? color.ColorName : 'Bilinmiyor';
+		},
+		getSubCategoryName: function (subCategoryId) {
+			const subCategoriesModel = this.getOwnerComponent().getModel("subCategories"); 
+			const subCategoriesData = subCategoriesModel.getData(); 
+			const subCategory = subCategoriesData.find(subCategory => subCategory.SubCategoryID === subCategoryId); 
+			return subCategory ? subCategory.SubCategoryName : 'Bilinmiyor';
+		},
+		getCategoryName: function (categoryId) {
+			const categoriesModel = this.getView().getModel("categories");
+			const categoriesData = categoriesModel.getData(); 
+			const category = categoriesData.find(category => category.CategoryID === categoryId); 
+			return category ? category.CategoryName : 'Bilinmiyor'; 
+		},
+		// onQuantityChange: function(oEvent) {
+        //     const sValue = oEvent.getParameter("value");
+        //     const oModel = this.getView().getModel("updateProductModel");
+        //     oModel.setProperty("/Quantity", sValue); 
+        // },  
+        // onNameChange: function(oEvent) {
+        //     const sValue = oEvent.getParameter("value");
+        //     const oModel = this.getView().getModel("updateProductModel");
+        //     oModel.setProperty("/ProductName", sValue);
+        // },    
+        // onPriceChange: function(oEvent) {
+        //     const sValue = oEvent.getParameter("value");
+        //     const oModel = this.getView().getModel("updateProductModel");
+        //     oModel.setProperty("/ExtendedPrice", sValue);
+        // },    
+        // onSizeChange: function(oEvent) {
+        //     const selectedItem = oEvent.getParameter("selectedItem");
+        //     if (selectedItem) {
+        //         const sValue = selectedItem.getKey(); // Seçilen öğenin anahtarını al
+        //         const oModel = this.getView().getModel("updateProductModel");
+        //         oModel.setProperty("/SizeId", sValue);
+        //     } else {
+        //         console.log("Hiçbir öğe seçilmedi.");
+        //     }
+        // }, 
+        // onColorChange: function(oEvent) {
+        //     const selectedItem = oEvent.getParameter("selectedItem");
+        //     if (selectedItem) {
+        //         const sValue = selectedItem.getKey(); // Seçilen öğenin anahtarını al
+        //         const oModel = this.getView().getModel("updateProductModel");
+        //         oModel.setProperty("/ColorId", sValue);
+        //     } else {
+        //         console.log("Hiçbir öğe seçilmedi.");
+        //     }
+        // },
+        // onCategoryChange: function(oEvent) {
+        //     const selectedItem = oEvent.getParameter("selectedItem");
+        //     if (selectedItem) {
+        //         const sValue = selectedItem.getKey(); // Seçilen öğenin anahtarını al
+        //         const oModel = this.getView().getModel("updateProductModel");
+        //         oModel.setProperty("/CategoryId", sValue);
+        //     } else {
+        //         console.log("Hiçbir öğe seçilmedi.");
+        //     }
+            
+        // },
+        // onSubCategoryChange: function(oEvent) {
+        //     const selectedItem = oEvent.getParameter("selectedItem");
+        //     if (selectedItem) {
+        //         const sValue = selectedItem.getKey(); // Seçilen öğenin anahtarını al
+        //         const oModel = this.getView().getModel("updateProductModel");
+        //         oModel.setProperty("/SubCategoryId", sValue);
+        //     } else {
+        //         console.log("Hiçbir öğe seçilmedi.");
+        //     }
+        // }
 	});
 });

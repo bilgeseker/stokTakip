@@ -44,13 +44,25 @@ sap.ui.define([
             SizeId: "",
             ColorId: "",
             CategoryId: "",
-            SubCategoryId: ""
+            SubCategoryId: "",
+            ImageUrl: ""
         };
         
-        const oModel = new JSONModel(oData);
-        
-        // Set the model to the view
-        this.setModel(oModel, "addProductModel");
+        const oAddModel = new JSONModel(oData);
+        this.setModel(oAddModel, "addProductModel");
+
+        const oUpdateData = {
+         ProductName: "",
+         Quantity: "",
+         ExtendedPrice: "",
+         SizeId: "",
+         ColorId: "",
+         CategoryId: "",
+         SubCategoryId: ""
+         };
+
+        const oUpdateModel = new JSONModel(oUpdateData);
+        this.setModel(oUpdateModel, "updateProductModel");
 
         this.getRouter().initialize();
 

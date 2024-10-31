@@ -3,14 +3,15 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const cors = require('cors');
 const app = express();
-app.use(express.static('webapp'));
 const fileUpload = require('express-fileupload');
 const path = require('path');
 
+app.use(express.static('webapp'));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 app.use(fileUpload());
+app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
 
 const connection = mysql.createConnection({
@@ -200,7 +201,8 @@ app.delete('/deleteProduct/:id', (req, res) => {
   });
 });
 /* -------------- DELETE END -------------*/
-app.use('/upload', express.static(path.join(__dirname, 'upload')));
+
+
 app.post('/upload', (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).send('Hiçbir dosya seçilmedi.');
@@ -215,8 +217,31 @@ app.post('/upload', (req, res) => {
           return res.status(500).send('Yükleme sırasında hata oluştu.');
       }
       console.log(sampleFile.name);
-      res.setHeader('Content-Type', 'application/json');  // Yanıt türünü JSON olarak ayarlayın
-      res.json({ FileName: sampleFile.name });
+      res.json({ FileName: sampleFile.name});
+
+  });
+});
+
+app.get('/getCount', (req, res) => {
+  const sql = 'SELECT Count(*) FROM Products WHERE Quantity<100';
+  connection.query(sql, (error, results) => {
+    if (error) {
+      console.error('Sorgu hatası:', error);
+      res.status(500).json({ error: 'Veritabanı hatası' });
+      return;
+    }
+    res.json(results);
+  });
+});
+app.get('/getProductCount', (req, res) => {
+  const sql = 'SELECT Count(*) FROM Products';
+  connection.query(sql, (error, results) => {
+    if (error) {
+      console.error('Sorgu hatası:', error);
+      res.status(500).json({ error: 'Veritabanı hatası' });
+      return;
+    }
+    res.json(results);
   });
 });
 

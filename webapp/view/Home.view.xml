@@ -2,14 +2,46 @@
 <mvc:View
 	controllerName="ui5.walkthrough.controller.Home"
 	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
 	xmlns:c="sap.ui.core"
 	xmlns:m="sap.m"
-    xmlns:layout="sap.ui.layout"
-	xmlns:html="sap.ui.core.HTML"
+	xmlns:l="sap.ui.layout"
+	displayBlock="true"
     height="100%">
-	<m:Page title="Chart.js Bar Graph">
+	<m:Page>
         <m:content>
-            
+           <l:VerticalLayout width="100%" class="gridWrapper">
+				<l:Grid containerQuery="true" defaultSpan="L12 M12 S12">
+					<m:Panel class="sapUiSmallMarginTop">
+						<m:VBox>
+							<m:Text text="Hoşgeldiniz Admin" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin"/>
+							<m:Text text="{dateModel>/today}" class="sapUiSmallMarginBegin" />
+						</m:VBox>
+					</m:Panel>
+				</l:Grid>
+			</l:VerticalLayout>
+			<l:VerticalLayout width="100%" class="gridWrapper">
+				<l:Grid containerQuery="true" defaultSpan="L4 M6 S1">
+					<m:Panel class="exampleDiv">
+						<m:VBox>
+							<m:Text text="Stoğu Azalan Ürün Miktarı" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin"/>
+							<m:Text text="{productModel>/decStockCount}" class="sapUiSmallMarginBegin" />
+						</m:VBox>
+					</m:Panel>
+					<m:Panel class="exampleDiv">
+						<m:VBox>
+							<m:Text text="Toplam Ürün Çeşidi" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin"/>
+							<m:Text text="{totalProductModel>/productCount}" class="sapUiSmallMarginBegin" />
+						</m:VBox>
+					</m:Panel>
+					<m:Panel class="exampleDiv">
+						<m:VBox>
+							<m:Text text="Lorem ipsum" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin"/>
+							<m:Text text="0" class="sapUiSmallMarginBegin" />
+						</m:VBox>
+					</m:Panel>
+				</l:Grid>
+			</l:VerticalLayout>
         </m:content>
     </m:Page>
 </mvc:View>

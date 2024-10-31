@@ -102,22 +102,36 @@
 .sapUiFormResGrid.sapUiFormToolbar > div:first-child{
    height: 4rem !important;
 }
-#container-walkthrough---addProduct--saveProduct-inner{
+#container-walkthrough---addProduct--saveProduct-inner,
+#container-walkthrough---overview--saveProductList-inner,
+#container-walkthrough---overview--cancelSaveList-inner,
+#container-walkthrough---overview--fileUploaderList-fu_button-inner{
    background-color: #6c7ee1 !important;
    color: white;
 
 }
-#container-walkthrough---addProduct--saveProduct-img{
+#container-walkthrough---addProduct--saveProduct-img,
+#container-walkthrough---overview--saveProductList-img,
+#container-walkthrough---overview--cancelSaveList-img{
    color: white;
 }
-#container-walkthrough---addProduct--addProductName-content,
-#container-walkthrough---addProduct--addQuantity-content,
-#container-walkthrough---addProduct--addExtendedPrice-content,
+#container-walkthrough---overview--addProductNameList-content,
+#container-walkthrough---overview--addQuantityList-content,
+#container-walkthrough---overview--addExtendedPriceList-content,
+#container-walkthrough---overview--fileUploaderList-fu_input-content,
 #container-walkthrough---detail--updateProductCode-content,
 #container-walkthrough---detail--updateQuantity-content,
-#container-walkthrough---detail--updateExtendedPrice-content
+#container-walkthrough---detail--updateExtendedPrice-content,
+#container-walkthrough---overview--fileUploaderList-fu_button-inner
 {
    height: 1.7rem;
+}
+
+#container-walkthrough---overview--fileUploaderList-fu_button{
+   height: 0 !important;
+}
+#container-walkthrough---overview--fileUploaderList-fu_button-content{
+   line-height: 1.7rem;
 }
 #container-walkthrough---detail--save-inner{
    background-color: #6c7ee1 !important;
@@ -140,6 +154,52 @@
    color: #eaecee;
 }
 
-#container-walkthrough---overview--contentArea-intHeader{
+#container-walkthrough---overview--contentArea-intHeader,
+#__page1-intHeader{
    height: 0;
+}
+#container-walkthrough---app--sideNavigation,
+.sapTntNLI a,
+.sapTntNLI,
+#__panel1-content,
+#__panel2-content,
+#__panel3-content{
+   background-color: #6c7ee1;
+}
+.sapTntNLI .sapMText,
+.sapTntNLI .sapTntNLIIcon,
+#__text3,
+#__text4,
+#__text5,
+#__text6,
+#__text7,
+#__text8{
+   color: #eaecee;
+
+}
+#__text3,
+#__text5,
+#__text7{
+   font-weight: bold;
+   font-size: 16px;
+}
+#__text4,
+#__text6,
+#__text8{
+   font-weight: bold;
+   font-size: 24px;
+}
+
+#__text1{
+   font-weight: bold;
+   font-size: x-large;
+}
+#__text2{
+   color: #1c1d22e6;
+}
+#__panel0,
+#__panel1,
+#__panel2,
+#__panel3{
+   box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.15);
 }

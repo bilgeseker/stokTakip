@@ -30,13 +30,13 @@
 				<Label text="Birim Fiyatı" />
 				<Text text="{products>ExtendedPrice} TL" />
 				<Label text="Beden" />
-				<Text text="{products>SizeId}" />
+				<Text text="{path: 'products>SizeId', formatter: '.getSizeName'}" />
 				<Label text="Renk" />
-				<Text text="{products>ColorId}" />
+				<Text text="{path: 'products>ColorId', formatter: '.getColorName'}" />
 				<Label text="Alt Kategori" />
-				<Text text="{products>SubCategoryId}" />
+				<Text text="{path: 'products>SubCategoryId', formatter: '.getSubCategoryName'}" />
 				<Label text="Kategori" />
-				<Text text="{products>CategoryId}" />
+				<Text text="{path: 'products>CategoryId', formatter: '.getCategoryName'}" />
 			</f:content>
 		</f:SimpleForm>
 	</VBox>

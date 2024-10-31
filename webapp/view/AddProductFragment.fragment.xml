@@ -25,12 +25,14 @@
 			singleContainerFullSize="false" >
 			<f:toolbar>
 				<m:Toolbar id="TB">
-					<m:HBox class="sapUiSmallMarginTop">
+					<m:HBox class="sapUiSmallMarginTop" justifyContent="End">
 						<m:Button
 							text="Kaydet"
 							id="saveProductList"
 							icon="sap-icon://save"
-							press="onSavePress" />
+							press="onSavePress" 
+							class="sapUiSmallMarginEnd"/>
+							
 						<m:Button
 							text="İptal"
 							id="cancelSaveList"
@@ -55,7 +57,9 @@
 					typeMissmatch="handleTypeMissmatch"
 					style="Emphasized"
 					fileType="jpeg,jpg,png,gif"
-					placeholder="Dosya seçiniz...">
+					placeholder="Dosya seçiniz..."
+					sendXHR="true"
+					>
 						<ui:parameters>
 							<ui:FileUploaderParameter
 								name="Accept-CH"

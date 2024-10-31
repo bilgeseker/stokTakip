@@ -23,33 +23,33 @@
 			<f:content>
 				<core:Title text="{products>ProductName}" />
 				<Label text="Ürün Adı" />
-				<Input value="{products>ProductName}" id="updateProductName"/>
+				<Input value="{products>ProductName}" id="updateProductName" liveChange="onNameChange"/>
 				<Label text="Ürün Kodu" />
 				<Input value="{products>ProductCode}" id="updateProductCode" editable="false"/>
 				<Label text="Miktar" />
-				<Input value="{products>Quantity}" type="Number" id="updateQuantity"/>
+				<Input value="{products>Quantity}" type="Number" id="updateQuantity" liveChange="onQuantityChange"/>
 				<Label text="Birim Fiyatı (TL)" />
-				<Input value="{products>ExtendedPrice}" type="Number" id="updateExtendedPrice"/>
+				<Input value="{products>ExtendedPrice}" type="Number" id="updateExtendedPrice" liveChange="onPriceChange"/>
 				<Label text="Beden" />
-				<Select id="updateSize" selectedKey="{products>SizeId}" items="{sizes>/}">
+				<Select id="updateSize" selectedKey="{products>SizeId}" items="{sizes>/}" change="onSizeChange">
 					<items>
 						<core:Item text="{sizes>SizeName}" key="{sizes>SizeID}"/>
 					</items>
 				</Select>
 				<Label text="Renk" />
-				<Select id="updateColor" selectedKey="{products>ColorId}" items="{colors>/}">
+				<Select id="updateColor" selectedKey="{products>ColorId}" items="{colors>/}" change="onColorChange">
 					<items>
 						<core:Item text="{colors>ColorName}" key="{colors>ColorID}"/>
 					</items>
 				</Select>
 				<Label text="Kategori" />
-				<Select id="updateCategory" selectedKey="{products>CategoryId}" items="{categories>/}">
+				<Select id="updateCategory" selectedKey="{products>CategoryId}" items="{categories>/}" change="onCategoryChange">
 					<items>
 						<core:Item text="{categories>CategoryName}" key="{categories>CategoryID}"/>
 					</items>
 				</Select>
 				<Label text="Alt Kategori" />
-				<Select id="updateSubcategory" selectedKey="{products>SubCategoryId}" items="{subCategories>/}">
+				<Select id="updateSubcategory" selectedKey="{products>SubCategoryId}" items="{subCategories>/}" change="onSubCategoryChange">
 					<items>
 						<core:Item text="{subCategories>SubCategoryName}" key="{subCategories>SubCategoryID}"/>
 					</items>

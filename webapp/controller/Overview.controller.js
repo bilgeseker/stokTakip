@@ -34,15 +34,6 @@ sap.ui.define([
             this._toggleButtonsAndView(false);
         },
         _toggleButtonsAndView : function (bEdit) {
-            var oView = this.getView();
-
-			// oView.byId("searchFieldList").setVisible(!bEdit);
-			// oView.byId("deleteButtonList").setVisible(!bEdit);
-			// oView.byId("addButtonList").setVisible(!bEdit);
-            // oView.byId("saveProductList").setVisible(bEdit);
-            // oView.byId("cancelSaveList").setVisible(bEdit);
-            //oView.byId("deleteProductButtonList").setVisible(!bEdit);
-            //oView.byId("exportExcel").setVisible(!bEdit);
 
 			this._showFormFragment(bEdit ? "AddProductFragment" : "ProductList");
 		},
@@ -91,13 +82,10 @@ sap.ui.define([
 			oBinding.filter(aFilter);
 		},
         onCancelPress: function(){
-            this.getView().byId("addProductNameList").setValue("");
-			this.getView().byId("addQuantityList").setValue("");
-			this.getView().byId("addExtendedPriceList").setValue("");
-			this.getView().byId("addSizeList").setSelectedKey("");
-			this.getView().byId("addColorList").setSelectedKey("");
-			this.getView().byId("addCategoryList").setSelectedKey("");
-			this.getView().byId("addSubcategoryList").setSelectedKey("");
+            const oModel = this.getView().getModel("addProductModel");
+            oModel.setProperty("/ProductName", "");
+            oModel.setProperty("/Quantity", "");
+            oModel.setProperty("/ExtendedPrice", "");
             this._toggleButtonsAndView(false);
         },
         onDelete: function () {
@@ -234,7 +222,7 @@ sap.ui.define([
         onSizeChange: function(oEvent) {
             const selectedItem = oEvent.getParameter("selectedItem");
             if (selectedItem) {
-                const sValue = selectedItem.getKey(); // Seçilen öğenin anahtarını al
+                const sValue = selectedItem.getSelectedKey(); // Seçilen öğenin anahtarını al
                 const oModel = this.getView().getModel("addProductModel");
                 oModel.setProperty("/SizeId", sValue);
             } else {
@@ -244,7 +232,7 @@ sap.ui.define([
         onColorChange: function(oEvent) {
             const selectedItem = oEvent.getParameter("selectedItem");
             if (selectedItem) {
-                const sValue = selectedItem.getKey(); // Seçilen öğenin anahtarını al
+                const sValue = selectedItem.getSelectedKey(); // Seçilen öğenin anahtarını al
                 const oModel = this.getView().getModel("addProductModel");
                 oModel.setProperty("/ColorId", sValue);
             } else {
@@ -254,7 +242,7 @@ sap.ui.define([
         onCategoryChange: function(oEvent) {
             const selectedItem = oEvent.getParameter("selectedItem");
             if (selectedItem) {
-                const sValue = selectedItem.getKey(); // Seçilen öğenin anahtarını al
+                const sValue = selectedItem.getSelectedKey(); // Seçilen öğenin anahtarını al
                 const oModel = this.getView().getModel("addProductModel");
                 oModel.setProperty("/CategoryId", sValue);
             } else {
@@ -265,7 +253,7 @@ sap.ui.define([
         onSubCategoryChange: function(oEvent) {
             const selectedItem = oEvent.getParameter("selectedItem");
             if (selectedItem) {
-                const sValue = selectedItem.getKey(); // Seçilen öğenin anahtarını al
+                const sValue = selectedItem.getSelectedKey(); // Seçilen öğenin anahtarını al
                 const oModel = this.getView().getModel("addProductModel");
                 oModel.setProperty("/SubCategoryId", sValue);
             } else {
@@ -277,12 +265,13 @@ sap.ui.define([
             const randomLetter = letters.charAt(Math.floor(Math.random() * letters.length));
             const randomNumber = Math.floor(10000 + Math.random() * 90000);
 
-            this.handleUploadPress();
-			console.log(this.ImageUrl);
 
             const oModel = this.getView().getModel("addProductModel");
-            console.log("Quantity Value: ", oModel.getProperty("/Quantity"));
-
+            console.log("ImageUrl değeri: ", oModel.getProperty("/ImageUrl"));
+            oModel.setProperty("/SizeId", this.getView().byId("addSizeList").getSelectedKey());
+			oModel.setProperty("/ColorId", this.getView().byId("addColorList").getSelectedKey());
+			oModel.setProperty("/CategoryId", this.getView().byId("addCategoryList").getSelectedKey());
+			oModel.setProperty("/SubCategoryId", this.getView().byId("addSubcategoryList").getSelectedKey());
 
             const updatedData = {
                 ProductName: oModel.getProperty("/ProductName"),
@@ -293,7 +282,7 @@ sap.ui.define([
                 ColorId: oModel.getProperty("/ColorId"), 
                 CategoryId: oModel.getProperty("/CategoryId"), 
                 SubCategoryId: oModel.getProperty("/SubCategoryId"), 
-                ImageUrl: this.ImageUrl
+                ImageUrl: oModel.getProperty("/ImageUrl")
             };
 
             if (!updatedData.ProductName) {
@@ -320,43 +309,13 @@ sap.ui.define([
 					const oModel = this.getOwnerComponent().getModel("products");
             		oModel.loadData("http://localhost:3000/products", null, true);
 					this._toggleButtonsAndView(false);
-					oModel.setProperty("/ProductName", "");
-                    oModel.setProperty("/Quantity", "");
-                    oModel.setProperty("/ExtendedPrice", "");
-                    oModel.setProperty("/SizeId", "");
-                    oModel.setProperty("/ColorId", "");
-                    oModel.setProperty("/CategoryId", "");
-                    oModel.setProperty("/SubCategoryId", "");
-					
+                    
 				}.bind(this), 
 				error: function () {
 					MessageToast.show("Ekleme sırasında hata oluştu.");
 				}
 			});
         },
-		
-
-		handleUploadPress: function() {
-            if (!this._formFragments.AddProductFragment) {
-                // Ensure the fragment is loaded and stored in `_formFragments`
-                this._getFormFragment("AddProductFragment").then(function(oFragment) {
-                    var oFileUploader = oFragment.byId("fileUploaderList"); // Access the FileUploader in the fragment
-        
-                    if (!oFileUploader.getValue()) {
-                        sap.m.MessageToast.show("Choose a file first");
-                        return;
-                    }
-        
-                    oFileUploader.checkFileReadable().then(function() {
-                        oFileUploader.upload();
-                    }, function(error) {
-                        sap.m.MessageToast.show("The file cannot be read. It may have changed.");
-                    }).then(function() {
-                        oFileUploader.clear();
-                    });
-                }.bind(this));
-            }
-        },        
 
 		handleTypeMissmatch: function(oEvent) {
 			var aFileTypes = oEvent.getSource().getFileType();
@@ -369,28 +328,35 @@ sap.ui.define([
 		},
 
 		handleValueChange: function(oEvent) {
+            var oFileUploader = this.byId("fileUploaderList"); 
+            oFileUploader.upload();
 			MessageToast.show("Press 'Upload File' to upload file '" +
 									oEvent.getParameter("newValue") + "'");
 		},
 
 		handleUploadComplete: function(oEvent) {
-			var sResponse = oEvent.getParameter("response");
-			console.log("Yükleme Yanıtı:", oEvent.getParameter("response"));
-		
-			if (sResponse) {
-				console.log(sResponse);
-				try {
-					var responseObject = JSON.parse(sResponse);
-					var imageUrl = responseObject.FileName; // URL'yi al
-					this.ImageUrl = imageUrl;
-					console.log("Yüklenen resim URL'si:", imageUrl);
-					MessageToast.show("Yükleme başarılı.");
-				} catch (e) {
-					console.error("JSON yanıtı ayrıştırılamadı:", e);
-					MessageToast.show("Yükleme sırasında hata oluştu.");
-				}
-			}
-		},
+            var oResponse = oEvent.getParameter("response");
+        
+            if (!oResponse) {
+                sap.m.MessageToast.show("Sunucudan geçerli bir yanıt alınamadı.");
+                return;
+            }
+        
+            try {
+                var oData = JSON.parse(oResponse);
+        
+                var oModel = this.getView().getModel("addProductModel");
+                oModel.setProperty("/ImageUrl", oData.FileName);
+                console.log("Yüklenen dosyanın adı (ImageUrl): ", oData.FileName);
+        
+                sap.m.MessageToast.show("Dosya başarıyla yüklendi: " + oData.FileName);
+        
+            } catch (error) {
+                console.error("JSON parse hatası:", error);
+                sap.m.MessageToast.show("JSON parse hatası: " + error.message);
+            }
+        }
+        ,
         onPress: function(oEvent) {
             const oButton = oEvent.getSource(); 
             const oContext = oButton.getBindingContext("products"); 
