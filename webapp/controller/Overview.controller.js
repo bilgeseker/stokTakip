@@ -127,7 +127,7 @@ sap.ui.define([
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						console.error("Silme hatası:", textStatus, errorThrown);
-						console.error("Sunucu yanıtı:", jqXHR.responseText); // Yanıtı konsolda göster
+						console.error("Sunucu yanıtı:", jqXHR.responseText); 
 						MessageToast.show("Bir hata oluştu, ürün silinemedi.");
 					}
 				});
@@ -136,14 +136,13 @@ sap.ui.define([
 		
 			Promise.all(deletePromises)
 				.then(() => {
-					// Silme işlemi başarılı ise
 					MessageToast.show("Seçilen ürün(ler) başarıyla silindi.");
-					// Seçilen ürünleri modelden kaldır
+					
 					for (let i = selectedIndices.length - 1; i >= 0; i--) {
 						const index = selectedIndices[i];
 						aProducts.splice(index, 1);
 					}
-					oModel.setData(aProducts); // Model verilerini güncelle
+					oModel.setData(aProducts); 
 				})
 				.catch(() => {
 					MessageToast.show("Bir hata oluştu, ürün silinemedi.");

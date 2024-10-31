@@ -1,9 +1,9 @@
 <mvc:View
-    controllerName="ui5.walkthrough.controller.Overview"
+    controllerName="ui5.walkthrough.controller.CategoryOverview"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:table="sap.ui.table">
-    <Page id="contentArea" >
+    <Page id="categoryContent" >
         
     </Page>
 </mvc:View>

@@ -17,7 +17,7 @@ app.use('/upload', express.static(path.join(__dirname, 'upload')));
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '**', 
+  password: 'crisscolfer1', 
   database: 'stock' 
 });
 
@@ -190,8 +190,19 @@ app.post('/addSubCategory', (req, res) => {
 app.delete('/deleteProduct/:id', (req, res) => {
   const productId = req.params.id;
 
-  // SQL sorgusu ile veritabanından silme işlemi
-  const sql = 'DELETE FROM Products WHERE ProductID = ?'; // products tablosunda id alanını kullanıyoruz
+  const sql = 'DELETE FROM Products WHERE ProductID = ?'; 
+  connection.query(sql, [productId], (err, results) => {
+      if (err) {
+        console.log(err);
+          return res.status(500).json({ message: 'Ürün silme işlemi başarısız.', error: err });
+      }
+      res.status(200).json({ message: 'Ürün başarıyla silindi.' });
+  });
+});
+app.delete('/deleteSubCategory/:id', (req, res) => {
+  const productId = req.params.id;
+
+  const sql = 'DELETE FROM SubCategories WHERE SubCategoryID = ?'; 
   connection.query(sql, [productId], (err, results) => {
       if (err) {
         console.log(err);

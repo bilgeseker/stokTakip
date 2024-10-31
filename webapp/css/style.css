@@ -154,7 +154,11 @@
 .dark-theme #container-walkthrough---overview--cancelSaveList-content,
 .dark-theme #container-walkthrough---overview--deleteButtonList-img,
 .dark-theme #container-walkthrough---overview--deleteButtonList-content,
-.dark-theme #container-walkthrough---overview--deleteProductButtonList-img{
+.dark-theme #container-walkthrough---overview--deleteProductButtonList-img,
+.dark-theme #container-walkthrough---categoryOverview--cancelSaveCategory-content,
+.dark-theme #container-walkthrough---categoryOverview--cancelSaveCategory-img,
+.dark-theme #container-walkthrough---categoryOverview--deleteButtonCategory-img,
+.dark-theme #container-walkthrough---categoryOverview--deleteButtonCategory-content{
    color: #eaecee;
 }
 .dark-theme #container-walkthrough---app--sideNavigation,
@@ -171,12 +175,15 @@
 }
 .dark-theme #container-walkthrough---overview--deleteButtonList-inner,
 .dark-theme #container-walkthrough---overview--deleteProductButtonList-inner,
-.dark-theme #container-walkthrough---overview--cancelSaveList-inner{
+.dark-theme #container-walkthrough---overview--cancelSaveList-inner,
+.dark-theme #container-walkthrough---categoryOverview--cancelSaveCategory-inner,
+.dark-theme #container-walkthrough---categoryOverview--deleteButtonCategory-inner{
    background-color: rgb(157, 32, 32);
 }
 
 #container-walkthrough---overview--contentArea-intHeader,
-#__page1-intHeader{
+#__page1-intHeader,
+#container-walkthrough---categoryOverview--categoryContent-intHeader{
    height: 0;
 }
 #container-walkthrough---app--sideNavigation,

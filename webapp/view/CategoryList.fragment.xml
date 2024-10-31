@@ -1,0 +1,73 @@
+<core:FragmentDefinition
+	xmlns:m="sap.m"
+    xmlns="sap.ui.table"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<m:VBox class="sapUiSmallMargin">
+		<m:HBox justifyContent="End" class="searchAndButton">
+                <m:SearchField
+                    id="searchFieldCategory"
+                    placeholder="Ürün Ara"
+                    search=".onFilterProducts"
+                    width="100%"/>
+                <m:Button 
+                    text="Kategoriyi Sil" 
+                    type="Negative" 
+                    icon="sap-icon://delete"
+                    class="sapUiMediumMarginBegin"
+					id="deleteButtonCategory"
+					press="onDelete">
+                </m:Button>
+				<m:Button 
+                    text="Kategori Ekle"
+                    icon="sap-icon://add"
+                    class="sapUiMediumMarginBegin"
+					id="addButtonCategory"
+					press="onAdd">
+                </m:Button>
+            </m:HBox>
+			<Table
+                id="categoryListFragment"
+				rows="{subCategories>/}"
+				selectionMode="MultiToggle"
+				ariaLabelledBy="title"
+                showColumnVisibilityMenu="true"
+                enableColumnFreeze="true"
+                enableCellFilter="true"
+                alternateRowColors="true">
+				<extension>
+                    <m:OverflowToolbar style="Clear">
+                        <m:Title id="categoryListTitle" text="Kategoriler"/>
+                        <m:ToolbarSpacer/>
+						<!-- <m:Button id="deleteCategoryButton" icon="sap-icon://clear-filter" type="Negative" press=".clearFilters" tooltip="{i18n>clearFilterText}"/> -->
+						<!-- <m:Button icon="sap-icon://excel-attachment" press="onExport" tooltip="{i18n>excelText}" id="exportExcel"/> -->
+                    </m:OverflowToolbar>
+                </extension>
+				<columns>
+					<Column
+                        id="subCategoryNameList"
+                        sortProperty="SubCategoryName"
+                        filterProperty="SubCategoryName"
+                        showFilterMenuEntry="true"
+                        showSortMenuEntry="true"
+						resizable="true"
+						autoResizable="true">
+						<m:Label text="Kategori Adı" />
+						<template>
+							<m:Text text="{subCategories>SubCategoryName}" wrapping="false" />
+						</template>
+					</Column>
+					<Column
+                        id="categoryNameList"
+						resizable="true"
+						autoResizable="true">
+						<m:Label text="Üst Kategori Adı" />
+						<template>
+							<m:Text text="{path: 'subCategories>CategoryId', formatter: '.getCategoryName'}" wrapping="false" />
+						</template>
+					</Column>
+				</columns>
+			</Table>
+	</m:VBox>
+</core:FragmentDefinition>

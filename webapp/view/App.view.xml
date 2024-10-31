@@ -51,7 +51,7 @@
 				<tnt:NavigationList>
 					<tnt:NavigationListItem text="Anasayfa" icon="sap-icon://home" key="home"/>
 					<tnt:NavigationListItem text="Ürünler" icon="sap-icon://list" key="overview"/>
-					<tnt:NavigationListItem text="Kategori Ekle" icon="sap-icon://add-activity-2" key="addCategory"/>
+					<tnt:NavigationListItem text="Kategoriler" icon="sap-icon://add-activity-2" key="categoryOverview"/>
 					
 				</tnt:NavigationList>
 			</tnt:SideNavigation>

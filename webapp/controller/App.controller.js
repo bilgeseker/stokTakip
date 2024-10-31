@@ -51,6 +51,8 @@ sap.ui.define([
             oRouter.navTo("addCategory");
          }else if (sKey === "overview") {
             oRouter.navTo("overview");
+         }else if (sKey === "categoryOverview") {
+            oRouter.navTo("categoryOverview");
          }
       },
       onLogoutButtonPress: function (oEvent){

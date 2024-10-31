@@ -97,6 +97,11 @@
 					"pattern": "addCategory",
 					"name": "addCategory",
 					"target": "addCategory"
+				},
+				{
+					"pattern": "categoryOverview",
+					"name": "categoryOverview",
+					"target": "categoryOverview"
 				}
 			],
 			"targets": {
@@ -123,6 +128,10 @@
 				"addCategory": {
 					"id": "addCategory",
 					"name": "AddCategory"
+				},
+				"categoryOverview": {
+					"id": "categoryOverview",
+					"name": "CategoryOverview"
 				}
 			}
 		}

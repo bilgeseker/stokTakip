@@ -64,6 +64,21 @@ sap.ui.define([
         const oUpdateModel = new JSONModel(oUpdateData);
         this.setModel(oUpdateModel, "updateProductModel");
 
+        const oCatAddData = {
+         CategoryName: ""
+         };
+
+        const oCatAddModel = new JSONModel(oCatAddData);
+        this.setModel(oCatAddModel, "addCategoryModel");
+
+        const oSubCatAddData = {
+         SubCategoryName: "",
+         CategoryId: ""
+         };
+
+        const oSubCatAddModel = new JSONModel(oSubCatAddData);
+        this.setModel(oSubCatAddModel, "addSubCategoryModel");
+
         this.getRouter().initialize();
 
       },
