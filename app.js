@@ -17,7 +17,7 @@ app.use('/upload', express.static(path.join(__dirname, 'upload')));
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'crisscolfer1', 
+  password: '**', 
   database: 'stock' 
 });
 
