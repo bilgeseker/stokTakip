@@ -14,8 +14,8 @@
 				<l:Grid containerQuery="true" defaultSpan="L12 M12 S12">
 					<m:Panel class="sapUiSmallMarginTop">
 						<m:VBox>
-							<m:Text text="Hoşgeldiniz Admin" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin"/>
-							<m:Text text="{dateModel>/today}" class="sapUiSmallMarginBegin" />
+							<m:Text text="Hoşgeldiniz Admin" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin" id="adminText"/>
+							<m:Text text="{dateModel>/today}" class="sapUiSmallMarginBegin" id="dateText"/>
 						</m:VBox>
 					</m:Panel>
 				</l:Grid>
@@ -24,20 +24,20 @@
 				<l:Grid containerQuery="true" defaultSpan="L4 M6 S1">
 					<m:Panel class="exampleDiv">
 						<m:VBox>
-							<m:Text text="Stoğu Azalan Ürün Miktarı" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin"/>
-							<m:Text text="{productModel>/decStockCount}" class="sapUiSmallMarginBegin" />
+							<m:Text text="Stoğu Azalan Ürün Miktarı" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin" id="homeText1"/>
+							<m:Text text="{productModel>/decStockCount}" class="sapUiSmallMarginBegin" id="homeNumber1"/>
 						</m:VBox>
 					</m:Panel>
 					<m:Panel class="exampleDiv">
 						<m:VBox>
-							<m:Text text="Toplam Ürün Çeşidi" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin"/>
-							<m:Text text="{totalProductModel>/productCount}" class="sapUiSmallMarginBegin" />
+							<m:Text text="Toplam Ürün Çeşidi" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin" id="homeText2"/>
+							<m:Text text="{totalProductModel>/productCount}" class="sapUiSmallMarginBegin" id="homeNumber2"/>
 						</m:VBox>
 					</m:Panel>
 					<m:Panel class="exampleDiv">
 						<m:VBox>
-							<m:Text text="Lorem ipsum" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin"/>
-							<m:Text text="0" class="sapUiSmallMarginBegin" />
+							<m:Text text="Lorem ipsum" class="sapUiSmallMarginBottom sapUiSmallMarginTop sapUiSmallMarginBegin" id="homeText3"/>
+							<m:Text text="0" class="sapUiSmallMarginBegin" id="homeNumber3"/>
 						</m:VBox>
 					</m:Panel>
 				</l:Grid>

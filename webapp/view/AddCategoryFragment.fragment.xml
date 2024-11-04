@@ -1,71 +1,80 @@
 <core:FragmentDefinition 
-	xmlns:l="sap.ui.layout"
-	xmlns:f="sap.ui.layout.form"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core"
-	xmlns="sap.m">
-	<VBox class="sapUiSmallMargin">
-		<f:SimpleForm id="categorySimpleFormToolbar"
-			editable="true"
-			layout="ResponsiveGridLayout"
-			labelSpanXL="4"
-			labelSpanL="4"
-			labelSpanM="12"
-			labelSpanS="12"
-			adjustLabelSpan="false"
-			emptySpanXL="0"
-			emptySpanL="0"
-			emptySpanM="0"
-			emptySpanS="0"
-			columnsXL="1"
-			columnsL="1"
-			columnsM="1"
-			singleContainerFullSize="false"
-			>
-            <f:toolbar>
-				<Toolbar>
-					<HBox class="sapUiSmallMarginTop" justifyContent="End">
-						<Button
-							text="İptal"
-							id="cancelSaveCategory"
-							type="Negative"
-							icon="sap-icon://cancel"
-							press="onCancelPress" />
-					</HBox>
-				</Toolbar>
-			</f:toolbar>
-			<f:content>
-                <VBox>
-                    <Toolbar ariaLabelledBy="addCategoryTitle" class="sapUiSmallMarginBottom">
-                        <Title id="addCategoryTitleF" text="Üst Kategori Ekle"/>
-                        <ToolbarSpacer />
-                        <Button icon="sap-icon://add-product" />
-                    </Toolbar>
-                    
-                    <Label text="Üst Kategori Adı" />
-                    <Input value="{addCategoryModel>/CategoryName}" id="addCategoryNameF" placeholder="Yeni üst kategori adı girin" width="90%" class="sapUiSmallMarginBottom" liveChange="onCatNameChange"/>
-                    <Button text="Üst Kategori Ekle" press="onAddCategory"/>
+	xmlns:m="sap.m"
+    xmlns="sap.ui.table"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:ui="sap.ui.unified">
+	<m:Dialog title="Kategori Ekle" draggable="true" resizable="true"  id="addCategoryDialog">
+		<m:endButton>
+			<m:Button
+				text="Kapat"
+				icon="sap-icon://decline"
+				press="onCancelPress" />
+		</m:endButton>
+		<m:VBox class="sapUiSmallMargin">
+			<f:SimpleForm id="categorySimpleFormToolbar"
+				editable="true"
+				layout="ResponsiveGridLayout"
+				labelSpanXL="4"
+				labelSpanL="4"
+				labelSpanM="12"
+				labelSpanS="12"
+				adjustLabelSpan="false"
+				emptySpanXL="0"
+				emptySpanL="0"
+				emptySpanM="0"
+				emptySpanS="0"
+				columnsXL="1"
+				columnsL="1"
+				columnsM="1"
+				singleContainerFullSize="false"
+				>
+				<f:toolbar>
+					<m:Toolbar>
+						<m:HBox class="sapUiSmallMarginTop" justifyContent="End">
+							<m:Button
+								text="İptal"
+								id="cancelSaveCategory"
+								type="Negative"
+								icon="sap-icon://cancel"
+								press="onCancelPress" />
+						</m:HBox>
+					</m:Toolbar>
+				</f:toolbar>
+				<f:content>
+					<m:VBox>
+						<m:Toolbar ariaLabelledBy="addCategoryTitle" class="sapUiSmallMarginBottom">
+							<m:Title id="addCategoryTitleF" text="Üst Kategori Ekle"/>
+							<m:ToolbarSpacer />
+							<m:Button icon="sap-icon://add-product" />
+						</m:Toolbar>
+						
+						<m:Label text="Üst Kategori Adı" />
+						<m:Input value="{addCategoryModel>/CategoryName}" id="addCategoryNameF" placeholder="Yeni üst kategori adı girin" width="90%" class="sapUiSmallMarginBottom" liveChange="onCatNameChange"/>
+						<m:Button text="Üst Kategori Ekle" press="onAddCategory"/>
 
-                </VBox>	
-                <VBox>
-                    <Toolbar ariaLabelledBy="addSubCategoryTitle" class="sapUiSmallMarginBottom">
-                        <Title id="addSubCategoryTitleF" text="Alt Kategori Ekle"/>
-                        <ToolbarSpacer />
-                        <Button icon="sap-icon://add-product" />
-                    </Toolbar>
-                    
-                    <Label text="Alt Kategori Adı" />
-                    <Input value="{addSubCategoryModel>/SubCategoryName}" id="addSubCategoryNameF" placeholder="Yeni alt kategori adı girin" width="90%" class="sapUiSmallMarginBottom" liveChange="onSubCatüNameChange"/>
-                    
-                    <Label text="Üst Kategori Seçin" />
-                    <Select id="addSubCategoryListF" items="{categories>/}" class="sapUiSmallMarginBottom" selectedKey="{addSubCategoryModel>/CategoryId}">
-                        <items>
-                            <core:Item text="{categories>CategoryName}" key="{categories>CategoryID}"/>
-                        </items>
-                    </Select>
-                    <Button text="Alt Kategori Ekle" press="onAddSubCategory" />
-                </VBox>
-			</f:content>
-		</f:SimpleForm>
-	</VBox>
+					</m:VBox>	
+					<m:VBox>
+						<m:Toolbar ariaLabelledBy="addSubCategoryTitle" class="sapUiSmallMarginBottom">
+							<m:Title id="addSubCategoryTitleF" text="Alt Kategori Ekle"/>
+							<m:ToolbarSpacer />
+							<m:Button icon="sap-icon://add-product" />
+						</m:Toolbar>
+						
+						<m:Label text="Alt Kategori Adı" />
+						<m:Input value="{addSubCategoryModel>/SubCategoryName}" id="addSubCategoryNameF" placeholder="Yeni alt kategori adı girin" width="90%" class="sapUiSmallMarginBottom" liveChange="onSubCatüNameChange"/>
+						
+						<m:Label text="Üst Kategori Seçin" />
+						<m:Select id="addSubCategoryListF" items="{categories>/}" class="sapUiSmallMarginBottom" selectedKey="{addSubCategoryModel>/CategoryId}">
+							<m:items>
+								<core:Item text="{categories>CategoryName}" key="{categories>CategoryID}"/>
+							</m:items>
+						</m:Select>
+						<m:Button text="Alt Kategori Ekle" press="onAddSubCategory" />
+					</m:VBox>
+				</f:content>
+			</f:SimpleForm>
+		</m:VBox>
+	</m:Dialog>
 </core:FragmentDefinition >

@@ -1,53 +1,54 @@
-<core:FragmentDefinition
+<core:FragmentDefinition xmlns:tnt="sap.tnt"
 	xmlns:m="sap.m"
     xmlns="sap.ui.table"
 	xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
-	<m:VBox class="sapUiSmallMargin">
-		<m:HBox justifyContent="End" class="searchAndButton">
-                <m:SearchField
-                    id="searchFieldList"
-                    placeholder="Ürün Ara"
-                    search=".onFilterProducts"
-                    width="100%"/>
-                    
-                <m:Button 
-                    text="Ürünü Sil" 
-                    type="Negative" 
-                    icon="sap-icon://delete"
-                    class="sapUiMediumMarginBegin"
-					id="deleteButtonList"
-					press="onDelete">
-                </m:Button>
-				<m:Button 
-                    text="Ürün Ekle"
-                    icon="sap-icon://add"
-                    class="sapUiMediumMarginBegin"
-					id="addButtonList"
-					press="onAdd">
-                </m:Button>
-            </m:HBox>
+		<m:VBox class="sapUiSmallMargin">
+			<tnt:ToolHeader id="productToolHeader">
+				<m:HBox justifyContent="End" class="searchAndButton">
+					<m:SearchField
+						id="searchFieldList"
+						placeholder="Ürün Ara"
+						search=".onFilterProducts"
+						width="100%"/>
+					<m:Button 
+						text="Ürünü Sil" 
+						type="Negative" 
+						icon="sap-icon://delete"
+						class="sapUiMediumMarginBegin"
+						id="deleteButtonList"
+						press="onDelete">
+					</m:Button>
+					<m:Button 
+						text="Ürün Ekle"
+						icon="sap-icon://add"
+						class="sapUiMediumMarginBegin"
+						id="addButtonList"
+						press="onAdd">
+					</m:Button>
+				</m:HBox>
+			</tnt:ToolHeader>
 			<Table
-                id="productFragmentList"
+				id="productFragmentList"
 				rows="{products>/}"
 				selectionMode="MultiToggle"
 				ariaLabelledBy="title"
-                showColumnVisibilityMenu="true"
-                enableColumnFreeze="true"
-                enableCellFilter="true"
-                alternateRowColors="true">
+				showColumnVisibilityMenu="true"
+				enableColumnFreeze="true"
+				enableCellFilter="true"
+				alternateRowColors="true">
 				<extension>
-                    <m:OverflowToolbar style="Clear">
-                        <m:Title id="titleList" text="Ürünler"/>
-                        <m:ToolbarSpacer/>
+					<m:OverflowToolbar style="Clear">
+						<m:Title id="titleList" text="Ürünler"/>
+						<m:ToolbarSpacer/>
 						<m:Button id="deleteProductButtonList" icon="sap-icon://clear-filter" type="Negative" press=".clearFilters" tooltip="{i18n>clearFilterText}"/>
 						<m:Button icon="sap-icon://excel-attachment" press="onExport" tooltip="{i18n>excelText}" id="exportExcel"/>
-                    </m:OverflowToolbar>
-                </extension>
+					</m:OverflowToolbar>
+				</extension>
 				<columns>
-                    <Column
-                        id="imageList"
+					<Column
+						id="imageList"
 						resizable="true"
 						autoResizable="true">
 						<m:Label text="Ürün Resmi" />
@@ -56,11 +57,11 @@
 						</template>
 					</Column>
 					<Column
-                        id="nameList"
-                        sortProperty="ProductName"
-                        filterProperty="ProductName"
-                        showFilterMenuEntry="true"
-                        showSortMenuEntry="true"
+						id="nameList"
+						sortProperty="ProductName"
+						filterProperty="ProductName"
+						showFilterMenuEntry="true"
+						showSortMenuEntry="true"
 						resizable="true"
 						autoResizable="true">
 						<m:Label text="Ürün Adı" />
@@ -69,10 +70,10 @@
 						</template>
 					</Column>
 					<Column 
-                        id="productIdList"
-                        filterProperty=""
+						id="productIdList"
+						filterProperty=""
 						resizable="true"
-                        sortProperty=""
+						sortProperty=""
 						autoResizable="true">
 						<m:Label text="Ürün Kodu" />
 						<template>
@@ -80,10 +81,10 @@
 						</template>
 					</Column>
 					<Column 
-                        id="quantityList"
-                        hAlign="End"
+						id="quantityList"
+						hAlign="End"
 						resizable="true"
-                        sortProperty="Quantity"
+						sortProperty="Quantity"
 						autoResizable="true">
 						<m:Label text="Miktar" />
 						<template>
@@ -92,9 +93,9 @@
 					</Column>
 					
 					<Column
-                        id="priceList"
+						id="priceList"
 						resizable="true"
-                        sortProperty="ExtendedPrice"
+						sortProperty="ExtendedPrice"
 						autoResizable="true">
 						<m:Label text="Fiyat (TL)" />
 						<template>
@@ -102,7 +103,7 @@
 						</template>
 					</Column>
 					<Column 
-                        id="sizeList"
+						id="sizeList"
 						resizable="true"
 						autoResizable="true">
 						<m:Label text="Beden" />
@@ -111,7 +112,7 @@
 						</template>
 					</Column>
 					<Column 
-                        id="colorList"
+						id="colorList"
 						resizable="true"
 						autoResizable="true">
 						<m:Label text="Renk" />
@@ -120,7 +121,7 @@
 						</template>
 					</Column>
 					<Column 
-                        id="subCategoryList"
+						id="subCategoryList"
 						resizable="true"
 						autoResizable="true">
 						<m:Label text="Alt Kategori" />
@@ -129,7 +130,7 @@
 						</template>
 					</Column>
 					<Column 
-                        id="categoryHomeList"
+						id="categoryHomeList"
 						resizable="true"
 						autoResizable="true">
 						<m:Label text="Ana Kategori" />
@@ -137,15 +138,16 @@
 							<m:Label text="{path: 'products>CategoryId', formatter: '.getCategoryName'}" wrapping="false" />
 						</template>
 					</Column>
-                    <Column 
+					<Column 
 					resizable="true"
 					autoResizable="true">
-                        <m:Label text="Detayı Gör" />
-                        <template>
-                            <m:Button text="Detayı Gör" press=".onPress" id="detailButtonList"/>
-                        </template>
-                    </Column>
+						<m:Label text="Detayı Gör" />
+						<template>
+							<m:Button text="Detayı Gör" press=".onPress" id="detailButtonList"/>
+						</template>
+					</Column>
 				</columns>
 			</Table>
-	</m:VBox>
+		</m:VBox>
+	
 </core:FragmentDefinition>

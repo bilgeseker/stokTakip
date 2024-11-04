@@ -70,9 +70,12 @@ sap.ui.define([
                 oPage.insertContent(oVBox);
             });
         },
-        
-        onAdd: function(){
-            this._toggleButtonsAndView(true);
+        onAdd: function () {
+            if (!this._oAddCategoryDialog) {
+                this._oAddCategoryDialog = sap.ui.xmlfragment("ui5.walkthrough.view.AddCategoryFragment", this);
+                this.getView().addDependent(this._oAddCategoryDialog);
+            }
+            this._oAddCategoryDialog.open();
         },
         onFilterProducts(oEvent) {
 			const aFilter = []; 
@@ -96,6 +99,7 @@ sap.ui.define([
             oCatModel.refresh(true);
             oSubCatModel.refresh(true);
 
+            this._oAddCategoryDialog.close();
             this._toggleButtonsAndView(false);
         },
         onCatNameChange: function(oEvent) {
@@ -175,7 +179,7 @@ sap.ui.define([
 
         onAddSubCategory: function(){
             const oModel = this.getView().getModel("addSubCategoryModel");
-            oModel.setProperty("/CategoryId", this.getView().byId("addSubCategoryListF").getSelectedKey());
+            oModel.setProperty("/CategoryId", sap.ui.getCore().byId("addSubCategoryListF").getSelectedKey());
             const updatedData = {
 				SubCategoryName: oModel.getProperty("/SubCategoryName"),
                 CategoryId: oModel.getProperty("/CategoryId")

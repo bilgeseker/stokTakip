@@ -5,110 +5,115 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core"
 	xmlns:ui="sap.ui.unified">
+	<m:Dialog title="Ürün Ekle" draggable="true" resizable="true"  id="addProductDialog">
+		<m:endButton>
+			<m:Button
+				text="Kapat"
+				icon="sap-icon://decline"
+				press="onCancelPress" />
+		</m:endButton>
         <m:VBox class="sapUiSmallMargin">
-            
-		<f:SimpleForm id="SimpleFormToolbarList"
-			editable="true"
-			layout="ResponsiveGridLayout"
-			labelSpanXL="4"
-			labelSpanL="4"
-			labelSpanM="12"
-			labelSpanS="12"
-			adjustLabelSpan="false"
-			emptySpanXL="0"
-			emptySpanL="0"
-			emptySpanM="0"
-			emptySpanS="0"
-			columnsXL="2"
-			columnsL="2"
-			columnsM="1"
-			singleContainerFullSize="false" >
-			<f:toolbar>
-				<m:Toolbar id="TB">
-					<m:HBox class="sapUiSmallMarginTop" justifyContent="End">
-						<m:Button
-							text="Kaydet"
-							id="saveProductList"
-							icon="sap-icon://save"
-							press="onSavePress" 
-							class="sapUiSmallMarginEnd"/>
-							
-						<m:Button
-							text="İptal"
-							id="cancelSaveList"
-							type="Negative"
-							icon="sap-icon://cancel"
-							press="onCancelPress" />
-					</m:HBox>
-				</m:Toolbar>
-			</f:toolbar>
-			<f:content>
-				<m:Toolbar ariaLabelledBy="Title2">
-					<m:Title text="Ürün Ekle"/>
-					<m:Button icon="sap-icon://add-product" />
-				</m:Toolbar>
-				<m:Label text="Ürün Fotoğrafı" />
-				<ui:FileUploader
-					id="fileUploaderList"
-					name="myFileUpload"
-					uploadUrl="http://localhost:3000/upload"
-					tooltip="Upload your file to the local server"
-					uploadComplete="handleUploadComplete"
-					change="handleValueChange"
-					typeMissmatch="handleTypeMissmatch"
-					style="Emphasized"
-					fileType="jpeg,jpg,png,gif"
-					placeholder="Dosya seçiniz..."
-					sendXHR="true"
-					>
-						<ui:parameters>
-							<ui:FileUploaderParameter
-								name="Accept-CH"
-								value="Viewport-Width"/>
-							<ui:FileUploaderParameter
-								name="Accept-CH"
-								value="Width"/>
-							<ui:FileUploaderParameter
-								name="Accept-CH-Lifetime"
-								value="86400"/>
-						</ui:parameters>
-				</ui:FileUploader>
-				<!-- <Button
-					text="Upload File"
-					press="handleUploadPress"/> -->
-				<m:Label text="Ürün Adı" />
-				<m:Input value="{addProductModel>/ProductName}" id="addProductNameList" liveChange="onNameChange"/>
-				<m:Label text="Miktar" />
-				<m:Input value="{addProductModel>/Quantity}" type="Number" id="addQuantityList" liveChange="onQuantityChange"/>
-				<m:Label text="Birim Fiyatı (TL)" />
-				<m:Input value="{addProductModel>/ExtendedPrice}" type="Number" id="addExtendedPriceList"  liveChange="onPriceChange"/>
-				<m:Label text="Beden" />
-				<m:Select id="addSizeList" items="{sizes>/}" change="onSizeChange" selectedKey="{addProductModel>/SizeId}">
-					<m:items>
-						<core:Item text="{sizes>SizeName}" key="{sizes>SizeID}" />
-					</m:items>
-				</m:Select>
+			<f:SimpleForm id="SimpleFormToolbarList"
+				editable="true"
+				layout="ResponsiveGridLayout"
+				labelSpanXL="4"
+				labelSpanL="4"
+				labelSpanM="12"
+				labelSpanS="12"
+				adjustLabelSpan="false"
+				emptySpanXL="0"
+				emptySpanL="0"
+				emptySpanM="0"
+				emptySpanS="0"
+				columnsXL="2"
+				columnsL="2"
+				columnsM="1"
+				singleContainerFullSize="false" >
+				<f:toolbar>
+					<m:Toolbar id="TB">
+						<m:HBox class="sapUiSmallMarginTop" justifyContent="End">
+							<m:Button
+								text="Kaydet"
+								id="saveProductList"
+								icon="sap-icon://save"
+								press="onSavePress" 
+								class="sapUiSmallMarginEnd"/>
+								
+							<m:Button
+								text="İptal"
+								id="cancelSaveList"
+								type="Negative"
+								icon="sap-icon://cancel"
+								press="onCancelPress" />
+						</m:HBox>
+					</m:Toolbar>
+				</f:toolbar>
+				<f:content>
+					<m:Toolbar ariaLabelledBy="Title2">
+						<m:Title text="Ürün Ekle"/>
+						<m:Button icon="sap-icon://add-product" />
+					</m:Toolbar>
+					<m:Label text="Ürün Fotoğrafı" />
+					<ui:FileUploader
+						id="fileUploaderList"
+						name="myFileUpload"
+						uploadUrl="http://localhost:3000/upload"
+						tooltip="Upload your file to the local server"
+						uploadComplete="handleUploadComplete"
+						change="handleValueChange"
+						typeMissmatch="handleTypeMissmatch"
+						style="Emphasized"
+						fileType="jpeg,jpg,png,gif"
+						placeholder="Dosya seçiniz..."
+						>
+							<ui:parameters>
+								<ui:FileUploaderParameter
+									name="Accept-CH"
+									value="Viewport-Width"/>
+								<ui:FileUploaderParameter
+									name="Accept-CH"
+									value="Width"/>
+								<ui:FileUploaderParameter
+									name="Accept-CH-Lifetime"
+									value="86400"/>
+							</ui:parameters>
+					</ui:FileUploader>
+					<m:Button
+						text="Yükle"
+						press="handleUploadPress"/>
+					<m:Label text="Ürün Adı" />
+					<m:Input value="{addProductModel>/ProductName}" id="addProductNameList" liveChange="onNameChange"/>
+					<m:Label text="Miktar" />
+					<m:Input value="{addProductModel>/Quantity}" type="Number" id="addQuantityList" liveChange="onQuantityChange"/>
+					<m:Label text="Birim Fiyatı (TL)" />
+					<m:Input value="{addProductModel>/ExtendedPrice}" type="Number" id="addExtendedPriceList"  liveChange="onPriceChange"/>
+					<m:Label text="Beden" />
+					<m:Select id="addSizeList" items="{sizes>/}" change="onSizeChange" selectedKey="{addProductModel>/SizeId}">
+						<m:items>
+							<core:Item text="{sizes>SizeName}" key="{sizes>SizeID}" />
+						</m:items>
+					</m:Select>
 
-				<m:Label text="Renk" />
-				<m:Select id="addColorList" items="{colors>/}" change="onColorChange" selectedKey="{addProductModel>/ColorId}">
-					<m:items>
-						<core:Item text="{colors>ColorName}" key="{colors>ColorID}"/>
-					</m:items>
-				</m:Select>
-				<m:Label text="Kategori" />
-				<m:Select id="addCategoryList" items="{categories>/}" change="onCategoryChange" selectedKey="{addProductModel>/CategoryId}">
-					<m:items>
-						<core:Item text="{categories>CategoryName}" key="{categories>CategoryID}"/>
-					</m:items>
-				</m:Select>
-				<m:Label text="Alt Kategori" />
-				<m:Select id="addSubcategoryList" items="{subCategories>/}" change="onSubCategoryChange" selectedKey="{addProductModel>/SubCategoryId}">
-					<m:items>
-						<core:Item text="{subCategories>SubCategoryName}" key="{subCategories>SubCategoryID}"/>
-					</m:items>
-				</m:Select>
-			</f:content>
-		</f:SimpleForm>
-
+					<m:Label text="Renk" />
+					<m:Select id="addColorList" items="{colors>/}" change="onColorChange" selectedKey="{addProductModel>/ColorId}">
+						<m:items>
+							<core:Item text="{colors>ColorName}" key="{colors>ColorID}"/>
+						</m:items>
+					</m:Select>
+					<m:Label text="Kategori" />
+					<m:Select id="addCategoryList" items="{categories>/}" change="onCategoryChange" selectedKey="{addProductModel>/CategoryId}">
+						<m:items>
+							<core:Item text="{categories>CategoryName}" key="{categories>CategoryID}"/>
+						</m:items>
+					</m:Select>
+					<m:Label text="Alt Kategori" />
+					<m:Select id="addSubcategoryList" items="{subCategories>/}" change="onSubCategoryChange" selectedKey="{addProductModel>/SubCategoryId}">
+						<m:items>
+							<core:Item text="{subCategories>SubCategoryName}" key="{subCategories>SubCategoryID}"/>
+						</m:items>
+					</m:Select>
+				</f:content>
+			</f:SimpleForm>
         </m:VBox>
+	</m:Dialog>
 </core:FragmentDefinition>

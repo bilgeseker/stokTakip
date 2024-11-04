@@ -4,7 +4,7 @@ sap.ui.define([
     "sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
     "sap/m/MessageBox",
-    "sap/m/MessageToast",
+    "sap/m/MessageToast"
 ], function (Controller, Fragment,Filter, FilterOperator,MessageBox,MessageToast) {
     "use strict";
 
@@ -66,10 +66,17 @@ sap.ui.define([
                 oPage.insertContent(oVBox);
             });
         },
-        
-        onAdd: function(){
-            this._toggleButtonsAndView(true);
+        onAdd: function () {
+            if (!this._oAddProductDialog) {
+                this._oAddProductDialog = sap.ui.xmlfragment("ui5.walkthrough.view.AddProductFragment", this);
+                this.getView().addDependent(this._oAddProductDialog);
+            }
+            this._oAddProductDialog.open();
         },
+        
+        // onAdd: function(){
+        //     this._toggleButtonsAndView(true);
+        // },
         onFilterProducts(oEvent) {
 			const aFilter = []; 
 			const sQuery = oEvent.getParameter("query");
@@ -91,6 +98,7 @@ sap.ui.define([
             oModel.setProperty("/CategoryId", ""); 
             oModel.setProperty("/SubCategoryId", ""); 
             oModel.setProperty("/ImageUrl", "");
+            this._oAddProductDialog.close();
             this._toggleButtonsAndView(false);
         },
         onDelete: function () {
@@ -274,10 +282,10 @@ sap.ui.define([
 
             const oModel = this.getView().getModel("addProductModel");
             console.log("ImageUrl değeri: ", oModel.getProperty("/ImageUrl"));
-            oModel.setProperty("/SizeId", this.getView().byId("addSizeList").getSelectedKey());
-			oModel.setProperty("/ColorId", this.getView().byId("addColorList").getSelectedKey());
-			oModel.setProperty("/CategoryId", this.getView().byId("addCategoryList").getSelectedKey());
-			oModel.setProperty("/SubCategoryId", this.getView().byId("addSubcategoryList").getSelectedKey());
+            oModel.setProperty("/SizeId", sap.ui.getCore().byId("addSizeList").getSelectedKey());
+			oModel.setProperty("/ColorId", sap.ui.getCore().byId("addColorList").getSelectedKey());
+			oModel.setProperty("/CategoryId", sap.ui.getCore().byId("addCategoryList").getSelectedKey());
+			oModel.setProperty("/SubCategoryId", sap.ui.getCore().byId("addSubcategoryList").getSelectedKey());
 
             const updatedData = {
                 ProductName: oModel.getProperty("/ProductName"),
@@ -323,6 +331,7 @@ sap.ui.define([
                     oModel.setProperty("/SubCategoryId", "");
                     oModel.setProperty("/ImageUrl", "");
 
+                    this._oAddProductDialog.close();
 					this._toggleButtonsAndView(false);
 
                     
@@ -331,6 +340,25 @@ sap.ui.define([
 					MessageToast.show("Ekleme sırasında hata oluştu.");
 				}
 			});
+        },
+        handleUploadPress: function(){
+            var oDialog = sap.ui.getCore().byId("addProductDialog");
+            console.log(oDialog);
+            var oFileUploader = oDialog.getContent()[0].byId("fileUploaderList");
+            console.log(oFileUploader);
+
+            if (!oFileUploader.getValue()) {
+                sap.m.MessageToast.show("Önce bir dosya seçin");
+                return;
+            }
+            
+            oFileUploader.checkFileReadable().then(function() {
+                oFileUploader.upload();
+            }, function(error) {
+                sap.m.MessageToast.show("Dosya okunamıyor. Değişmiş olabilir.");
+            }).then(function() {
+                oFileUploader.clear();
+            });
         },
 
 		handleTypeMissmatch: function(oEvent) {
@@ -344,9 +372,7 @@ sap.ui.define([
 		},
 
 		handleValueChange: function(oEvent) {
-            var oFileUploader = this.byId("fileUploaderList"); 
-            oFileUploader.upload();
-			MessageToast.show("Press 'Upload File' to upload file '" +
+			MessageToast.show("Press 'Save' to upload file '" +
 									oEvent.getParameter("newValue") + "'");
 		},
 
@@ -359,13 +385,14 @@ sap.ui.define([
             }
         
             try {
+                console.log("Server response:", oResponse);
                 var oData = JSON.parse(oResponse);
         
                 var oModel = this.getView().getModel("addProductModel");
-                oModel.setProperty("/ImageUrl", oData.FileName);
-                console.log("Yüklenen dosyanın adı (ImageUrl): ", oData.FileName);
+                oModel.setProperty("/ImageUrl", oData.file);
+                console.log("Yüklenen dosyanın adı (ImageUrl): ", oData.file);
         
-                sap.m.MessageToast.show("Dosya başarıyla yüklendi: " + oData.FileName);
+                sap.m.MessageToast.show("Dosya başarıyla yüklendi: " + oData.file);
         
             } catch (error) {
                 console.error("JSON parse hatası:", error);
@@ -390,7 +417,5 @@ sap.ui.define([
             });
             console.log(`Navigating to detail page with path: ${sPath}`);
         }
-        
-
     });
 });

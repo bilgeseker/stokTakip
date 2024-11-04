@@ -66,7 +66,16 @@
 .sapUiSizeCompact .sapMBtnInner{
    height: 2.5rem;
 }
-
+#container-walkthrough---overview--productToolHeader,
+#container-walkthrough---categoryOverview--categoryToolHeader{
+   border-radius: 0.5rem 0.5rem 0 0;
+   padding-top: 2rem;
+   justify-content: end;
+}
+#container-walkthrough---overview--searchFieldList-F,
+#container-walkthrough---categoryOverview--searchFieldCategory-F{
+   margin-top: 0.5rem;
+}
 /* ----- Login ----- */
 .sapMListTblCell {
    white-space: nowrap !important;
@@ -90,8 +99,6 @@
 .sapUiSizeCompact .sapMTB{
    height: 4.5rem;
    padding: 0 1rem;
-   border-top-left-radius: 10px;
-   border-top-right-radius: 10px;
 }
 .sapUiTableCnt{
    padding: 0 0.5rem;
@@ -102,16 +109,20 @@
 .sapUiFormResGrid.sapUiFormToolbar > div:first-child{
    height: 4rem !important;
 }
-#container-walkthrough---addProduct--saveProduct-inner,
+
 #container-walkthrough---overview--saveProductList-inner,
-#container-walkthrough---overview--fileUploaderList-fu_button-inner{
+#container-walkthrough---overview--fileUploaderList-fu_button-inner,
+#container-walkthrough---overview--addButtonList-inner,
+#container-walkthrough---categoryOverview--addButtonCategory-inner{
    background-color: #6c7ee1 !important;
    color: white;
 
 }
-#container-walkthrough---addProduct--saveProduct-img,
+
 #container-walkthrough---overview--saveProductList-img,
-#container-walkthrough---overview--cancelSaveList-img{
+#container-walkthrough---overview--cancelSaveList-img,
+#container-walkthrough---overview--addButtonList-img,
+#container-walkthrough---categoryOverview--addButtonCategory-img{
    color: white;
 }
 #container-walkthrough---overview--addProductNameList-content,
@@ -167,10 +178,10 @@
 .dark-theme #__panel1-content,
 .dark-theme #__panel2-content,
 .dark-theme #__panel3-content,
-.dark-theme #container-walkthrough---addProduct--saveProduct-inner,
 .dark-theme #container-walkthrough---overview--saveProductList-inner,
 .dark-theme #container-walkthrough---overview--fileUploaderList-fu_button-inner,
-.dark-theme .sapMBtnInner{
+.dark-theme .sapMBtnInner,
+.dark-theme #container-walkthrough---overview--addButtonList-inner{
    background-color: #5e6ec8;
 }
 .dark-theme #container-walkthrough---overview--deleteButtonList-inner,
@@ -196,33 +207,33 @@
 }
 .sapTntNLI .sapMText,
 .sapTntNLI .sapTntNLIIcon,
-#__text3,
-#__text4,
-#__text5,
-#__text6,
-#__text7,
-#__text8{
+#container-walkthrough---home--homeText1,
+#container-walkthrough---home--homeNumber1,
+#container-walkthrough---home--homeText2,
+#container-walkthrough---home--homeNumber2,
+#container-walkthrough---home--homeText3,
+#container-walkthrough---home--homeNumber3{
    color: #eaecee;
 
 }
-#__text3,
-#__text5,
-#__text7{
+#container-walkthrough---home--homeText1,
+#container-walkthrough---home--homeText2,
+#container-walkthrough---home--homeText3{
    font-weight: bold;
    font-size: 16px;
 }
-#__text4,
-#__text6,
-#__text8{
+#container-walkthrough---home--homeNumber1,
+#container-walkthrough---home--homeNumber2,
+#container-walkthrough---home--homeNumber3{
    font-weight: bold;
    font-size: 24px;
 }
 
-#__text1{
+#container-walkthrough---home--adminText{
    font-weight: bold;
    font-size: x-large;
 }
-#__text2{
+#container-walkthrough---home--dateText{
    color: #1c1d22e6;
 }
 #__panel0,
@@ -231,3 +242,4 @@
 #__panel3{
    box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.15);
 }
+

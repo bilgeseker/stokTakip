@@ -5,6 +5,7 @@ const cors = require('cors');
 const app = express();
 const fileUpload = require('express-fileupload');
 const path = require('path');
+const multer  = require('multer');
 
 app.use(express.static('webapp'));
 app.use(bodyParser.json());
@@ -17,7 +18,7 @@ app.use('/upload', express.static(path.join(__dirname, 'upload')));
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '**', 
+  password: 'crisscolfer1', 
   database: 'stock' 
 });
 
@@ -212,25 +213,37 @@ app.delete('/deleteSubCategory/:id', (req, res) => {
   });
 });
 /* -------------- DELETE END -------------*/
-
-
-app.post('/upload', (req, res) => {
-  if (!req.files || Object.keys(req.files).length === 0) {
-      return res.status(400).send('Hiçbir dosya seçilmedi.');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'upload/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); // Dosya adını benzersiz yapmak için zaman damgası ekleniyor
   }
+});
+// Sadece resim dosyalarını kabul etme
+const upload = multer({ 
+  storage: storage,
+  fileFilter: function (req, file, cb) {
+    const fileTypes = /jpeg|jpg|png|gif/;
+    const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = fileTypes.test(file.mimetype);
 
-  const sampleFile = req.files.myFileUpload; 
-  const uploadPath = path.join(__dirname, 'upload', sampleFile.name);
-  
-  sampleFile.mv(uploadPath, (err) => {
-      if (err) {
-          console.error('Dosya kaydedilirken hata:', err);
-          return res.status(500).send('Yükleme sırasında hata oluştu.');
-      }
-      console.log(sampleFile.name);
-      res.json({ FileName: sampleFile.name});
-
-  });
+    if (mimetype && extname) {
+      return cb(null, true);
+    } else {
+      cb(new Error('Yalnızca resim dosyaları yüklenebilir!'));
+    }
+  }
+});
+app.post('/upload', upload.single('myFileUpload'), (req, res) => {
+  if (req.file) {
+    console.log(req.file);
+    res.status(200).json({ message: 'Dosya başarıyla yüklendi!', file: req.file });
+  } else {
+    console.log("fvefv");
+    res.status(400).json({ message: 'Dosya yüklenemedi!' });
+  }
 });
 
 app.get('/getCount', (req, res) => {
