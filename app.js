@@ -13,6 +13,11 @@ app.use(cors());
 app.use(express.json());
 app.use(fileUpload());
 app.use('/upload', express.static(path.join(__dirname, 'upload')));
+app.use((err, req, res, next) => {
+  console.error("Global error handler:", err);
+  res.status(500).send('Something broke!');
+});
+
 
 
 const connection = mysql.createConnection({
@@ -237,14 +242,21 @@ const upload = multer({
   }
 });
 app.post('/upload', upload.single('myFileUpload'), (req, res) => {
-  if (req.file) {
+  console.log(req.body);
     console.log(req.file);
-    res.status(200).json({ message: 'Dosya başarıyla yüklendi!', file: req.file });
-  } else {
-    console.log("fvefv");
-    res.status(400).json({ message: 'Dosya yüklenemedi!' });
+  try {
+      if (req.file) {
+          res.status(200).json({ message: 'Dosya başarıyla yüklendi!', file: req.file.filename });
+      } else {
+          console.error("Dosya yüklenemedi, req.file tanımsız.");
+          res.status(400).json({ message: 'Dosya yüklenemedi!' });
+      }
+  } catch (error) {
+      console.error("Hata oluştu:", error);
+      res.status(500).json({ message: 'Sunucu hatası oluştu.' });
   }
 });
+
 
 app.get('/getCount', (req, res) => {
   const sql = 'SELECT Count(*) FROM Products WHERE Quantity<100';

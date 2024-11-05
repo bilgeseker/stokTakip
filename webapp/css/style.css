@@ -113,7 +113,9 @@
 #container-walkthrough---overview--saveProductList-inner,
 #container-walkthrough---overview--fileUploaderList-fu_button-inner,
 #container-walkthrough---overview--addButtonList-inner,
-#container-walkthrough---categoryOverview--addButtonCategory-inner{
+#container-walkthrough---categoryOverview--addButtonCategory-inner,
+#saveProductList-inner,
+#fileUploaderList-fu_button-inner{
    background-color: #6c7ee1 !important;
    color: white;
 
@@ -122,7 +124,8 @@
 #container-walkthrough---overview--saveProductList-img,
 #container-walkthrough---overview--cancelSaveList-img,
 #container-walkthrough---overview--addButtonList-img,
-#container-walkthrough---categoryOverview--addButtonCategory-img{
+#container-walkthrough---categoryOverview--addButtonCategory-img,
+#saveProductList-img{
    color: white;
 }
 #container-walkthrough---overview--addProductNameList-content,
@@ -169,7 +172,9 @@
 .dark-theme #container-walkthrough---categoryOverview--cancelSaveCategory-content,
 .dark-theme #container-walkthrough---categoryOverview--cancelSaveCategory-img,
 .dark-theme #container-walkthrough---categoryOverview--deleteButtonCategory-img,
-.dark-theme #container-walkthrough---categoryOverview--deleteButtonCategory-content{
+.dark-theme #container-walkthrough---categoryOverview--deleteButtonCategory-content,
+.dark-theme #saveProductList-img,
+.dark-theme #saveProductList-content{
    color: #eaecee;
 }
 .dark-theme #container-walkthrough---app--sideNavigation,
@@ -181,7 +186,8 @@
 .dark-theme #container-walkthrough---overview--saveProductList-inner,
 .dark-theme #container-walkthrough---overview--fileUploaderList-fu_button-inner,
 .dark-theme .sapMBtnInner,
-.dark-theme #container-walkthrough---overview--addButtonList-inner{
+.dark-theme #container-walkthrough---overview--addButtonList-inner,
+.dark-theme #saveProductList-inner{
    background-color: #5e6ec8;
 }
 .dark-theme #container-walkthrough---overview--deleteButtonList-inner,

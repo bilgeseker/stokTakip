@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dosya Yükleme</title>
+</head>
+<body>
+    <h1>Dosya Yükleme</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Yükle</button>
+    </form>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const formData = new FormData(this);
+            fetch('http://localhost:3000/upload', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ağ yanıtı hatalı: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Başarılı:', data);
+            })
+            .catch((error) => {
+                console.error('Hata:', error);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -54,33 +54,36 @@
 						<m:Button icon="sap-icon://add-product" />
 					</m:Toolbar>
 					<m:Label text="Ürün Fotoğrafı" />
-					<ui:FileUploader
-						id="fileUploaderList"
-						name="myFileUpload"
-						uploadUrl="http://localhost:3000/upload"
-						tooltip="Upload your file to the local server"
-						uploadComplete="handleUploadComplete"
-						change="handleValueChange"
-						typeMissmatch="handleTypeMissmatch"
-						style="Emphasized"
-						fileType="jpeg,jpg,png,gif"
-						placeholder="Dosya seçiniz..."
-						>
-							<ui:parameters>
-								<ui:FileUploaderParameter
-									name="Accept-CH"
-									value="Viewport-Width"/>
-								<ui:FileUploaderParameter
-									name="Accept-CH"
-									value="Width"/>
-								<ui:FileUploaderParameter
-									name="Accept-CH-Lifetime"
-									value="86400"/>
-							</ui:parameters>
-					</ui:FileUploader>
-					<m:Button
-						text="Yükle"
-						press="handleUploadPress"/>
+					<m:HBox >
+						<ui:FileUploader
+							id="fileUploaderList"
+							name="myFileUpload"
+							uploadUrl="http://localhost:3000/upload"
+							tooltip="Upload your file to the local server"
+							uploadComplete="handleUploadComplete"
+							change="handleValueChange"
+							typeMissmatch="handleTypeMissmatch"
+							style="Emphasized"
+							fileType="jpeg,jpg,png,gif"
+							placeholder="Dosya seçiniz..."
+							>
+								<ui:parameters>
+									<ui:FileUploaderParameter
+										name="Accept-CH"
+										value="Viewport-Width"/>
+									<ui:FileUploaderParameter
+										name="Accept-CH"
+										value="Width"/>
+									<ui:FileUploaderParameter
+										name="Accept-CH-Lifetime"
+										value="86400"/>
+								</ui:parameters>
+						</ui:FileUploader>
+						<m:Button
+							text="Yükle"
+							press="handleUploadPress"
+							class="sapUiSmallMarginBegin"/>
+					</m:HBox>
 					<m:Label text="Ürün Adı" />
 					<m:Input value="{addProductModel>/ProductName}" id="addProductNameList" liveChange="onNameChange"/>
 					<m:Label text="Miktar" />

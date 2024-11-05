@@ -341,25 +341,23 @@ sap.ui.define([
 				}
 			});
         },
-        handleUploadPress: function(){
-            var oDialog = sap.ui.getCore().byId("addProductDialog");
-            console.log(oDialog);
-            var oFileUploader = oDialog.getContent()[0].byId("fileUploaderList");
-            console.log(oFileUploader);
-
-            if (!oFileUploader.getValue()) {
-                sap.m.MessageToast.show("Önce bir dosya seçin");
-                return;
-            }
-            
-            oFileUploader.checkFileReadable().then(function() {
-                oFileUploader.upload();
-            }, function(error) {
-                sap.m.MessageToast.show("Dosya okunamıyor. Değişmiş olabilir.");
-            }).then(function() {
-                oFileUploader.clear();
-            });
+        handleUploadPress: function() {
+        
+            var oFileUploader = sap.ui.getCore().byId("fileUploaderList");
+			if (!oFileUploader.getValue()) {
+				MessageToast.show("Choose a file first");
+				return;
+			}
+			oFileUploader.checkFileReadable().then(function() {
+				oFileUploader.upload();
+                console.log(oFileUploader.getDomRef().querySelector("input[type='file']").files[0]);
+			}, function(error) {
+				MessageToast.show("The file cannot be read. It may have changed.");
+			}).then(function() {
+				oFileUploader.clear();
+			});
         },
+        
 
 		handleTypeMissmatch: function(oEvent) {
 			var aFileTypes = oEvent.getSource().getFileType();
@@ -377,28 +375,26 @@ sap.ui.define([
 		},
 
 		handleUploadComplete: function(oEvent) {
-            var oResponse = oEvent.getParameter("response");
+            var oResponse = oEvent.getParameter("response"); 
+            console.log("Sunucu yanıtı:", oResponse); 
         
             if (!oResponse) {
                 sap.m.MessageToast.show("Sunucudan geçerli bir yanıt alınamadı.");
                 return;
             }
-        
+            
             try {
-                console.log("Server response:", oResponse);
                 var oData = JSON.parse(oResponse);
-        
                 var oModel = this.getView().getModel("addProductModel");
                 oModel.setProperty("/ImageUrl", oData.file);
                 console.log("Yüklenen dosyanın adı (ImageUrl): ", oData.file);
-        
                 sap.m.MessageToast.show("Dosya başarıyla yüklendi: " + oData.file);
-        
             } catch (error) {
                 console.error("JSON parse hatası:", error);
                 sap.m.MessageToast.show("JSON parse hatası: " + error.message);
             }
         }
+        
         ,
         onPress: function(oEvent) {
             const oButton = oEvent.getSource(); 
