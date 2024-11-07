@@ -5,7 +5,6 @@ sap.ui.define([
 
 	return Controller.extend("ui5.walkthrough.controller.Login", {
         onInit: function(){
-            this.byId("user").addStyleClass("loginInput");
         },
 		
 		onBtnClick: function () {

@@ -15,10 +15,31 @@ sap.ui.define([
 			} else {
 				this.getOwnerComponent().getRouter().navTo("login"); 
 			}
-         this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
+         
+         var savedKey = sessionStorage.getItem("selectedPage");
+         if (savedKey) {
+            var oSideNavigation = this.byId("sideNavigation");
+            var oNavigationList = oSideNavigation.getAggregation("item");
 
+            if (oNavigationList) {
+                var oItemToSelect = this._findNavigationItemByKey(oNavigationList, savedKey);
+                
+                if (oItemToSelect) {
+                    oSideNavigation.setSelectedItem(oItemToSelect);
+                }
+            }
+         }
+         
+         this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
          this.getOwnerComponent().getRouter().attachRouteMatched(this.onRouteMatched, this);
       },
+
+      _findNavigationItemByKey: function(oNavigationList, sKey) {
+         var aItems = oNavigationList.getItems();
+         return aItems.find(function(oItem) {
+             return oItem.getKey() === sKey;
+         });
+     },
       onRouteMatched: function (oEvent) {
          var sRouteName = oEvent.getParameter("name");
          var oSideNav = this.byId("sideNavigation");
@@ -45,6 +66,7 @@ sap.ui.define([
       onItemSelect: function (oEvent) {
          var sKey = oEvent.getParameter("item").getKey();
          var oRouter = UIComponent.getRouterFor(this);
+         sessionStorage.setItem("selectedPage", sKey);
          if (sKey === "home") {
             oRouter.navTo("home");
          } else if (sKey === "addCategory") {

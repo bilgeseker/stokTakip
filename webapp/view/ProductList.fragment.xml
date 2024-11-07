@@ -16,17 +16,29 @@
 						text="Ürünü Sil" 
 						type="Negative" 
 						icon="sap-icon://delete"
-						class="sapUiMediumMarginBegin"
+						class="sapUiSmallMarginBegin"
 						id="deleteButtonList"
 						press="onDelete">
 					</m:Button>
 					<m:Button 
 						text="Ürün Ekle"
 						icon="sap-icon://add"
-						class="sapUiMediumMarginBegin"
+						class="sapUiSmallMarginBegin"
 						id="addButtonList"
 						press="onAdd">
 					</m:Button>
+					<m:Button 
+						id="deleteProductButtonList" 
+						icon="sap-icon://clear-filter"
+						press=".clearFilters" 
+						class="sapUiSmallMarginBegin"
+						tooltip="{i18n>clearFilterText}"/>
+					<m:Button 
+						id="exportExcel"
+						icon="sap-icon://excel-attachment"
+						class="sapUiSmallMarginBegin"
+						press="onExport" 
+						tooltip="{i18n>excelText}" />
 				</m:HBox>
 			</tnt:ToolHeader>
 			<Table
@@ -42,8 +54,6 @@
 					<m:OverflowToolbar style="Clear">
 						<m:Title id="titleList" text="Ürünler"/>
 						<m:ToolbarSpacer/>
-						<m:Button id="deleteProductButtonList" icon="sap-icon://clear-filter" type="Negative" press=".clearFilters" tooltip="{i18n>clearFilterText}"/>
-						<m:Button icon="sap-icon://excel-attachment" press="onExport" tooltip="{i18n>excelText}" id="exportExcel"/>
 					</m:OverflowToolbar>
 				</extension>
 				<columns>

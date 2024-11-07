@@ -122,7 +122,7 @@
 }
 
 #container-walkthrough---overview--saveProductList-img,
-#container-walkthrough---overview--cancelSaveList-img,
+#cancelSaveList-img,
 #container-walkthrough---overview--addButtonList-img,
 #container-walkthrough---categoryOverview--addButtonCategory-img,
 #saveProductList-img{
@@ -161,14 +161,23 @@
 #__bar0{
    height: 3rem;
 }
+#container-walkthrough---overview--deleteProductButtonList-img{
+   color: var(--sapButton_Negative_Background);
+}
+
+.sapTntNLCollapsed .sapTntNLISelected:not(.sapTntNLIDisabled):not(.sapTntNLIActive):not(:hover):not(:focus-within){
+   background: 0 100% / 100% 0.125rem no-repeat linear-gradient(0deg, #e5e9ef, #c8cdd3), #ebf8ff;
+}
+.sapTntNLISelectionIndicator{
+   color:#e5e9ef;
+}
 /* ------ dark theme ------- */
 
 .dark-theme .sapMTitleStyleAuto,
 .dark-theme #__text2,
-.dark-theme #container-walkthrough---overview--cancelSaveList-content,
+.dark-theme #cancelSaveList-content,
 .dark-theme #container-walkthrough---overview--deleteButtonList-img,
 .dark-theme #container-walkthrough---overview--deleteButtonList-content,
-.dark-theme #container-walkthrough---overview--deleteProductButtonList-img,
 .dark-theme #container-walkthrough---categoryOverview--cancelSaveCategory-content,
 .dark-theme #container-walkthrough---categoryOverview--cancelSaveCategory-img,
 .dark-theme #container-walkthrough---categoryOverview--deleteButtonCategory-img,
@@ -191,11 +200,14 @@
    background-color: #5e6ec8;
 }
 .dark-theme #container-walkthrough---overview--deleteButtonList-inner,
-.dark-theme #container-walkthrough---overview--deleteProductButtonList-inner,
-.dark-theme #container-walkthrough---overview--cancelSaveList-inner,
+
+.dark-theme #cancelSaveList-inner,
 .dark-theme #container-walkthrough---categoryOverview--cancelSaveCategory-inner,
 .dark-theme #container-walkthrough---categoryOverview--deleteButtonCategory-inner{
    background-color: rgb(157, 32, 32);
+}
+.dark-theme #container-walkthrough---overview--deleteProductButtonList-img{
+   color:rgb(157, 32, 32) ;
 }
 
 #container-walkthrough---overview--contentArea-intHeader,

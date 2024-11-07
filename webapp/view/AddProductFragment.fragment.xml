@@ -5,10 +5,20 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core"
 	xmlns:ui="sap.ui.unified">
-	<m:Dialog title="Ürün Ekle" draggable="true" resizable="true"  id="addProductDialog">
+	<m:Dialog draggable="true" resizable="true"  id="addProductDialog">
+		<m:beginButton>
+			<m:Button
+				text="Kaydet"
+				id="saveProductList"
+				icon="sap-icon://save"
+				press="onSavePress" 
+				class="sapUiSmallMarginEnd"/>
+		</m:beginButton>
 		<m:endButton>
 			<m:Button
 				text="Kapat"
+				id="cancelSaveList"
+				type="Negative"
 				icon="sap-icon://decline"
 				press="onCancelPress" />
 		</m:endButton>
@@ -29,25 +39,6 @@
 				columnsL="2"
 				columnsM="1"
 				singleContainerFullSize="false" >
-				<f:toolbar>
-					<m:Toolbar id="TB">
-						<m:HBox class="sapUiSmallMarginTop" justifyContent="End">
-							<m:Button
-								text="Kaydet"
-								id="saveProductList"
-								icon="sap-icon://save"
-								press="onSavePress" 
-								class="sapUiSmallMarginEnd"/>
-								
-							<m:Button
-								text="İptal"
-								id="cancelSaveList"
-								type="Negative"
-								icon="sap-icon://cancel"
-								press="onCancelPress" />
-						</m:HBox>
-					</m:Toolbar>
-				</f:toolbar>
 				<f:content>
 					<m:Toolbar ariaLabelledBy="Title2">
 						<m:Title text="Ürün Ekle"/>

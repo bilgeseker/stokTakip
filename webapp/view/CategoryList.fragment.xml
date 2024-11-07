@@ -16,14 +16,14 @@
                     text="Kategoriyi Sil" 
                     type="Negative" 
                     icon="sap-icon://delete"
-                    class="sapUiMediumMarginBegin"
+                    class="sapUiSmallMarginBegin"
 					id="deleteButtonCategory"
 					press="onDelete">
                 </m:Button>
 				<m:Button 
                     text="Kategori Ekle"
                     icon="sap-icon://add"
-                    class="sapUiMediumMarginBegin"
+                    class="sapUiSmallMarginBegin"
 					id="addButtonCategory"
 					press="onAdd">
                 </m:Button>
