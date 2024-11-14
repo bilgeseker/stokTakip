@@ -341,24 +341,57 @@ sap.ui.define([
 				}
 			});
         },
-        handleUploadPress: function() {
+        // handleUploadPress: function() {
         
+        //     var oFileUploader = sap.ui.getCore().byId("fileUploaderList");
+		// 	if (!oFileUploader.getValue()) {
+		// 		MessageToast.show("Choose a file first");
+		// 		return;
+		// 	}
+		// 	oFileUploader.checkFileReadable().then(function() {
+		// 		oFileUploader.upload();
+        //         console.log(oFileUploader.getDomRef().querySelector("input[type='file']").files[0]);
+		// 	}, function(error) {
+		// 		MessageToast.show("The file cannot be read. It may have changed.");
+		// 	}).then(function() {
+		// 		oFileUploader.clear();
+		// 	});
+        // },
+        handleUploadPress: function () {
             var oFileUploader = sap.ui.getCore().byId("fileUploaderList");
-			if (!oFileUploader.getValue()) {
-				MessageToast.show("Choose a file first");
-				return;
-			}
-			oFileUploader.checkFileReadable().then(function() {
-				oFileUploader.upload();
-                console.log(oFileUploader.getDomRef().querySelector("input[type='file']").files[0]);
-			}, function(error) {
-				MessageToast.show("The file cannot be read. It may have changed.");
-			}).then(function() {
-				oFileUploader.clear();
-			});
-        },
+            var oFile = oFileUploader.oFileUpload.files[0];
+            console.log(oFile);
         
-
+            if (!oFile) {
+                sap.m.MessageToast.show("Lütfen bir dosya seçin.");
+                return;
+            }
+        
+            let formData = new FormData();
+            formData.append("file", oFile);
+            formData.append("type", "productImage");
+        
+            fetch("http://localhost:3000/fileUpload", {
+                method: "POST",
+                body: formData,
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error("Dosya yükleme başarısız oldu.");
+                })
+                .then((data) => {
+                    sap.m.MessageToast.show("Dosya yüklendi.");
+                    console.log("Sunucu Yanıtı:", data);
+                })
+                .catch((error) => {
+                    console.log("error");
+                    sap.m.MessageToast.show("hata oluştu.");
+                    console.error(error);
+                });
+        },
+                
 		handleTypeMissmatch: function(oEvent) {
 			var aFileTypes = oEvent.getSource().getFileType();
 			aFileTypes.map(function(sType) {
@@ -386,9 +419,9 @@ sap.ui.define([
             try {
                 var oData = JSON.parse(oResponse);
                 var oModel = this.getView().getModel("addProductModel");
-                oModel.setProperty("/ImageUrl", oData.file);
-                console.log("Yüklenen dosyanın adı (ImageUrl): ", oData.file);
-                sap.m.MessageToast.show("Dosya başarıyla yüklendi: " + oData.file);
+                oModel.setProperty("/ImageUrl", oData.fileNames[0]);
+                console.log("Yüklenen dosyanın adı (ImageUrl): ", oData.fileNames[0]);
+                sap.m.MessageToast.show("Dosya başarıyla yüklendi: " + oData.fileNames[0]);
             } catch (error) {
                 console.error("JSON parse hatası:", error);
                 sap.m.MessageToast.show("JSON parse hatası: " + error.message);

@@ -48,8 +48,8 @@
 					<m:HBox >
 						<ui:FileUploader
 							id="fileUploaderList"
-							name="myFileUpload"
-							uploadUrl="http://localhost:3000/upload"
+							name="file"
+							uploadUrl="http://localhost:3000/fileUpload"
 							tooltip="Upload your file to the local server"
 							uploadComplete="handleUploadComplete"
 							change="handleValueChange"

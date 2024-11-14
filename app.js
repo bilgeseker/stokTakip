@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs/promises');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const cors = require('cors');
@@ -12,7 +13,6 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 app.use(fileUpload());
-app.use('/upload', express.static(path.join(__dirname, 'upload')));
 app.use((err, req, res, next) => {
   console.error("Global error handler:", err);
   res.status(500).send('Something broke!');
@@ -218,43 +218,62 @@ app.delete('/deleteSubCategory/:id', (req, res) => {
   });
 });
 /* -------------- DELETE END -------------*/
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'upload/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Dosya adını benzersiz yapmak için zaman damgası ekleniyor
-  }
-});
-// Sadece resim dosyalarını kabul etme
-const upload = multer({ 
-  storage: storage,
-  fileFilter: function (req, file, cb) {
-    const fileTypes = /jpeg|jpg|png|gif/;
-    const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = fileTypes.test(file.mimetype);
+app.use('/upload', express.static(path.join(__dirname, 'upload')));
+app.post("/fileUpload", async (req, res) => {
+    let data = Buffer.alloc(0);
+    console.log("Headers:", req.headers);
+    console.log("Body:", req.body);
 
-    if (mimetype && extname) {
-      return cb(null, true);
-    } else {
-      cb(new Error('Yalnızca resim dosyaları yüklenebilir!'));
-    }
-  }
-});
-app.post('/upload', upload.single('myFileUpload'), (req, res) => {
-  console.log(req.body);
-    console.log(req.file);
-  try {
-      if (req.file) {
-          res.status(200).json({ message: 'Dosya başarıyla yüklendi!', file: req.file.filename });
-      } else {
-          console.error("Dosya yüklenemedi, req.file tanımsız.");
-          res.status(400).json({ message: 'Dosya yüklenemedi!' });
-      }
-  } catch (error) {
-      console.error("Hata oluştu:", error);
-      res.status(500).json({ message: 'Sunucu hatası oluştu.' });
-  }
+    req.on('data', (chunk) => {
+        data = Buffer.concat([data, chunk]);
+    });
+
+    req.on('end', async () => {
+        const boundary = `--${req.headers['content-type'].split('boundary=')[1]}`;
+        const parts = data.toString('binary').split(boundary);
+
+        const files = [];
+        let type;
+
+        parts.forEach((part) => {
+            const contentDisposition = part.match(/Content-Disposition: form-data; name="([^"]+)"(; filename="([^"]+)")?/);
+            if (contentDisposition) {
+                const name = contentDisposition[1];
+                const fileName = contentDisposition[3];
+
+                if (fileName) {
+                    const contentStart = part.indexOf('\r\n\r\n') + 4;
+                    const contentBuffer = Buffer.from(part.slice(contentStart, part.lastIndexOf('\r\n')), 'binary');
+                    files.push({ fileName, fileContent: contentBuffer });
+                } else if (name === 'type') {
+                    type = part.split('\r\n\r\n')[1].trim();
+                }
+            }
+        });
+
+        if (files.length > 0) {
+            try {
+                const uploadDir = path.join(__dirname, 'upload');
+                await fs.mkdir(uploadDir, { recursive: true });
+
+                for (const file of files) {
+                    const filePath = path.join(uploadDir, file.fileName);
+                    await fs.writeFile(filePath, file.fileContent, 'binary');
+                    console.log(`Dosya kaydedildi: ${file.fileName}`);
+                }
+
+                const fileNames = files.map(file => file.fileName);
+                const filePaths = fileNames.map(fileName => path.join(uploadDir, fileName));
+
+                res.send({ type, fileNames, filePaths });
+            } catch (err) {
+                console.error("Dosya yazma hatası:", err);
+                res.status(500).send('Dosyalar yüklenirken bir hata oluştu!');
+            }
+        } else {
+            res.status(400).send('Dosyalar veya gerekli alanlar eksik!');
+        }
+    });
 });
 
 
