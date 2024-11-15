@@ -49,11 +49,9 @@
 						<ui:FileUploader
 							id="fileUploaderList"
 							name="file"
-							uploadUrl="http://localhost:3000/fileUpload"
+							uploadUrl="http://localhost:3000/upload"
 							tooltip="Upload your file to the local server"
-							uploadComplete="handleUploadComplete"
-							change="handleValueChange"
-							typeMissmatch="handleTypeMissmatch"
+							change="onFileChange"
 							style="Emphasized"
 							fileType="jpeg,jpg,png,gif"
 							placeholder="Dosya seçiniz..."
@@ -70,10 +68,6 @@
 										value="86400"/>
 								</ui:parameters>
 						</ui:FileUploader>
-						<m:Button
-							text="Yükle"
-							press="handleUploadPress"
-							class="sapUiSmallMarginBegin"/>
 					</m:HBox>
 					<m:Label text="Ürün Adı" />
 					<m:Input value="{addProductModel>/ProductName}" id="addProductNameList" liveChange="onNameChange"/>

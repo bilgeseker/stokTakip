@@ -274,14 +274,14 @@ sap.ui.define([
                 console.log("Hiçbir öğe seçilmedi.");
             }
         },
-        onSavePress: function() {
+        onSavePress: async function() {
             const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             const randomLetter = letters.charAt(Math.floor(Math.random() * letters.length));
             const randomNumber = Math.floor(10000 + Math.random() * 90000);
 
-
+            const imageUrl = await this.onFileUpload();
             const oModel = this.getView().getModel("addProductModel");
-            console.log("ImageUrl değeri: ", oModel.getProperty("/ImageUrl"));
+            console.log("ImageUrl değeri: ", imageUrl);
             oModel.setProperty("/SizeId", sap.ui.getCore().byId("addSizeList").getSelectedKey());
 			oModel.setProperty("/ColorId", sap.ui.getCore().byId("addColorList").getSelectedKey());
 			oModel.setProperty("/CategoryId", sap.ui.getCore().byId("addCategoryList").getSelectedKey());
@@ -296,7 +296,7 @@ sap.ui.define([
                 ColorId: oModel.getProperty("/ColorId"), 
                 CategoryId: oModel.getProperty("/CategoryId"), 
                 SubCategoryId: oModel.getProperty("/SubCategoryId"), 
-                ImageUrl: oModel.getProperty("/ImageUrl")
+                ImageUrl: imageUrl
             };
 
             if (!updatedData.ProductName) {
@@ -319,7 +319,7 @@ sap.ui.define([
 				data: JSON.stringify(updatedData), 
 				contentType: 'application/json',
 				success: function (response) {
-					MessageToast.show("Ürün başarıyla eklendi");
+					// MessageToast.show("Ürün başarıyla eklendi");
 					const oModel = this.getOwnerComponent().getModel("products");
             		oModel.loadData("http://localhost:3000/products", null, true);
                     oModel.setProperty("/ProductName", "");
@@ -357,78 +357,120 @@ sap.ui.define([
 		// 		oFileUploader.clear();
 		// 	});
         // },
-        handleUploadPress: function () {
-            var oFileUploader = sap.ui.getCore().byId("fileUploaderList");
-            var oFile = oFileUploader.oFileUpload.files[0];
+        onFileChange: function (oEvent) {
+            var oFileUploader = oEvent.getSource();
+            var oFile = oEvent.getParameter("files")[0];
             console.log(oFile);
-        
-            if (!oFile) {
-                sap.m.MessageToast.show("Lütfen bir dosya seçin.");
-                return;
+            if (!this.oData) {
+                this.oData = {};
             }
         
-            let formData = new FormData();
-            formData.append("file", oFile);
-            formData.append("type", "productImage");
-        
-            fetch("http://localhost:3000/fileUpload", {
-                method: "POST",
-                body: formData,
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json();
-                    }
-                    throw new Error("Dosya yükleme başarısız oldu.");
-                })
-                .then((data) => {
-                    sap.m.MessageToast.show("Dosya yüklendi.");
-                    console.log("Sunucu Yanıtı:", data);
-                })
-                .catch((error) => {
-                    console.log("error");
-                    sap.m.MessageToast.show("hata oluştu.");
-                    console.error(error);
-                });
+            if (oFile) {
+                this.oData.file = oFile;
+                console.log(this.oData.file);
+            }
         },
-                
-		handleTypeMissmatch: function(oEvent) {
-			var aFileTypes = oEvent.getSource().getFileType();
-			aFileTypes.map(function(sType) {
-				return "*." + sType;
-			});
-			MessageToast.show("The file type *." + oEvent.getParameter("fileType") +
-									" is not supported. Choose one of the following types: " +
-									aFileTypes.join(", "));
-		},
 
-		handleValueChange: function(oEvent) {
-			MessageToast.show("Press 'Save' to upload file '" +
-									oEvent.getParameter("newValue") + "'");
-		},
+        onFileUpload: async function () {
+            var oModel = this.getView().getModel("formData");
+            var formData = oModel.getData();
 
-		handleUploadComplete: function(oEvent) {
-            var oResponse = oEvent.getParameter("response"); 
-            console.log("Sunucu yanıtı:", oResponse); 
-        
-            if (!oResponse) {
-                sap.m.MessageToast.show("Sunucudan geçerli bir yanıt alınamadı.");
+            var oFormData = new FormData();
+            oFormData.append("name", this.oData.file.name);
+
+            if (this.oData && this.oData.file) {
+                oFormData.append("file", this.oData.file);
+            } else {
+                MessageToast.show("Lütfen bir dosya seçiniz.");
                 return;
             }
-            
-            try {
-                var oData = JSON.parse(oResponse);
-                var oModel = this.getView().getModel("addProductModel");
-                oModel.setProperty("/ImageUrl", oData.fileNames[0]);
-                console.log("Yüklenen dosyanın adı (ImageUrl): ", oData.fileNames[0]);
-                sap.m.MessageToast.show("Dosya başarıyla yüklendi: " + oData.fileNames[0]);
-            } catch (error) {
-                console.error("JSON parse hatası:", error);
-                sap.m.MessageToast.show("JSON parse hatası: " + error.message);
+            console.log([...oFormData.entries()]);
+
+            const uploadResponse = await fetch("http://localhost:3000/upload", {
+                method: "POST",
+                body: oFormData
+            });
+
+            if (!uploadResponse.ok) {
+                MessageToast.show("Ekleme sırasında hata oluştu.");
+
+                return;
             }
-        }
+            const uploadData = await uploadResponse.json();
+            return uploadData.imageUrl;
+        },
+        // handleUploadPress: function () {
+        //     var oFileUploader = sap.ui.getCore().byId("fileUploaderList");
+        //     var oFile = oFileUploader.oFileUpload.files[0];
+        //     console.log(oFile);
         
-        ,
+        //     if (!oFile) {
+        //         sap.m.MessageToast.show("Lütfen bir dosya seçin.");
+        //         return;
+        //     }
+        
+        //     let formData = new FormData();
+        //     formData.append("file", oFile);
+        //     formData.append("type", "productImage");
+        
+        //     fetch("http://localhost:3000/fileUpload", {
+        //         method: "POST",
+        //         body: formData,
+        //     })
+        //         .then((response) => {
+        //             if (response.ok) {
+        //                 return response.json();
+        //             }
+        //             throw new Error("Dosya yükleme başarısız oldu.");
+        //         })
+        //         .then((data) => {
+        //             sap.m.MessageToast.show("Dosya yüklendi.");
+        //             console.log("Sunucu Yanıtı:", data);
+        //         })
+        //         .catch((error) => {
+        //             console.log("error");
+        //             sap.m.MessageToast.show("hata oluştu.");
+        //             console.error(error);
+        //         });
+        // },
+                
+		// handleTypeMissmatch: function(oEvent) {
+		// 	var aFileTypes = oEvent.getSource().getFileType();
+		// 	aFileTypes.map(function(sType) {
+		// 		return "*." + sType;
+		// 	});
+		// 	MessageToast.show("The file type *." + oEvent.getParameter("fileType") +
+		// 							" is not supported. Choose one of the following types: " +
+		// 							aFileTypes.join(", "));
+		// },
+
+		// handleValueChange: function(oEvent) {
+		// 	MessageToast.show("Press 'Save' to upload file '" +
+		// 							oEvent.getParameter("newValue") + "'");
+		// },
+
+		// handleUploadComplete: function(oEvent) {
+        //     var oResponse = oEvent.getParameter("response"); 
+        //     console.log("Sunucu yanıtı:", oResponse); 
+        
+        //     if (!oResponse) {
+        //         sap.m.MessageToast.show("Sunucudan geçerli bir yanıt alınamadı.");
+        //         return;
+        //     }
+            
+        //     try {
+        //         var oData = JSON.parse(oResponse);
+        //         var oModel = this.getView().getModel("addProductModel");
+        //         oModel.setProperty("/ImageUrl", oData.fileNames[0]);
+        //         console.log("Yüklenen dosyanın adı (ImageUrl): ", oData.fileNames[0]);
+        //         sap.m.MessageToast.show("Dosya başarıyla yüklendi: " + oData.fileNames[0]);
+        //     } catch (error) {
+        //         console.error("JSON parse hatası:", error);
+        //         sap.m.MessageToast.show("JSON parse hatası: " + error.message);
+        //     }
+        // }
+        
+        // ,
         onPress: function(oEvent) {
             const oButton = oEvent.getSource(); 
             const oContext = oButton.getBindingContext("products"); 

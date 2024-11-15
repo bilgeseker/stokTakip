@@ -78,6 +78,13 @@ sap.ui.define([
 
         const oSubCatAddModel = new JSONModel(oSubCatAddData);
         this.setModel(oSubCatAddModel, "addSubCategoryModel");
+        
+        var formData = {
+         name: ""
+         };
+     
+         var oFormDataModel = new JSONModel(formData);
+         this.setModel(oFormDataModel, "formData");
 
         this.getRouter().initialize();
 

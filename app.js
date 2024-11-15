@@ -14,8 +14,8 @@ app.use(cors());
 app.use(express.json());
 app.use(fileUpload());
 app.use((err, req, res, next) => {
-  console.error("Global error handler:", err);
-  res.status(500).send('Something broke!');
+  console.error("Global error handler:", err.message);
+  res.status(500).json({ error: err.message });
 });
 
 
@@ -218,64 +218,28 @@ app.delete('/deleteSubCategory/:id', (req, res) => {
   });
 });
 /* -------------- DELETE END -------------*/
-app.use('/upload', express.static(path.join(__dirname, 'upload')));
-app.post("/fileUpload", async (req, res) => {
-    let data = Buffer.alloc(0);
-    console.log("Headers:", req.headers);
-    console.log("Body:", req.body);
-
-    req.on('data', (chunk) => {
-        data = Buffer.concat([data, chunk]);
-    });
-
-    req.on('end', async () => {
-        const boundary = `--${req.headers['content-type'].split('boundary=')[1]}`;
-        const parts = data.toString('binary').split(boundary);
-
-        const files = [];
-        let type;
-
-        parts.forEach((part) => {
-            const contentDisposition = part.match(/Content-Disposition: form-data; name="([^"]+)"(; filename="([^"]+)")?/);
-            if (contentDisposition) {
-                const name = contentDisposition[1];
-                const fileName = contentDisposition[3];
-
-                if (fileName) {
-                    const contentStart = part.indexOf('\r\n\r\n') + 4;
-                    const contentBuffer = Buffer.from(part.slice(contentStart, part.lastIndexOf('\r\n')), 'binary');
-                    files.push({ fileName, fileContent: contentBuffer });
-                } else if (name === 'type') {
-                    type = part.split('\r\n\r\n')[1].trim();
-                }
-            }
-        });
-
-        if (files.length > 0) {
-            try {
-                const uploadDir = path.join(__dirname, 'upload');
-                await fs.mkdir(uploadDir, { recursive: true });
-
-                for (const file of files) {
-                    const filePath = path.join(uploadDir, file.fileName);
-                    await fs.writeFile(filePath, file.fileContent, 'binary');
-                    console.log(`Dosya kaydedildi: ${file.fileName}`);
-                }
-
-                const fileNames = files.map(file => file.fileName);
-                const filePaths = fileNames.map(fileName => path.join(uploadDir, fileName));
-
-                res.send({ type, fileNames, filePaths });
-            } catch (err) {
-                console.error("Dosya yazma hatası:", err);
-                res.status(500).send('Dosyalar yüklenirken bir hata oluştu!');
-            }
-        } else {
-            res.status(400).send('Dosyalar veya gerekli alanlar eksik!');
-        }
-    });
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+      cb(null, Date.now() + path.extname(file.originalname));
+  }
 });
 
+const upload = multer({ storage: storage });
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.post("/upload", upload.single("file"), (req, res) => {
+  console.log(req.file);
+  console.log(req.body);
+  if (!req.file) {
+      return res.status(400).send("Dosya yüklenemedi.");
+  }
+
+  const imageUrl = `http://localhost:3000/uploads/${req.file.filename}`;
+  res.status(200).json({ imageUrl: imageUrl });
+});
 
 app.get('/getCount', (req, res) => {
   const sql = 'SELECT Count(*) FROM Products WHERE Quantity<100';
